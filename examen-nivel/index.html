@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Placement Test for Kids</title>
+  <!-- Google Fonts: Nunito for body, Fredoka One for display -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== LOADING SCREEN ===================== -->
+  <div id="loading-screen" class="screen active">
+    <div class="loader-wrapper">
+      <div class="stars" id="stars"></div>
+      <div class="loader-content">
+        <div class="loader-logo">🌟</div>
+        <h1 class="loader-title">English Test</h1>
+        <p class="loader-subtitle">for Kids</p>
+        <div class="loader-bar-track">
+          <div class="loader-bar-fill" id="loader-bar"></div>
+        </div>
+        <p class="loader-hint">Getting ready…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== START SCREEN ===================== -->
+  <div id="start-screen" class="screen">
+    <div class="bubbles" id="bubbles"></div>
+    <div class="start-card card">
+      <div class="start-icon">📚</div>
+      <h1 class="start-title">English Placement Test</h1>
+      <p class="start-subtitle">For Kids · Grades 1–5</p>
+      <div class="start-meta">
+        <span class="meta-badge">📝 35 Questions</span>
+        <span class="meta-badge">⏱️ ~15 mins</span>
+        <span class="meta-badge">🏅 4 Sections</span>
+      </div>
+      <div class="section-list">
+        <div class="section-item"><span>📖</span><span>Grammar</span><span class="s-count">15 Q</span></div>
+        <div class="section-item"><span>🔤</span><span>Vocabulary</span><span class="s-count">8 Q</span></div>
+        <div class="section-item"><span>📄</span><span>Reading</span><span class="s-count">7 Q</span></div>
+        <div class="section-item"><span>🎧</span><span>Listening</span><span class="s-count">5 Q</span></div>
+      </div>
+      <button class="btn btn-primary" id="start-btn">Start Test 🚀</button>
+      <p class="resume-note" id="resume-note" style="display:none;">
+        💾 You have a saved session. <button class="link-btn" id="resume-btn">Resume</button> or start fresh.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== QUIZ SCREEN ===================== -->
+  <div id="quiz-screen" class="screen">
+
+    <!-- Top bar: section label + progress -->
+    <div class="quiz-topbar">
+      <div class="section-label" id="section-label">Grammar</div>
+      <div class="question-counter" id="question-counter">1 / 35</div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+      <div class="progress-dots" id="progress-dots"></div>
+    </div>
+
+    <!-- Reading passage (conditionally shown) -->
+    <div class="passage-box" id="passage-box" style="display:none;">
+      <div class="passage-label">📖 Read carefully:</div>
+      <div class="passage-text" id="passage-text"></div>
+    </div>
+
+    <!-- Question card -->
+    <div class="question-card card" id="question-card">
+
+      <!-- Listening play button (conditionally shown) -->
+      <div class="listen-zone" id="listen-zone" style="display:none;">
+        <button class="play-btn" id="play-btn" title="Listen">
+          <span id="play-icon">▶</span>
+          <span id="play-label">Play Audio</span>
+        </button>
+        <p class="listen-hint">🎧 Listen carefully, then answer below.</p>
+      </div>
+
+      <div class="question-number" id="q-number">Question 1</div>
+      <div class="question-text" id="q-text">Loading…</div>
+
+      <div class="options-grid" id="options-grid"></div>
+
+      <!-- Feedback bar (appears after answer) -->
+      <div class="feedback-bar" id="feedback-bar" style="display:none;">
+        <span id="feedback-icon"></span>
+        <span id="feedback-msg"></span>
+      </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="nav-row">
+      <button class="btn btn-secondary" id="prev-btn" disabled>← Back</button>
+      <button class="btn btn-primary" id="next-btn" disabled>Next →</button>
+    </div>
+
+  </div>
+
+  <!-- ===================== RESULTS SCREEN ===================== -->
+  <div id="results-screen" class="screen">
+    <div class="confetti-layer" id="confetti-layer"></div>
+    <div class="results-card card">
+      <div class="results-trophy" id="results-trophy">🏆</div>
+      <h2 class="results-title">Test Complete!</h2>
+
+      <div class="score-ring-wrapper">
+        <svg class="score-ring" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"
+                  stroke-dasharray="314" stroke-dashoffset="314"/>
+        </svg>
+        <div class="score-ring-label">
+          <span class="score-big" id="score-big">0</span>
+          <span class="score-denom">/35</span>
+        </div>
+      </div>
+
+      <div class="results-percentage" id="results-pct">0%</div>
+      <div class="results-level-badge" id="results-level">Pre-A1</div>
+      <div class="results-msg" id="results-msg">Keep going!</div>
+
+      <!-- Section breakdown -->
+      <div class="breakdown">
+        <div class="breakdown-title">Section Breakdown</div>
+        <div class="breakdown-grid" id="breakdown-grid"></div>
+      </div>
+
+      <button class="btn btn-primary" id="restart-btn">🔄 Restart Test</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
