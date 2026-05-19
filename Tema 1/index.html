@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Greetings & Introductions — English A1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --border: rgba(255,255,255,0.07);
+  --accent: #00e5c0;
+  --accent2: #4f9eff;
+  --accent3: #ff6b6b;
+  --text: #e8eaf0;
+  --muted: #6b7280;
+  --white: #ffffff;
+  --r: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 28px 0 20px;
+}
+
+.sidebar-logo {
+  padding: 0 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .course-tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+}
+.sidebar-logo h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.nav-list {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 0;
+}
+.nav-item {
+  padding: 0 14px;
+  margin-bottom: 2px;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: all .2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-link:hover { background: var(--surface2); color: var(--text); }
+.nav-link.active {
+  background: rgba(0,229,192,0.1);
+  border-color: rgba(0,229,192,0.25);
+  color: var(--accent);
+}
+.nav-icon { font-size: 0.9rem; width: 18px; text-align: center; flex-shrink: 0; }
+.nav-step {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: all .2s;
+}
+.nav-link.active .nav-step {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.nav-link.done .nav-step {
+  background: rgba(0,229,192,0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.sidebar-footer {
+  padding: 16px 22px 0;
+  border-top: 1px solid var(--border);
+}
+.progress-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 7px; }
+.progress-bar { background: var(--surface2); border-radius: 999px; height: 4px; }
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width .5s ease;
+  width: 0%;
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 220px;
+  min-height: 100vh;
+}
+
+.section {
+  display: none;
+  animation: fadeIn .35s ease;
+}
+.section.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  padding: 52px 56px 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.sec-header::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 40px; top: 30px;
+  font-family: 'Syne', sans-serif;
+  font-size: 6rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -4px;
+}
+.sec-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+.sec-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 580px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── SECTION BODY ── */
+.sec-body { padding: 44px 56px; }
+
+/* ── GRID LAYOUTS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-2x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: rgba(0,229,192,0.2); transform: translateY(-2px); }
+
+.card-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.card-body {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── IMAGE SLOT ── */
+.img-slot {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--surface2);
+  border: 1.5px dashed rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.img-slot-sm {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--surface2);
+  border: 1.5px dashed rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.img-slot img, .img-slot-sm img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.img-slot .placeholder-icon { font-size: 1.8rem; opacity: 0.3; }
+
+/* ── VOCAB ROW ── */
+.vocab-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.vocab-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 20px 16px;
+  transition: border-color .2s;
+}
+.vocab-item:hover { border-color: rgba(79,158,255,0.3); }
+.vocab-word {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.vocab-ipa {
+  font-size: 0.78rem;
+  color: var(--accent2);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.vocab-translation {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.vocab-divider {
+  width: 28px; height: 2px;
+  background: var(--accent2);
+  border-radius: 2px;
+  margin: 10px 0;
+}
+.vocab-example {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── DIALOGUE BLOCK ── */
+.dialogue-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.dialogue-header {
+  padding: 14px 22px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.dialogue-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.d-line { display: flex; align-items: flex-start; gap: 14px; }
+.d-speaker {
+  min-width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.d-speaker.a { background: rgba(0,229,192,0.15); color: var(--accent); border: 1px solid rgba(0,229,192,0.3); }
+.d-speaker.b { background: rgba(79,158,255,0.15); color: var(--accent2); border: 1px solid rgba(79,158,255,0.3); }
+.d-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  padding-top: 5px;
+}
+.d-text strong { color: var(--white); }
+.d-text .note { font-size: 0.76rem; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+/* ── GRAMMAR TABLE ── */
+.g-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-top: 8px;
+}
+.g-table thead th {
+  background: rgba(255,255,255,0.04);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+}
+.g-table tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.g-table tbody tr:last-child td { border-bottom: none; }
+.g-table .en {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  color: var(--white);
+  font-size: 0.95rem;
+}
+.g-table .es { color: var(--muted); font-size: 0.82rem; }
+.g-table .use { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+.g-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── PRON BLOCK ── */
+.pron-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pron-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+}
+.pron-symbol {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.pron-name { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.pron-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pron-chip {
+  padding: 4px 12px;
+  background: rgba(0,229,192,0.08);
+  border: 1px solid rgba(0,229,192,0.18);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-style: italic;
+}
+.pron-tip {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  border-left: 2px solid rgba(0,229,192,0.3);
+  padding-left: 12px;
+}
+
+/* ── CONTEXT BLOCK ── */
+.context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.context-list { list-style: none; }
+.context-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.context-list li:last-child { border-bottom: none; }
+.context-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.78rem;
+  min-width: 20px;
+  padding-top: 2px;
+}
+
+/* ── OBJECTIVES LIST ── */
+.obj-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.obj-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.obj-icon { font-size: 1rem; margin-top: 2px; }
+.obj-text { font-size: 0.9rem; line-height: 1.55; }
+.obj-text strong { color: var(--white); }
+
+/* ── SUMMARY STRIP ── */
+.summary-strip {
+  display: flex;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.strip-item {
+  flex: 1;
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.strip-item:last-child { border-right: none; }
+.strip-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--white);
+  display: block;
+  margin-bottom: 4px;
+}
+.strip-key { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.nav-btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+.nav-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+.nav-btn.primary:hover { background: #00cca8; }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn:disabled:hover { background: transparent; }
+.page-indicator { font-size: 0.82rem; color: var(--muted); }
+
+/* ── PRACTICE STYLES (Drag & Drop y Múltiple) ── */
+.fill-blank {
+  display: inline-block;
+  min-width: 75px;
+  padding: 6px 10px;
+  margin: 0 4px;
+  background: var(--surface2);
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s;
+}
+.fill-blank.drag-over {
+  border-color: var(--accent);
+  background: rgba(0,229,192,0.1);
+}
+.fill-blank.filled {
+  background: rgba(0,229,192,0.15);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+}
+.fill-blank.correct {
+  background: rgba(0,229,192,0.25);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.fill-blank.incorrect {
+  background: rgba(255,107,107,0.2);
+  border-color: var(--accent3);
+  color: var(--accent3);
+}
+.word-bank-word {
+  display: inline-block;
+  padding: 8px 18px;
+  margin: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: grab;
+  transition: all 0.2s;
+  user-select: none;
+}
+.word-bank-word:active {
+  cursor: grabbing;
+}
+.word-bank-word.dragging {
+  opacity: 0.5;
+}
+.word-bank-word.used {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  background: var(--surface2);
+}
+.option-btn {
+  display: inline-block;
+  margin: 0 8px;
+  padding: 5px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.option-btn:hover {
+  background: var(--surface2);
+  border-color: var(--accent2);
+}
+.option-btn.selected {
+  background: rgba(79,158,255,0.2);
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+.option-btn.correct {
+  background: rgba(0,229,192,0.25);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.option-btn.incorrect {
+  background: rgba(255,107,107,0.2);
+  border-color: var(--accent3);
+  color: var(--accent3);
+}
+.feedback-msg {
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+.feedback-correct {
+  background: rgba(0,229,192,0.1);
+  color: var(--accent);
+}
+.feedback-incorrect {
+  background: rgba(255,107,107,0.1);
+  color: var(--accent3);
+}
+.check-btn {
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: var(--accent2);
+  border: none;
+  border-radius: 8px;
+  color: var(--bg);
+  font-weight: 600;
+  cursor: pointer;
+}
+.check-btn:hover {
+  opacity: 0.9;
+}
+
+/* ── HIGHLIGHT ── */
+.hl { color: var(--accent); }
+.hl2 { color: var(--accent2); }
+.hl3 { color: var(--accent3); }
+
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+/* ── TAG ── */
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.tag-green { background: rgba(0,229,192,0.1); color: var(--accent); border: 1px solid rgba(0,229,192,0.2); }
+.tag-blue  { background: rgba(79,158,255,0.1); color: var(--accent2); border: 1px solid rgba(79,158,255,0.2); }
+.tag-red   { background: rgba(255,107,107,0.1); color: var(--accent3); border: 1px solid rgba(255,107,107,0.2); }
+
+/* ── SCROLL ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+@media (max-width: 900px) {
+  .sidebar { width: 56px; }
+  .sidebar-logo, .nav-link span, .sidebar-footer .progress-label { display: none; }
+  .nav-link { justify-content: center; padding: 9px; }
+  .main { margin-left: 56px; }
+  .sec-header, .sec-body { padding-left: 28px; padding-right: 28px; }
+  .grid-2, .grid-3, .grid-2x3, .vocab-row, .pron-grid, .context-grid { grid-template-columns: 1fr; }
+  .sec-title { font-size: 1.7rem; }
+  .summary-strip { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="course-tag">English A1 · Month 1</span>
+    <h2>Greetings &amp; Introductions</h2>
+  </div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item"><a class="nav-link active" onclick="goTo(0)" data-idx="0"><span class="nav-step">1</span><span>Overview</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(1)" data-idx="1"><span class="nav-step">2</span><span>Vocabulary</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(2)" data-idx="2"><span class="nav-step">3</span><span>Grammar</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(3)" data-idx="3"><span class="nav-step">4</span><span>Dialogue</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(4)" data-idx="4"><span class="nav-step">5</span><span>Pronunciation</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(5)" data-idx="5"><span class="nav-step">6</span><span>Practice</span></a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <div class="progress-label" id="progressLabel">Section 1 of 6</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ═══════════ SECTION 0 — OVERVIEW ═══════════ -->
+  <section class="section active" id="sec0">
+    <div class="sec-header" data-label="01">
+      <div class="sec-eyebrow">Topic 1 · Week 1 · Month 1</div>
+      <h1 class="sec-title">Greetings &amp;<br>Introductions</h1>
+      <p class="sec-desc">Learn how to greet people, introduce yourself, and start a basic conversation in English — the foundation of all communication.</p>
+    </div>
+    <div class="sec-body">
+      <div class="summary-strip">
+        <div class="strip-item"><span class="strip-val hl">6</span><span class="strip-key">Key phrases</span></div>
+        <div class="strip-item"><span class="strip-val hl2">4</span><span class="strip-key">Structures</span></div>
+        <div class="strip-item"><span class="strip-val hl3">2</span><span class="strip-key">Sounds</span></div>
+        <div class="strip-item"><span class="strip-val" style="color:var(--white)">A1</span><span class="strip-key">Level</span></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Learning Objectives</p>
+          <ul class="obj-list">
+            <li class="obj-item"><span class="obj-icon">💬</span><span class="obj-text"><strong>Greet</strong> people using formal and informal expressions in English.</span></li>
+            <li class="obj-item"><span class="obj-icon">🪪</span><span class="obj-text"><strong>Introduce yourself</strong> — say your name and ask for someone else's.</span></li>
+            <li class="obj-item"><span class="obj-icon">🔊</span><span class="obj-text"><strong>Pronounce</strong> key sounds correctly: /h/ and the long vowel /aɪ/.</span></li>
+            <li class="obj-item"><span class="obj-icon">🗣</span><span class="obj-text"><strong>Hold a short conversation</strong> using a guided dialogue script.</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Why This Matters</p>
+          <div class="card" style="margin-bottom:16px"><div class="card-body">Greetings are the <strong style="color:var(--white)">first thing you say</strong> in any language. Knowing how to greet someone correctly — and in the right context — immediately makes your English sound more natural and confident.</div></div>
+          <div class="img-slot"><img src="https://promova.com/content/english_greetings_5eda896eaf.png" alt="Greetings context" /></div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" disabled>← Previous</button><span class="page-indicator">1 / 6</span><button class="nav-btn primary" onclick="goTo(1)">Vocabulary →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 1 — VOCABULARY ═══════════ -->
+  <section class="section" id="sec1">
+    <div class="sec-header" data-label="02"><div class="sec-eyebrow">Section 2 of 6</div><h1 class="sec-title">Vocabulary</h1><p class="sec-desc">Six essential expressions. Learn the spelling, pronunciation, and when to use each one.</p></div>
+    <div class="sec-body">
+      <div class="vocab-row">
+        <div class="vocab-item"><div class="img-slot-sm"><img src="https://static.vecteezy.com/system/resources/previews/038/820/964/non_2x/man-doing-greet-pose-and-say-hello-free-vector.jpg" alt="Hello" /></div><div class="vocab-word">Hello</div><div class="vocab-ipa">/həˈloʊ/</div><div class="vocab-translation">Hola</div><div class="vocab-divider"></div><div class="vocab-example">"Hello, my name is Ana."</div><div style="margin-top:10px"><span class="tag tag-blue">Formal / Informal</span></div></div>
+        <div class="vocab-item"><div class="img-slot-sm"><img src="https://media.baamboozle.com/uploads/images/526740/61fe01b1-305d-41c7-9d8b-a33fea46421c.jpeg" alt="Hi" /></div><div class="vocab-word">Hi</div><div class="vocab-ipa">/haɪ/</div><div class="vocab-translation">Hola</div><div class="vocab-divider"></div><div class="vocab-example">"Hi! How are you?"</div><div style="margin-top:10px"><span class="tag tag-green">Informal</span></div></div>
+        <div class="vocab-item"><div class="img-slot-sm"><img src="https://cdn.shopify.com/s/files/1/0729/8239/7174/files/1600w-agu-A1i1zys.webp?v=1752647693" alt="Good morning" /></div><div class="vocab-word">Good morning</div><div class="vocab-ipa">/ɡʊd ˈmɔːrnɪŋ/</div><div class="vocab-translation">Buenos días</div><div class="vocab-divider"></div><div class="vocab-example">"Good morning, sir."</div><div style="margin-top:10px"><span class="tag tag-red">Formal</span></div></div>
+        <div class="vocab-item"><div class="img-slot-sm"><img src="https://blessingstimes.com/wp-content/uploads/2025/09/Good-Afternoon.webp" alt="Good afternoon" /></div><div class="vocab-word">Good afternoon</div><div class="vocab-ipa">/ɡʊd ˌæftərˈnuːn/</div><div class="vocab-translation">Buenas tardes</div><div class="vocab-divider"></div><div class="vocab-example">"Good afternoon, everyone."</div><div style="margin-top:10px"><span class="tag tag-red">Formal</span></div></div>
+        <div class="vocab-item"><div class="img-slot-sm"><img src="https://thumbs.dreamstime.com/b/gente-que-saluda-o-diciendo-adi%C3%B3s-agitando-las-manos-saludo-del-hombre-y-de-la-mujer-los-j%C3%B3venes-decir-en-el-parque-204407090.jpg" alt="Goodbye" /></div><div class="vocab-word">Goodbye</div><div class="vocab-ipa">/ɡʊdˈbaɪ/</div><div class="vocab-translation">Adiós</div><div class="vocab-divider"></div><div class="vocab-example">"Goodbye! See you tomorrow."</div><div style="margin-top:10px"><span class="tag tag-blue">Formal / Informal</span></div></div>
+        <div class="vocab-item"><div class="img-slot-sm"><img src="https://www.thelemontreeeducation.com/wp-content/uploads/2019/05/saludo-de-manos-2.jpg" alt="Nice to meet you" /></div><div class="vocab-word">Nice to meet you</div><div class="vocab-ipa">/naɪs tə miːt juː/</div><div class="vocab-translation">Mucho gusto</div><div class="vocab-divider"></div><div class="vocab-example">"Nice to meet you, Carlos."</div><div style="margin-top:10px"><span class="tag tag-blue">Formal / Informal</span></div></div>
+      </div>
+      <hr class="divider"/>
+      <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04)"><div class="card-label" style="color:var(--accent2)">📌 Key difference</div><div class="card-body"><strong style="color:var(--white)">Hello</strong> and <strong style="color:var(--white)">Hi</strong> both mean <em>hola</em>, but <span class="hl2">Hello</span> works in formal and informal situations, while <span class="hl">Hi</span> is only casual — you would not say "Hi" to your teacher on the first day. <strong style="color:var(--white)">Good morning / Good afternoon</strong> are time-specific greetings and are always polite.</div></div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(0)">← Overview</button><span class="page-indicator">2 / 6</span><button class="nav-btn primary" onclick="goTo(2)">Grammar →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 2 — GRAMMAR ═══════════ -->
+  <section class="section" id="sec2">
+    <div class="sec-header" data-label="03"><div class="sec-eyebrow">Section 3 of 6</div><h1 class="sec-title">Grammar Focus</h1><p class="sec-desc">Four key structures using the verb <span class="hl">to be</span>. These are the building blocks of your first real conversation.</p></div>
+    <div class="sec-body">
+      <div class="grid-2">
+        <div><p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Core Structures</p><table class="g-table"><thead><tr><th>Structure</th><th>Use</th><th>Spanish</th></tr></thead><tbody><tr><td class="en">My name is ___.</td><td class="use">Introduce yourself</td><td class="es">Mi nombre es ___.</td></tr><tr><td class="en">What is your name?</td><td class="use">Ask someone's name</td><td class="es">¿Cuál es tu nombre?</td></tr><tr><td class="en">How are you?</td><td class="use">Ask how someone feels</td><td class="es">¿Cómo estás?</td></tr><tr><td class="en">I am fine.</td><td class="use">Answer "How are you?"</td><td class="es">Estoy bien.</td></tr></tbody></table></div>
+        <div style="display:flex;flex-direction:column;gap:16px"><div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)"><div class="card-label">Verb to be — key rule</div><div class="card-body"><p style="margin-bottom:10px">In all these structures, <span class="hl">to be</span> connects the subject with information about it:</p><p style="font-family:'Syne',sans-serif;font-size:1.05rem;color:var(--white);margin-bottom:6px">My name <span class="hl">is</span> Ana.</p><p style="font-family:'Syne',sans-serif;font-size:1.05rem;color:var(--white);margin-bottom:6px">I <span class="hl">am</span> fine.</p><p style="font-family:'Syne',sans-serif;font-size:1.05rem;color:var(--white)">What <span class="hl">is</span> your name?</p></div></div><div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04)"><div class="card-label" style="color:var(--accent3)">Contraction — short form</div><div class="card-body"><p style="margin-bottom:8px">In spoken English, <span class="hl3">I am</span> is almost always shortened:</p><div style="display:flex;align-items:center;gap:14px;margin-top:6px"><span style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white)">I am fine</span><span style="color:var(--muted)">→</span><span style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--accent3)">I'm fine</span></div></div></div><div class="img-slot"><img src="https://lingokids.com/wp-content/uploads/2020/11/20182F052F142F142F442F242F9f0f0085-7df3-4b0f-bf86-ca42cb2d71b22Fverb-to-be-present-opt.png" alt="Grammar visual" /></div></div>
+      </div>
+      <hr class="divider"/>
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">Question vs Statement</p>
+      <div class="grid-2"><div class="card" style="border-color:rgba(79,158,255,0.15)"><div class="card-label" style="color:var(--accent2)">Statement</div><div class="card-body"><p style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:6px">My name is Carlos.</p><p style="font-size:0.82rem;color:var(--muted)">Subject + verb to be + information. Ends with a period.</p></div></div><div class="card" style="border-color:rgba(79,158,255,0.15)"><div class="card-label" style="color:var(--accent2)">Question</div><div class="card-body"><p style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:6px">What is your name?</p><p style="font-size:0.82rem;color:var(--muted)">Question word + verb to be + subject. Ends with a question mark.</p></div></div></div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(1)">← Vocabulary</button><span class="page-indicator">3 / 6</span><button class="nav-btn primary" onclick="goTo(3)">Dialogue →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 3 — DIALOGUE ═══════════ -->
+  <section class="section" id="sec3">
+    <div class="sec-header" data-label="04"><div class="sec-eyebrow">Section 4 of 6</div><h1 class="sec-title">Dialogue</h1><p class="sec-desc">A real conversation. Read it, understand it, then practice it with a partner. Pay attention to the structure.</p></div>
+    <div class="sec-body">
+      <div class="context-grid">
+        <div><p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Full Dialogue — Meeting someone new</p>
+          <div class="dialogue-wrap"><div class="dialogue-header">Dialogue · School Setting</div><div class="dialogue-body"><div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Hi! What is your name?"</strong><div class="note">Informal greeting + question</div></div></div><div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"My name is Sofia. How are you?"</strong><div class="note">Introduction + follow-up question</div></div></div><div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"I'm fine, thank you. Nice to meet you, Sofia."</strong><div class="note">Answer + courtesy expression</div></div></div><div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Nice to meet you too!"</strong><div class="note">Reciprocal response</div></div></div></div></div>
+          <div class="dialogue-wrap"><div class="dialogue-header">Dialogue · Formal version (e.g. meeting a teacher)</div><div class="dialogue-body"><div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Good morning. What is your name?"</strong></div></div><div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Good morning. My name is Carlos. Nice to meet you."</strong></div></div><div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Nice to meet you too, Carlos."</strong></div></div></div></div></div>
+        <div style="display:flex;flex-direction:column;gap:16px"><div class="img-slot" style="aspect-ratio:1.2"><img src="https://www.evangelicalsforsocialaction.org/wp-content/uploads/2016/01/dialogue-exdez-istock.jpg" alt="Two people talking" /></div><div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)"><div class="card-label">Structure of the dialogue</div><ul class="context-list"><li><span class="context-num">01</span>Open with a greeting</li><li><span class="context-num">02</span>Ask the other person's name</li><li><span class="context-num">03</span>Give your own name</li><li><span class="context-num">04</span>Ask "How are you?"</li><li><span class="context-num">05</span>Answer the question</li><li><span class="context-num">06</span>Close with "Nice to meet you"</li></ul></div></div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(2)">← Grammar</button><span class="page-indicator">4 / 6</span><button class="nav-btn primary" onclick="goTo(4)">Pronunciation →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 4 — PRONUNCIATION ═══════════ -->
+  <section class="section" id="sec4">
+    <div class="sec-header" data-label="05"><div class="sec-eyebrow">Section 5 of 6</div><h1 class="sec-title">Pronunciation</h1><p class="sec-desc">Two sounds that appear constantly in English greetings. Getting these right makes a big difference.</p></div>
+    <div class="sec-body">
+      <div class="pron-grid" style="margin-bottom:28px"><div class="pron-card"><div class="pron-symbol">/h/</div><div class="pron-name">The H sound</div><div class="pron-examples"><span class="pron-chip">Hello</span><span class="pron-chip">Hi</span><span class="pron-chip">How</span></div><div class="pron-tip">Air passes gently through an open throat — like fogging a mirror. <br/><br/>The <strong style="color:var(--white)">/h/</strong> does not exist in Spanish the same way. Avoid the silent <em>h</em> of Spanish — in English it is always pronounced.</div></div><div class="pron-card"><div class="pron-symbol" style="color:var(--accent2)">/aɪ/</div><div class="pron-name">The long I sound</div><div class="pron-examples"><span class="pron-chip" style="background:rgba(79,158,255,0.08);border-color:rgba(79,158,255,0.2);color:var(--accent2)">Hi</span><span class="pron-chip" style="background:rgba(79,158,255,0.08);border-color:rgba(79,158,255,0.2);color:var(--accent2)">I</span><span class="pron-chip" style="background:rgba(79,158,255,0.08);border-color:rgba(79,158,255,0.2);color:var(--accent2)">fine</span><span class="pron-chip" style="background:rgba(79,158,255,0.08);border-color:rgba(79,158,255,0.2);color:var(--accent2)">goodbye</span></div><div class="pron-tip" style="border-color:rgba(79,158,255,0.3)">Start with an open <strong style="color:var(--white)">/a/</strong> sound (mouth wide), then close toward <strong style="color:var(--white)">/i/</strong> (mouth narrows). It's a gliding vowel — one sound in motion.<br/><br/>Think of it as the Spanish sound <em>"ai"</em> said quickly.</div></div></div>
+      <hr class="divider"/>
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Minimal Pair Drill</p>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:18px">These pairs differ by only one sound. Train your ear to hear the difference, then train your mouth to produce it.</p>
+      <div class="grid-3"><div class="card" style="text-align:center"><div style="display:flex;justify-content:center;gap:28px;margin-bottom:12px"><span style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--white)">Hi</span><span style="color:var(--muted)">vs</span><span style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--accent2)">He</span></div><div class="card-body">/haɪ/ vs /hiː/ — different vowel after /h/</div></div><div class="card" style="text-align:center"><div style="display:flex;justify-content:center;gap:28px;margin-bottom:12px"><span style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--white)">Hi</span><span style="color:var(--muted)">vs</span><span style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--accent2)">Bye</span></div><div class="card-body">/haɪ/ vs /baɪ/ — only the first consonant changes</div></div><div class="card" style="text-align:center"><div style="display:flex;justify-content:center;gap:28px;margin-bottom:12px"><span style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--white)">fine</span><span style="color:var(--muted)">vs</span><span style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--accent2)">fan</span></div><div class="card-body">/faɪn/ vs /fæn/ — long vs short vowel</div></div></div>
+      <div class="img-slot" style="margin-top:28px;aspect-ratio:21/6"><img src="https://www.cla.purdue.edu/place/images/pronunciation_banner.jpg" alt="Pronunciation visual" /></div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(3)">← Dialogue</button><span class="page-indicator">5 / 6</span><button class="nav-btn primary" onclick="goTo(5)">Practice →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 5 — PRACTICE (INTERACTIVO) ═══════════ -->
+  <section class="section" id="sec5">
+    <div class="sec-header" data-label="06">
+      <div class="sec-eyebrow">Section 6 of 6</div>
+      <h1 class="sec-title">Practice</h1>
+      <p class="sec-desc">Apply everything from this lesson. Three exercises — written, oral, and reflective.</p>
+    </div>
+    <div class="sec-body">
+
+      <div class="grid-2" style="margin-bottom:28px">
+
+        <!-- Exercise 1 — Fill in the blanks con DRAG & DROP -->
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 1 — Fill in the blanks (Drag & Drop)</p>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-body" style="display:flex;flex-direction:column;gap:14px">
+              <p>1. <span class="fill-blank" data-blank-idx="0" data-correct="Good">___</span> morning! How <span class="fill-blank" data-blank-idx="1" data-correct="are">___</span> you?</p>
+              <p>2. My <span class="fill-blank" data-blank-idx="2" data-correct="name">___</span> is Lucas. Nice to <span class="fill-blank" data-blank-idx="3" data-correct="meet">___</span> you.</p>
+              <p>3. <span class="fill-blank" data-blank-idx="4" data-correct="What">___</span> is your name? — My name <span class="fill-blank" data-blank-idx="5" data-correct="is">___</span> María.</p>
+              <p>4. I <span class="fill-blank" data-blank-idx="6" data-correct="am">___</span> fine. Goodbye!</p>
+            </div>
+          </div>
+          <div class="card" style="border-color:rgba(0,229,192,0.15);background:rgba(0,229,192,0.03)">
+            <div class="card-label">Word bank (drag and drop)</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="wordBank">
+              <span class="word-bank-word" draggable="true" data-word="Good">Good</span>
+              <span class="word-bank-word" draggable="true" data-word="are">are</span>
+              <span class="word-bank-word" draggable="true" data-word="name">name</span>
+              <span class="word-bank-word" draggable="true" data-word="meet">meet</span>
+              <span class="word-bank-word" draggable="true" data-word="What">What</span>
+              <span class="word-bank-word" draggable="true" data-word="is">is</span>
+              <span class="word-bank-word" draggable="true" data-word="am">am</span>
+            </div>
+          </div>
+          <div id="ex1Feedback" class="feedback-msg" style="margin-top:12px"></div>
+          <button class="check-btn" onclick="checkExercise1()">Check Exercise 1 ✓</button>
+          <button class="check-btn" style="margin-left:10px;background:var(--surface2);color:var(--text);" onclick="resetExercise1()">Reset Exercise 1</button>
+        </div>
+
+        <!-- Exercise 2 — Choose the right greeting con selección múltiple -->
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 2 — Choose the right greeting</p>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">Situation: You meet your teacher at 8 am.</p>
+                <div data-situation="teacher">
+                  <span class="option-btn" data-opt="Hi">(a) Hi!</span>
+                  <span class="option-btn" data-opt="Good morning">(b) Good morning</span>
+                  <span class="option-btn" data-opt="Goodbye">(c) Goodbye</span>
+                </div>
+              </div>
+              <hr class="divider" style="margin:0"/>
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">Situation: You meet a new classmate at lunch.</p>
+                <div data-situation="classmate">
+                  <span class="option-btn" data-opt="Good morning">(a) Good morning</span>
+                  <span class="option-btn" data-opt="Hi">(b) Hi!</span>
+                  <span class="option-btn" data-opt="Good afternoon">(c) Good afternoon</span>
+                </div>
+              </div>
+              <hr class="divider" style="margin:0"/>
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">Situation: Class is over, you leave.</p>
+                <div data-situation="leave">
+                  <span class="option-btn" data-opt="Hello">(a) Hello</span>
+                  <span class="option-btn" data-opt="How are you?">(b) How are you?</span>
+                  <span class="option-btn" data-opt="Goodbye">(c) Goodbye</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="ex2Feedback" class="feedback-msg" style="margin-top:12px"></div>
+          <button class="check-btn" onclick="checkExercise2()">Check Exercise 2 ✓</button>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">Exercise 3 — Speaking task</p>
+      <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:28px">
+        <div class="card-body">
+          <p style="margin-bottom:14px">With a partner, create your own version of the dialogue. Use the structure below. You can change the names and the greeting — try both formal and informal.</p>
+          <div class="dialogue-body" style="padding:0;gap:10px">
+            <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>[Greeting]. What is your name?</strong></div></div>
+            <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>My name is [name]. How are you?</strong></div></div>
+            <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>I'm [fine / great]. Nice to meet you, [name].</strong></div></div>
+            <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>Nice to meet you too. [Goodbye / See you!]</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="img-slot" style="aspect-ratio:16/6"><img src="https://www.oksensay.com/wp-content/uploads/2022/07/christina-wocintechchat-com-LQ1t-8Ms5PY-unsplash-1080x675.jpg" alt="Practice" /></div>
+
+      <hr class="divider"/>
+
+      <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+        <div class="card-label">Lesson Summary — What you learned today</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px">
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> 6 greeting expressions</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> Verb to be: <em>am / is</em></div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> How to introduce yourself</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> Contraction: I'm</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> Formal vs informal register</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> Sounds /h/ and /aɪ/</div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="nav-btn" onclick="goTo(4)">← Pronunciation</button>
+        <span class="page-indicator">6 / 6</span>
+        <button class="nav-btn" style="background:var(--surface2);border-color:var(--border);color:var(--text);font-weight:600;cursor:default">✓ Complete</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i === idx));
+    document.querySelectorAll('.nav-link').forEach(l => {
+      const i = parseInt(l.dataset.idx);
+      l.classList.remove('active', 'done');
+      if (i === idx) l.classList.add('active');
+      else if (i < idx) l.classList.add('done');
+    });
+    document.getElementById('progressFill').style.width = ((idx + 1) / TOTAL * 100) + '%';
+    document.getElementById('progressLabel').textContent = `Section ${idx + 1} of ${TOTAL}`;
+    current = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // ========== EXERCISE 1: Drag & Drop ==========
+  const blanks = document.querySelectorAll('.fill-blank');
+  const wordBankWords = document.querySelectorAll('.word-bank-word');
+  let userAnswers = new Array(blanks.length).fill(null);
+  let usedWords = new Array(wordBankWords.length).fill(false);
+  let draggedWord = null;
+
+  wordBankWords.forEach(wordEl => {
+    wordEl.addEventListener('dragstart', (e) => {
+      if (wordEl.classList.contains('used')) { e.preventDefault(); return false; }
+      draggedWord = wordEl;
+      e.dataTransfer.setData('text/plain', wordEl.getAttribute('data-word'));
+      e.dataTransfer.effectAllowed = 'copy';
+      wordEl.classList.add('dragging');
+    });
+    wordEl.addEventListener('dragend', (e) => { wordEl.classList.remove('dragging'); draggedWord = null; });
+  });
+
+  blanks.forEach(blank => {
+    blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+    blank.addEventListener('dragleave', (e) => { blank.classList.remove('drag-over'); });
+    blank.addEventListener('drop', (e) => {
+      e.preventDefault();
+      blank.classList.remove('drag-over');
+      if (!draggedWord || draggedWord.classList.contains('used')) return;
+      const word = draggedWord.getAttribute('data-word');
+      const blankIdx = parseInt(blank.getAttribute('data-blank-idx'));
+      const wordBankIndex = Array.from(wordBankWords).indexOf(draggedWord);
+      
+      if (userAnswers[blankIdx] !== null) {
+        const oldWord = userAnswers[blankIdx];
+        const oldWordIndex = Array.from(wordBankWords).findIndex(w => w.getAttribute('data-word') === oldWord);
+        if (oldWordIndex !== -1) { usedWords[oldWordIndex] = false; wordBankWords[oldWordIndex].classList.remove('used'); }
+      }
+      userAnswers[blankIdx] = word;
+      blank.textContent = word;
+      blank.classList.add('filled');
+      blank.classList.remove('incorrect', 'correct');
+      usedWords[wordBankIndex] = true;
+      draggedWord.classList.add('used');
+      document.getElementById('ex1Feedback').innerHTML = '';
+    });
+  });
+
+  function resetExercise1() {
+    userAnswers.fill(null);
+    usedWords.fill(false);
+    blanks.forEach((blank, idx) => { blank.textContent = '___'; blank.classList.remove('filled', 'correct', 'incorrect', 'drag-over'); });
+    wordBankWords.forEach(w => { w.classList.remove('used', 'dragging'); });
+    draggedWord = null;
+    document.getElementById('ex1Feedback').innerHTML = '';
+  }
+
+  function checkExercise1() {
+    let allCorrect = true;
+    blanks.forEach((blank, idx) => {
+      const userAnswer = userAnswers[idx];
+      const correctAnswer = blank.getAttribute('data-correct');
+      blank.classList.remove('correct', 'incorrect');
+      if (userAnswer === correctAnswer) { blank.classList.add('correct'); } 
+      else { blank.classList.add('incorrect'); allCorrect = false; }
+    });
+    const fb = document.getElementById('ex1Feedback');
+    if (allCorrect) { fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ ¡Excelente! All answers are correct. Great job!</div>'; } 
+    else { fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers are incorrect. Drag words from the bank to the blanks. Try again!</div>'; }
+  }
+
+  // ========== EXERCISE 2: Multiple choice ==========
+  const situationData = { teacher: { correct: 'Good morning' }, classmate: { correct: 'Good afternoon' }, leave: { correct: 'Goodbye' } };
+  let userSelections = { teacher: null, classmate: null, leave: null };
+  
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const parentDiv = btn.closest('[data-situation]');
+      if (!parentDiv) return;
+      const situation = parentDiv.getAttribute('data-situation');
+      const selectedValue = btn.getAttribute('data-opt');
+      parentDiv.querySelectorAll('.option-btn').forEach(opt => opt.classList.remove('selected'));
+      btn.classList.add('selected');
+      userSelections[situation] = selectedValue;
+      document.getElementById('ex2Feedback').innerHTML = '';
+    });
+  });
+  
+  function checkExercise2() {
+    let allCorrect = true;
+    const situations = ['teacher', 'classmate', 'leave'];
+    situations.forEach(sit => {
+      const selected = userSelections[sit];
+      const correct = situationData[sit].correct;
+      const container = document.querySelector(`[data-situation="${sit}"]`);
+      const options = container.querySelectorAll('.option-btn');
+      options.forEach(opt => {
+        opt.classList.remove('correct', 'incorrect');
+        if (opt.getAttribute('data-opt') === correct) opt.classList.add('correct');
+        if (opt.getAttribute('data-opt') === selected && selected !== correct) opt.classList.add('incorrect');
+      });
+      if (selected !== correct) allCorrect = false;
+    });
+    const fb = document.getElementById('ex2Feedback');
+    if (allCorrect) { fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! You understand formal/informal greetings and context.</div>'; } 
+    else { fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers are wrong. Review: "Good morning" for teachers (8am), "Good afternoon" for lunchtime, and "Goodbye" when leaving class.</div>'; }
+  }
+</script>
+</body>
+</html>
