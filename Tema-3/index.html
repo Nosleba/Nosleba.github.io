@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Alphabet, Numbers & Age — English A1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --border: rgba(255,255,255,0.07);
+  --accent: #00e5c0;
+  --accent2: #4f9eff;
+  --accent3: #ff6b6b;
+  --text: #e8eaf0;
+  --muted: #6b7280;
+  --white: #ffffff;
+  --r: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 28px 0 20px;
+}
+.sidebar-logo {
+  padding: 0 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .course-tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+}
+.sidebar-logo h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.3;
+}
+.nav-list { list-style: none; flex: 1; overflow-y: auto; padding: 18px 0; }
+.nav-item { padding: 0 14px; margin-bottom: 2px; }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: all .2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-link:hover { background: var(--surface2); color: var(--text); }
+.nav-link.active { background: rgba(0,229,192,0.1); border-color: rgba(0,229,192,0.25); color: var(--accent); }
+.nav-step {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: all .2s;
+}
+.nav-link.active .nav-step { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.nav-link.done .nav-step { background: rgba(0,229,192,0.15); border-color: var(--accent); color: var(--accent); }
+.sidebar-footer { padding: 16px 22px 0; border-top: 1px solid var(--border); }
+.progress-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 7px; }
+.progress-bar { background: var(--surface2); border-radius: 999px; height: 4px; }
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width .5s ease;
+  width: 0%;
+}
+
+/* ── MAIN ── */
+.main { margin-left: 220px; min-height: 100vh; }
+.section { display: none; animation: fadeIn .35s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  padding: 52px 56px 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.sec-header::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 40px; top: 30px;
+  font-family: 'Syne', sans-serif;
+  font-size: 6rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -4px;
+}
+.sec-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.sec-title { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+.sec-desc { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.7; font-weight: 300; }
+
+/* ── SECTION BODY ── */
+.sec-body { padding: 44px 56px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+/* ── CARDS ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: border-color .2s, transform .2s; }
+.card:hover { border-color: rgba(0,229,192,0.2); transform: translateY(-2px); }
+.card-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.card-body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* ── IMAGE SLOT ── */
+.img-slot {
+  width: 100%; aspect-ratio: 16/10;
+  background: var(--surface2);
+  border: 1.5px dashed rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; color: var(--muted); font-size: 0.8rem; margin-bottom: 16px; overflow: hidden;
+}
+.img-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+/* ── SUMMARY STRIP ── */
+.summary-strip {
+  display: flex; gap: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden; margin-bottom: 32px;
+}
+.strip-item { flex: 1; padding: 18px 20px; border-right: 1px solid var(--border); text-align: center; }
+.strip-item:last-child { border-right: none; }
+.strip-val { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); display: block; margin-bottom: 4px; }
+.strip-key { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── OBJ LIST ── */
+.obj-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.obj-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+.obj-icon { font-size: 1rem; margin-top: 2px; }
+.obj-text { font-size: 0.9rem; line-height: 1.55; }
+.obj-text strong { color: var(--white); }
+
+/* ── ALPHABET GRID ── */
+.alpha-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.alpha-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 6px;
+  text-align: center;
+  transition: border-color .2s, transform .15s, background .15s;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.alpha-card:hover { border-color: rgba(0,229,192,0.4); transform: translateY(-2px); background: rgba(0,229,192,0.05); }
+.alpha-card:active { transform: scale(0.94); }
+.alpha-card.speaking {
+  border-color: var(--accent) !important;
+  background: rgba(0,229,192,0.12) !important;
+}
+.alpha-card.speaking .alpha-letter { color: var(--accent) !important; }
+.alpha-card.vowel.speaking { border-color: var(--accent2) !important; background: rgba(79,158,255,0.12) !important; }
+.alpha-card.vowel.speaking .alpha-letter { color: var(--accent2) !important; }
+
+/* Sound icon hint */
+.alpha-card::after {
+  content: '♪';
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-size: 0.5rem;
+  color: var(--muted);
+  opacity: 0.5;
+  transition: opacity .2s;
+}
+.alpha-card:hover::after { opacity: 1; color: var(--accent); }
+.alpha-letter { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 3px; }
+.alpha-lower { font-size: 0.72rem; color: var(--muted); }
+.alpha-card.vowel { border-color: rgba(0,229,192,0.25); }
+.alpha-card.vowel .alpha-letter { color: var(--accent); }
+
+/* ── NUMBER GRID ── */
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.number-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 10px;
+  text-align: center;
+  transition: border-color .2s, transform .15s;
+  cursor: default;
+}
+.number-card:hover { border-color: rgba(79,158,255,0.4); transform: translateY(-2px); background: rgba(79,158,255,0.05); }
+.number-digit { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--accent2); line-height: 1; margin-bottom: 4px; }
+.number-word { font-size: 0.75rem; color: var(--muted); }
+
+/* ── DIALOGUE BLOCK ── */
+.dialogue-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+.dialogue-header { padding: 14px 22px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); }
+.dialogue-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.d-line { display: flex; align-items: flex-start; gap: 14px; }
+.d-speaker { min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.d-speaker.a { background: rgba(0,229,192,0.15); color: var(--accent); border: 1px solid rgba(0,229,192,0.3); }
+.d-speaker.b { background: rgba(79,158,255,0.15); color: var(--accent2); border: 1px solid rgba(79,158,255,0.3); }
+.d-text { font-size: 0.92rem; line-height: 1.55; padding-top: 5px; }
+.d-text strong { color: var(--white); }
+.d-text .note { font-size: 0.76rem; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+/* ── GRAMMAR TABLE ── */
+.g-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+.g-table thead th { background: rgba(255,255,255,0.04); padding: 12px 16px; text-align: left; font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); }
+.g-table tbody td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.g-table tbody tr:last-child td { border-bottom: none; }
+.g-table .en { font-family: 'Syne', sans-serif; font-weight: 600; color: var(--white); font-size: 0.95rem; }
+.g-table .es { color: var(--muted); font-size: 0.82rem; }
+.g-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── PRON BLOCK ── */
+.pron-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pron-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+.pron-symbol { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.pron-name { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.pron-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pron-chip { padding: 4px 12px; background: rgba(0,229,192,0.08); border: 1px solid rgba(0,229,192,0.18); border-radius: 999px; font-size: 0.82rem; color: var(--accent); font-style: italic; }
+.pron-tip { font-size: 0.82rem; color: var(--muted); line-height: 1.6; border-left: 2px solid rgba(0,229,192,0.3); padding-left: 12px; }
+
+/* ── CONTEXT BLOCK ── */
+.context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.context-list { list-style: none; }
+.context-list li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+.context-list li:last-child { border-bottom: none; }
+.context-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 0.78rem; min-width: 20px; padding-top: 2px; }
+
+/* ── PRACTICE ── */
+.fill-blank {
+  display: inline-block; min-width: 75px; padding: 6px 10px; margin: 0 4px;
+  background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+  color: var(--muted); font-weight: 500; text-align: center; transition: all 0.2s;
+}
+.fill-blank.drag-over { border-color: var(--accent); background: rgba(0,229,192,0.1); }
+.fill-blank.filled { background: rgba(0,229,192,0.15); border: 2px solid var(--accent); color: var(--accent); }
+.fill-blank.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+.fill-blank.incorrect { background: rgba(255,107,107,0.2); border-color: var(--accent3); color: var(--accent3); }
+.word-bank-word {
+  display: inline-block; padding: 8px 18px; margin: 5px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+  font-size: 0.9rem; font-weight: 500; cursor: grab; transition: all 0.2s; user-select: none;
+}
+.word-bank-word:active { cursor: grabbing; }
+.word-bank-word.dragging { opacity: 0.5; }
+.word-bank-word.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+.option-btn {
+  display: inline-block; margin: 0 8px; padding: 5px 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  cursor: pointer; transition: all 0.2s;
+}
+.option-btn:hover { background: var(--surface2); border-color: var(--accent2); }
+.option-btn.selected { background: rgba(79,158,255,0.2); border-color: var(--accent2); color: var(--accent2); }
+.option-btn.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+.option-btn.incorrect { background: rgba(255,107,107,0.2); border-color: var(--accent3); color: var(--accent3); }
+.feedback-msg { font-size: 0.85rem; padding: 8px 12px; border-radius: 8px; margin-top: 12px; }
+.feedback-correct { background: rgba(0,229,192,0.1); color: var(--accent); }
+.feedback-incorrect { background: rgba(255,107,107,0.1); color: var(--accent3); }
+.check-btn { margin-top: 12px; padding: 8px 20px; background: var(--accent2); border: none; border-radius: 8px; color: var(--bg); font-weight: 600; cursor: pointer; }
+.check-btn:hover { opacity: 0.9; }
+
+/* ── HIGHLIGHTS ── */
+.hl { color: var(--accent); }
+.hl2 { color: var(--accent2); }
+.hl3 { color: var(--accent3); }
+.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+.tag-green { background: rgba(0,229,192,0.1); color: var(--accent); border: 1px solid rgba(0,229,192,0.2); }
+.tag-blue  { background: rgba(79,158,255,0.1); color: var(--accent2); border: 1px solid rgba(79,158,255,0.2); }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); }
+.nav-btn { display: flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 9px; border: 1px solid var(--border); background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+.nav-btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+.nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 700; }
+.nav-btn.primary:hover { background: #00cca8; }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn:disabled:hover { background: transparent; }
+.page-indicator { font-size: 0.82rem; color: var(--muted); }
+
+/* ── SPELLING BOX ── */
+.spelling-box {
+  display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0;
+}
+.spell-letter {
+  width: 38px; height: 44px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white);
+  transition: all 0.2s;
+}
+.spell-letter.active { border-color: var(--accent); color: var(--accent); background: rgba(0,229,192,0.1); }
+.spell-dash { width: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1rem; }
+
+/* ── SCROLL ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+@media (max-width: 900px) {
+  .sidebar { width: 56px; }
+  .sidebar-logo, .nav-link span, .sidebar-footer .progress-label { display: none; }
+  .nav-link { justify-content: center; padding: 9px; }
+  .main { margin-left: 56px; }
+  .sec-header, .sec-body { padding-left: 28px; padding-right: 28px; }
+  .grid-2, .grid-3, .pron-grid, .context-grid { grid-template-columns: 1fr 1fr; }
+  .alpha-grid { grid-template-columns: repeat(6, 1fr); }
+  .number-grid { grid-template-columns: repeat(4, 1fr); }
+  .sec-title { font-size: 1.7rem; }
+  .summary-strip { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="course-tag">English A1 · Month 1</span>
+    <h2>Alphabet, Numbers &amp; Age</h2>
+  </div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item"><a class="nav-link active" onclick="goTo(0)" data-idx="0"><span class="nav-step">1</span><span>Overview</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(1)" data-idx="1"><span class="nav-step">2</span><span>Alphabet</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(2)" data-idx="2"><span class="nav-step">3</span><span>Numbers</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(3)" data-idx="3"><span class="nav-step">4</span><span>Dialogue</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(4)" data-idx="4"><span class="nav-step">5</span><span>Pronunciation</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(5)" data-idx="5"><span class="nav-step">6</span><span>Practice</span></a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <div class="progress-label" id="progressLabel">Section 1 of 6</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ═══════════ SECTION 0 — OVERVIEW ═══════════ -->
+  <section class="section active" id="sec0">
+    <div class="sec-header" data-label="03">
+      <div class="sec-eyebrow">Topic 3 · Week 1 · Month 1</div>
+      <h1 class="sec-title">Alphabet, Numbers<br>&amp; Age</h1>
+      <p class="sec-desc">Learn the 26 letters of the English alphabet, numbers from 1 to 20, and how to ask and answer questions about age.</p>
+    </div>
+    <div class="sec-body">
+      <div class="summary-strip">
+        <div class="strip-item"><span class="strip-val hl">26</span><span class="strip-key">Letters</span></div>
+        <div class="strip-item"><span class="strip-val hl2">20</span><span class="strip-key">Numbers</span></div>
+        <div class="strip-item"><span class="strip-val hl3">3</span><span class="strip-key">Key phrases</span></div>
+        <div class="strip-item"><span class="strip-val" style="color:var(--white)">A1</span><span class="strip-key">Level</span></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Learning Objectives</p>
+          <ul class="obj-list">
+            <li class="obj-item"><span class="obj-icon">🔤</span><span class="obj-text"><strong>Recite and recognize</strong> all 26 letters of the English alphabet (A–Z), both uppercase and lowercase.</span></li>
+            <li class="obj-item"><span class="obj-icon">🔢</span><span class="obj-text"><strong>Say and write</strong> numbers 1 to 20 in English: one, two, three…</span></li>
+            <li class="obj-item"><span class="obj-icon">🗣️</span><span class="obj-text"><strong>Spell your name aloud</strong> using the alphabet: "My name is Ana — A, N, A."</span></li>
+            <li class="obj-item"><span class="obj-icon">🎂</span><span class="obj-text"><strong>Ask and answer</strong> "How old are you?" → "I am 8 years old."</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Why This Matters</p>
+          <div class="card" style="margin-bottom:16px"><div class="card-body">The alphabet is the <strong style="color:var(--white)">foundation of all reading and writing</strong> in English. Numbers are used every day — for age, time, prices, and counting. These two skills unlock everything that comes next.</div></div>
+          <div class="img-slot"><img src="https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Alphabet and numbers learning" /></div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" disabled>← Previous</button><span class="page-indicator">1 / 6</span><button class="nav-btn primary" onclick="goTo(1)">Alphabet →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 1 — ALPHABET ═══════════ -->
+  <section class="section" id="sec1">
+    <div class="sec-header" data-label="ABC"><div class="sec-eyebrow">Section 2 of 6</div><h1 class="sec-title">The Alphabet A–Z</h1><p class="sec-desc">26 letters. Learn each one by name — uppercase and lowercase. Vowels are highlighted in <span class="hl">green</span>.</p></div>
+    <div class="sec-body">
+
+      <div class="alpha-grid" id="alphaGrid">
+        <!-- JS renders this -->
+      </div>
+      <p style="font-size:0.72rem;color:var(--muted);margin-bottom:20px;text-align:center">♪ Click any letter to hear its pronunciation</p>
+
+      <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);margin-bottom:20px">
+        <div class="card-label">Vowels — The 5 special letters</div>
+        <div class="card-body">
+          English has <strong style="color:var(--white)">5 vowels: A, E, I, O, U</strong> — highlighted above. Every other letter is a consonant. Vowels are important because almost every English word needs at least one.
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+            <div style="text-align:center;padding:12px 18px;background:var(--surface2);border-radius:10px;border:1px solid rgba(0,229,192,0.25)"><span style="font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--accent)">A</span><br/><span style="font-size:0.7rem;color:var(--muted)">/eɪ/</span></div>
+            <div style="text-align:center;padding:12px 18px;background:var(--surface2);border-radius:10px;border:1px solid rgba(0,229,192,0.25)"><span style="font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--accent)">E</span><br/><span style="font-size:0.7rem;color:var(--muted)">/iː/</span></div>
+            <div style="text-align:center;padding:12px 18px;background:var(--surface2);border-radius:10px;border:1px solid rgba(0,229,192,0.25)"><span style="font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--accent)">I</span><br/><span style="font-size:0.7rem;color:var(--muted)">/aɪ/</span></div>
+            <div style="text-align:center;padding:12px 18px;background:var(--surface2);border-radius:10px;border:1px solid rgba(0,229,192,0.25)"><span style="font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--accent)">O</span><br/><span style="font-size:0.7rem;color:var(--muted)">/oʊ/</span></div>
+            <div style="text-align:center;padding:12px 18px;background:var(--surface2);border-radius:10px;border:1px solid rgba(0,229,192,0.25)"><span style="font-family:'Syne',sans-serif;font-size:1.6rem;color:var(--accent)">U</span><br/><span style="font-size:0.7rem;color:var(--muted)">/juː/</span></div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">How to spell your name — Example</p>
+      <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:16px">
+        <div class="card-label" style="color:var(--accent2)">Speaking: "How do you spell your name?"</div>
+        <div style="margin-top:10px">
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px">Name: <strong style="color:var(--white)">SOFIA</strong></p>
+          <div class="spelling-box">
+            <div class="spell-letter active">S</div>
+            <div class="spell-dash">–</div>
+            <div class="spell-letter active">O</div>
+            <div class="spell-dash">–</div>
+            <div class="spell-letter active">F</div>
+            <div class="spell-dash">–</div>
+            <div class="spell-letter active">I</div>
+            <div class="spell-dash">–</div>
+            <div class="spell-letter active">A</div>
+          </div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-top:10px">Say it aloud: <span class="hl">"S — O — F — I — A"</span></p>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04)">
+        <div class="card-label" style="color:var(--accent3)">⚠ Letters that look similar to Spanish but sound different</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:10px">
+          <div style="font-size:0.85rem"><strong style="color:var(--white)">Letter J</strong><br/><span style="color:var(--muted)">Sounds like /dʒeɪ/ — NOT like "jota" in Spanish.</span></div>
+          <div style="font-size:0.85rem"><strong style="color:var(--white)">Letter G</strong><br/><span style="color:var(--muted)">Sounds like /dʒiː/ — not "he".</span></div>
+          <div style="font-size:0.85rem"><strong style="color:var(--white)">Letter Y</strong><br/><span style="color:var(--muted)">Called /waɪ/ — not "ye".</span></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(0)">← Overview</button><span class="page-indicator">2 / 6</span><button class="nav-btn primary" onclick="goTo(2)">Numbers →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 2 — NUMBERS ═══════════ -->
+  <section class="section" id="sec2">
+    <div class="sec-header" data-label="123"><div class="sec-eyebrow">Section 3 of 6</div><h1 class="sec-title">Numbers 1–20</h1><p class="sec-desc">Learn to say and recognize all numbers from 1 to 20 in English. These are used for age, time, counting, and much more.</p></div>
+    <div class="sec-body">
+
+      <div class="number-grid" id="numberGrid">
+        <!-- JS renders this -->
+      </div>
+
+      <hr class="divider"/>
+
+      <div class="grid-2">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Key patterns to remember</p>
+          <table class="g-table">
+            <thead><tr><th>Pattern</th><th>Numbers</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td class="en" style="color:var(--accent)">-teen</td><td class="en">13–19</td><td class="es">thirteen, fourteen… — all end in -teen</td></tr>
+              <tr><td class="en" style="color:var(--accent2)">Special</td><td class="en">11, 12</td><td class="es">eleven, twelve — no pattern, memorize them</td></tr>
+              <tr><td class="en" style="color:var(--accent3)">Watch!</td><td class="en">13 vs 30</td><td class="es">thirTEEN ≠ THIRty — stress is different</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+          <div class="card-label">Grammar Focus — Asking about age</div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+            <div><span style="font-size:0.78rem;color:var(--muted)">Question:</span><br/><span style="font-family:'Syne',sans-serif;font-size:1rem;color:var(--white)">How old are you?</span></div>
+            <div><span style="font-size:0.78rem;color:var(--muted)">Answer:</span><br/><span style="font-family:'Syne',sans-serif;font-size:1rem;color:var(--accent)">I am 8 years old.</span><br/><span style="font-size:0.8rem;color:var(--muted);margin-top:4px;display:block">→ Informal: "I'm 8."</span></div>
+            <hr style="border:none;border-top:1px solid var(--border)"/>
+            <div><span style="font-size:0.78rem;color:var(--muted)">Asking about someone else:</span><br/><span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--white)">How old is he / she?</span><br/><span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">He is 10 years old.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(1)">← Alphabet</button><span class="page-indicator">3 / 6</span><button class="nav-btn primary" onclick="goTo(3)">Dialogue →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 3 — DIALOGUE ═══════════ -->
+  <section class="section" id="sec3">
+    <div class="sec-header" data-label="DLG"><div class="sec-eyebrow">Section 4 of 6</div><h1 class="sec-title">Dialogue</h1><p class="sec-desc">Two real conversations using the alphabet, numbers, and age. Notice how the questions and answers connect.</p></div>
+    <div class="sec-body">
+      <div class="context-grid">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Dialogue 1 — How old are you?</p>
+          <div class="dialogue-wrap">
+            <div class="dialogue-header">Dialogue · Age &amp; Numbers</div>
+            <div class="dialogue-body">
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Hello! How old are you?"</strong><div class="note">Question asking for age</div></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"I am 9 years old. How old are you?"</strong><div class="note">Answer + same question back</div></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"I'm 10. My sister is 7 years old."</strong><div class="note">Informal I'm + describing someone else</div></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Cool! How old is your brother?"</strong><div class="note">Asking about a third person</div></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"He is 15 years old."</strong><div class="note">He is + number</div></div></div>
+            </div>
+          </div>
+
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;margin-top:24px">Dialogue 2 — Spelling your name</p>
+          <div class="dialogue-wrap">
+            <div class="dialogue-header">Dialogue · Spelling Names</div>
+            <div class="dialogue-body">
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"What is your name?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"My name is Lucas."</strong></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"How do you spell it?"</strong><div class="note">Asking for the spelling</div></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"L — U — C — A — S."</strong><div class="note">Spelling out each letter clearly</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="img-slot" style="aspect-ratio:1.2;margin-bottom:0"><img src="https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Kids talking in English class" /></div>
+          <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+            <div class="card-label">Key phrases in this dialogue</div>
+            <ul class="context-list">
+              <li><span class="context-num">→</span>How old are you?</li>
+              <li><span class="context-num">→</span>I am ___ years old.</li>
+              <li><span class="context-num">→</span>I'm ___ . (informal)</li>
+              <li><span class="context-num">→</span>How old is he / she?</li>
+              <li><span class="context-num">→</span>How do you spell it?</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04)">
+            <div class="card-label" style="color:var(--accent3)">⚠ "years old" — don't forget it!</div>
+            <div class="card-body">In English, we always say <strong style="color:var(--white)">"I am 8 <u>years old</u>"</strong> — not just "I am 8" in formal speech. In casual speaking, "I'm 8" is fine, but for class, use the full form.</div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(2)">← Numbers</button><span class="page-indicator">4 / 6</span><button class="nav-btn primary" onclick="goTo(4)">Pronunciation →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 4 — PRONUNCIATION ═══════════ -->
+  <section class="section" id="sec4">
+    <div class="sec-header" data-label="SND"><div class="sec-eyebrow">Section 5 of 6</div><h1 class="sec-title">Pronunciation</h1><p class="sec-desc">Two tricky letter distinctions for Spanish speakers: <span class="hl">B vs V</span> and <span class="hl2">E vs I</span>. Getting these right will make your spelling much clearer.</p></div>
+    <div class="sec-body">
+      <div class="pron-grid" style="margin-bottom:28px">
+        <div class="pron-card">
+          <div class="pron-symbol">B vs V</div>
+          <div class="pron-name">Two different letters — two different sounds</div>
+          <div class="pron-examples">
+            <span class="pron-chip">B — /biː/</span>
+            <span class="pron-chip">V — /viː/</span>
+          </div>
+          <div class="pron-tip">
+            In Spanish, <em>B</em> and <em>V</em> sound almost identical. In English, they are <strong style="color:var(--white)">clearly different</strong>:<br/><br/>
+            <strong style="color:var(--white)">B</strong> /biː/ — lips close together and pop open (like in <em>ball</em>, <em>book</em>)<br/>
+            <strong style="color:var(--white)">V</strong> /viː/ — upper teeth touch the lower lip and vibrate (like in <em>very</em>, <em>violin</em>)<br/><br/>
+            When spelling, this distinction is critical: "Is it B or V?"
+          </div>
+        </div>
+        <div class="pron-card">
+          <div class="pron-symbol" style="color:var(--accent2)">E vs I</div>
+          <div class="pron-name">Long vowel sounds — very different</div>
+          <div class="pron-examples">
+            <span class="pron-chip" style="background:rgba(79,158,255,0.08);border-color:rgba(79,158,255,0.2);color:var(--accent2)">E — /iː/</span>
+            <span class="pron-chip" style="background:rgba(79,158,255,0.08);border-color:rgba(79,158,255,0.2);color:var(--accent2)">I — /aɪ/</span>
+          </div>
+          <div class="pron-tip" style="border-color:rgba(79,158,255,0.3)">
+            <strong style="color:var(--white)">E</strong> in the alphabet = /iː/ — a long "ee" sound, like in <em>see</em> or <em>tree</em>.<br/>
+            <strong style="color:var(--white)">I</strong> in the alphabet = /aɪ/ — sounds like the word "eye".<br/><br/>
+            When spelling a name, "E" and "I" must be very clear:<br/>
+            "Is it E as in <em>elephant</em> or I as in <em>ice cream</em>?"
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Alphabet letter names — Commonly confused letters</p>
+      <div class="grid-3">
+        <div class="card" style="text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--white);margin-bottom:6px">A / E / I</div>
+          <div style="font-size:0.78rem;color:var(--accent);margin-bottom:8px">/eɪ/ · /iː/ · /aɪ/</div>
+          <div class="card-body">These three vowels have very different names. Practice them slowly: <em>ay — ee — eye</em>.</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--white);margin-bottom:6px">G / J</div>
+          <div style="font-size:0.78rem;color:var(--accent2);margin-bottom:8px">/dʒiː/ · /dʒeɪ/</div>
+          <div class="card-body">G sounds like "jee" and J like "jay". Easy to confuse when spelling fast.</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--white);margin-bottom:6px">M / N</div>
+          <div style="font-size:0.78rem;color:var(--accent3);margin-bottom:8px">/ɛm/ · /ɛn/</div>
+          <div class="card-body">Both start with /ɛ/. Say M as "em" and N as "en" — hold the ending sound.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px;border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+        <div class="card-label">💡 Tip — Use a word to clarify</div>
+        <div class="card-body">When spelling and someone can't hear a letter, use a word: <br/>
+        <strong style="color:var(--white)">"B as in Ball"</strong> · <strong style="color:var(--white)">"V as in Very"</strong> · <strong style="color:var(--white)">"E as in Elephant"</strong> · <strong style="color:var(--white)">"I as in Ice cream"</strong></div>
+      </div>
+
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(3)">← Dialogue</button><span class="page-indicator">5 / 6</span><button class="nav-btn primary" onclick="goTo(5)">Practice →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 5 — PRACTICE ═══════════ -->
+  <section class="section" id="sec5">
+    <div class="sec-header" data-label="DO">
+      <div class="sec-eyebrow">Section 6 of 6</div>
+      <h1 class="sec-title">Practice</h1>
+      <p class="sec-desc">Three exercises on the alphabet, numbers, and age questions. Let's put it all together.</p>
+    </div>
+    <div class="sec-body">
+
+      <div class="grid-2" style="margin-bottom:28px">
+
+        <!-- Exercise 1 — Fill in the blanks -->
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 1 — Fill in the blanks (Drag & Drop)</p>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-body" style="display:flex;flex-direction:column;gap:14px">
+              <p>1. <strong style="color:var(--white)">"How <span class="fill-blank" data-blank-idx="0" data-correct="old">___</span> are you?"</strong></p>
+              <p>2. <strong style="color:var(--white)">"I am <span class="fill-blank" data-blank-idx="1" data-correct="nine">___</span> years old."</strong></p>
+              <p>3. <strong style="color:var(--white)">"How do you <span class="fill-blank" data-blank-idx="2" data-correct="spell">___</span> your name?"</strong></p>
+              <p>4. <strong style="color:var(--white)">"He is <span class="fill-blank" data-blank-idx="3" data-correct="twelve">___</span> years old."</strong></p>
+            </div>
+          </div>
+          <div class="card" style="border-color:rgba(0,229,192,0.15);background:rgba(0,229,192,0.03)">
+            <div class="card-label">Word bank (drag and drop)</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="wordBank">
+              <span class="word-bank-word" draggable="true" data-word="old">old</span>
+              <span class="word-bank-word" draggable="true" data-word="nine">nine</span>
+              <span class="word-bank-word" draggable="true" data-word="spell">spell</span>
+              <span class="word-bank-word" draggable="true" data-word="twelve">twelve</span>
+              <span class="word-bank-word" draggable="true" data-word="am">am</span>
+              <span class="word-bank-word" draggable="true" data-word="write">write</span>
+              <span class="word-bank-word" draggable="true" data-word="young">young</span>
+              <span class="word-bank-word" draggable="true" data-word="ten">ten</span>
+            </div>
+          </div>
+          <div id="ex1Feedback" class="feedback-msg" style="margin-top:12px"></div>
+          <button class="check-btn" onclick="checkExercise1()">Check Exercise 1 ✓</button>
+          <button class="check-btn" style="margin-left:10px;background:var(--surface2);color:var(--text);" onclick="resetExercise1()">Reset</button>
+        </div>
+
+        <!-- Exercise 2 — Multiple choice numbers -->
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 2 — Choose the correct number word</p>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">The number <strong style="color:var(--white)">15</strong> in English is:</p>
+                <div data-situation="fifteen">
+                  <span class="option-btn" data-opt="fifty">(a) fifty</span>
+                  <span class="option-btn" data-opt="fifteen">(b) fifteen</span>
+                  <span class="option-btn" data-opt="five">(c) five</span>
+                </div>
+              </div>
+              <hr class="divider" style="margin:0"/>
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">The number <strong style="color:var(--white)">11</strong> in English is:</p>
+                <div data-situation="eleven">
+                  <span class="option-btn" data-opt="onety-one">(a) onety-one</span>
+                  <span class="option-btn" data-opt="eleven">(b) eleven</span>
+                  <span class="option-btn" data-opt="firsteen">(c) firsteen</span>
+                </div>
+              </div>
+              <hr class="divider" style="margin:0"/>
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px"><strong style="color:var(--white)">"I am ___ years old."</strong> — She is 7.</p>
+                <div data-situation="seven">
+                  <span class="option-btn" data-opt="seventeen">(a) seventeen</span>
+                  <span class="option-btn" data-opt="seventy">(b) seventy</span>
+                  <span class="option-btn" data-opt="seven">(c) seven</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="ex2Feedback" class="feedback-msg" style="margin-top:12px"></div>
+          <button class="check-btn" onclick="checkExercise2()">Check Exercise 2 ✓</button>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">Exercise 3 — Speaking task: Spell your name &amp; say your age</p>
+      <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:22px">
+        <div class="card-body">
+          <p style="margin-bottom:14px">Use the structure below to introduce yourself. Spell your name letter by letter, then say your age.</p>
+          <div class="dialogue-body" style="padding:0;gap:10px">
+            <div class="d-line"><div class="d-speaker a">1</div><div class="d-text"><strong>"My name is [NAME]."</strong></div></div>
+            <div class="d-line"><div class="d-speaker a">2</div><div class="d-text"><strong>"How do you spell it? — [Letter 1] — [Letter 2] — [Letter 3]…"</strong></div></div>
+            <div class="d-line"><div class="d-speaker a">3</div><div class="d-text"><strong>"I am [NUMBER] years old."</strong></div></div>
+            <div class="d-line"><div class="d-speaker a">4</div><div class="d-text"><strong>"My [brother / sister] is [NUMBER] years old."</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="img-slot" style="aspect-ratio:16/6"><img src="https://assets.ltkcontent.com/images/84721/spelling-blocks-third-grade_27c5571306.jpg" alt="Children practicing English alphabet" /></div>
+
+      <hr class="divider"/>
+
+      <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+        <div class="card-label">Lesson Summary — What you learned today</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px">
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> 26 letters of the English alphabet</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> Numbers 1 to 20 in English</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> How old are you? / I am ___ years old.</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> How do you spell your name?</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> B vs V pronunciation difference</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> E (/iː/) vs I (/aɪ/) distinction</div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="nav-btn" onclick="goTo(4)">← Pronunciation</button>
+        <span class="page-indicator">6 / 6</span>
+        <button class="nav-btn" style="background:var(--surface2);border-color:var(--border);color:var(--text);font-weight:600;cursor:default">✓ Complete</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i === idx));
+    document.querySelectorAll('.nav-link').forEach(l => {
+      const i = parseInt(l.dataset.idx);
+      l.classList.remove('active', 'done');
+      if (i === idx) l.classList.add('active');
+      else if (i < idx) l.classList.add('done');
+    });
+    document.getElementById('progressFill').style.width = ((idx + 1) / TOTAL * 100) + '%';
+    document.getElementById('progressLabel').textContent = `Section ${idx + 1} of ${TOTAL}`;
+    current = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // ── SPEECH HELPER ──
+  // Letter name pronunciations — spelled out phonetically so TTS reads the letter NAME, not the sound
+  const letterNames = {
+    A:'a', B:'b', C:'c', D:'d', E:'e', F:'f', G:'g', H:'aitch',
+    I:'i', J:'yei', K:'k', L:'l', M:'m', N:'n', O:'o', P:'p',
+    Q:'q', R:'r', S:'s', T:'t', U:'u', V:'v', W:'doubleyou',
+    X:'x', Y:'why', Z:'z'
+  };
+
+  let activeSpeakCard = null;
+
+  function speakLetter(letter, cardEl) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    if (activeSpeakCard) activeSpeakCard.classList.remove('speaking');
+
+    const utter = new SpeechSynthesisUtterance(letterNames[letter] || letter);
+    utter.lang = 'en-US';
+    utter.rate = 0.85;
+    utter.pitch = 1.1;
+
+    activeSpeakCard = cardEl;
+    cardEl.classList.add('speaking');
+    utter.onend = () => cardEl.classList.remove('speaking');
+    utter.onerror = () => cardEl.classList.remove('speaking');
+    window.speechSynthesis.speak(utter);
+  }
+
+  // ── ALPHABET GRID ──
+  const vowels = new Set(['A','E','I','O','U']);
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const alphaGrid = document.getElementById('alphaGrid');
+  letters.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'alpha-card' + (vowels.has(l) ? ' vowel' : '');
+    card.innerHTML = `<div class="alpha-letter">${l}</div><div class="alpha-lower">${l.toLowerCase()}</div>`;
+    card.addEventListener('click', () => speakLetter(l, card));
+    card.setAttribute('title', `Click to hear: "${l}"`);
+    alphaGrid.appendChild(card);
+  });
+
+  // ── NUMBER GRID ──
+  const numberWords = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+  const numberGrid = document.getElementById('numberGrid');
+  numberWords.forEach((word, i) => {
+    const card = document.createElement('div');
+    card.className = 'number-card';
+    card.innerHTML = `<div class="number-digit">${i+1}</div><div class="number-word">${word}</div>`;
+    numberGrid.appendChild(card);
+  });
+
+  // ── EXERCISE 1: Drag & Drop ──
+  const blanks = document.querySelectorAll('.fill-blank');
+  const wordBankWords = document.querySelectorAll('.word-bank-word');
+  let userAnswers = new Array(blanks.length).fill(null);
+  let usedWords = new Array(wordBankWords.length).fill(false);
+  let draggedWord = null;
+
+  wordBankWords.forEach(wordEl => {
+    wordEl.addEventListener('dragstart', (e) => {
+      if (wordEl.classList.contains('used')) { e.preventDefault(); return false; }
+      draggedWord = wordEl;
+      e.dataTransfer.setData('text/plain', wordEl.getAttribute('data-word'));
+      e.dataTransfer.effectAllowed = 'copy';
+      wordEl.classList.add('dragging');
+    });
+    wordEl.addEventListener('dragend', () => { wordEl.classList.remove('dragging'); draggedWord = null; });
+  });
+
+  blanks.forEach(blank => {
+    blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+    blank.addEventListener('dragleave', () => { blank.classList.remove('drag-over'); });
+    blank.addEventListener('drop', (e) => {
+      e.preventDefault();
+      blank.classList.remove('drag-over');
+      if (!draggedWord || draggedWord.classList.contains('used')) return;
+      const word = draggedWord.getAttribute('data-word');
+      const blankIdx = parseInt(blank.getAttribute('data-blank-idx'));
+      const wordBankIndex = Array.from(wordBankWords).indexOf(draggedWord);
+      if (userAnswers[blankIdx] !== null) {
+        const oldWord = userAnswers[blankIdx];
+        const oldWordIndex = Array.from(wordBankWords).findIndex(w => w.getAttribute('data-word') === oldWord);
+        if (oldWordIndex !== -1) { usedWords[oldWordIndex] = false; wordBankWords[oldWordIndex].classList.remove('used'); }
+      }
+      userAnswers[blankIdx] = word;
+      blank.textContent = word;
+      blank.classList.add('filled');
+      blank.classList.remove('incorrect', 'correct');
+      usedWords[wordBankIndex] = true;
+      draggedWord.classList.add('used');
+      document.getElementById('ex1Feedback').innerHTML = '';
+    });
+  });
+
+  function resetExercise1() {
+    userAnswers.fill(null);
+    usedWords.fill(false);
+    blanks.forEach(blank => { blank.textContent = '___'; blank.classList.remove('filled', 'correct', 'incorrect', 'drag-over'); });
+    wordBankWords.forEach(w => { w.classList.remove('used', 'dragging'); });
+    draggedWord = null;
+    document.getElementById('ex1Feedback').innerHTML = '';
+  }
+
+  function checkExercise1() {
+    let allCorrect = true;
+    blanks.forEach((blank, idx) => {
+      const userAnswer = userAnswers[idx];
+      const correctAnswer = blank.getAttribute('data-correct');
+      blank.classList.remove('correct', 'incorrect');
+      if (userAnswer === correctAnswer) { blank.classList.add('correct'); }
+      else { blank.classList.add('incorrect'); allCorrect = false; }
+    });
+    const fb = document.getElementById('ex1Feedback');
+    if (allCorrect) { fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ ¡Excelente! All answers are correct. Great job!</div>'; }
+    else { fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers are incorrect. Remember the key phrases: How OLD are you? / I am NINE years old / How do you SPELL? / He is TWELVE. Try again!</div>'; }
+  }
+
+  // ── EXERCISE 2: Multiple Choice ──
+  const situationData = { fifteen: { correct: 'fifteen' }, eleven: { correct: 'eleven' }, seven: { correct: 'seven' } };
+  let userSelections = { fifteen: null, eleven: null, seven: null };
+
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parentDiv = btn.closest('[data-situation]');
+      if (!parentDiv) return;
+      const situation = parentDiv.getAttribute('data-situation');
+      parentDiv.querySelectorAll('.option-btn').forEach(opt => opt.classList.remove('selected'));
+      btn.classList.add('selected');
+      userSelections[situation] = btn.getAttribute('data-opt');
+      document.getElementById('ex2Feedback').innerHTML = '';
+    });
+  });
+
+  function checkExercise2() {
+    let allCorrect = true;
+    ['fifteen', 'eleven', 'seven'].forEach(sit => {
+      const selected = userSelections[sit];
+      const correct = situationData[sit].correct;
+      const container = document.querySelector(`[data-situation="${sit}"]`);
+      container.querySelectorAll('.option-btn').forEach(opt => {
+        opt.classList.remove('correct', 'incorrect');
+        if (opt.getAttribute('data-opt') === correct) opt.classList.add('correct');
+        if (opt.getAttribute('data-opt') === selected && selected !== correct) opt.classList.add('incorrect');
+      });
+      if (selected !== correct) allCorrect = false;
+    });
+    const fb = document.getElementById('ex2Feedback');
+    if (allCorrect) { fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! You know your numbers in English!</div>'; }
+    else { fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some are wrong. Tip: 15 = fifteen (not fifty!) · 11 = eleven (special word!) · 7 = seven (not seventeen). Try again!</div>'; }
+  }
+</script>
+</body>
+</html>
