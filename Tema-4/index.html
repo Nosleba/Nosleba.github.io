@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Family Members — English A1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --border: rgba(255,255,255,0.07);
+  --accent: #00e5c0;
+  --accent2: #4f9eff;
+  --accent3: #ff6b6b;
+  --text: #e8eaf0;
+  --muted: #6b7280;
+  --white: #ffffff;
+  --r: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 28px 0 20px;
+}
+.sidebar-logo {
+  padding: 0 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .course-tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+}
+.sidebar-logo h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.3;
+}
+.nav-list { list-style: none; flex: 1; overflow-y: auto; padding: 18px 0; }
+.nav-item { padding: 0 14px; margin-bottom: 2px; }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: all .2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-link:hover { background: var(--surface2); color: var(--text); }
+.nav-link.active { background: rgba(0,229,192,0.1); border-color: rgba(0,229,192,0.25); color: var(--accent); }
+.nav-step {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: all .2s;
+}
+.nav-link.active .nav-step { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.nav-link.done .nav-step { background: rgba(0,229,192,0.15); border-color: var(--accent); color: var(--accent); }
+.sidebar-footer { padding: 16px 22px 0; border-top: 1px solid var(--border); }
+.progress-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 7px; }
+.progress-bar { background: var(--surface2); border-radius: 999px; height: 4px; }
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width .5s ease;
+  width: 0%;
+}
+
+/* ── MAIN ── */
+.main { margin-left: 220px; min-height: 100vh; }
+.section { display: none; animation: fadeIn .35s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  padding: 52px 56px 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.sec-header::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 40px; top: 30px;
+  font-family: 'Syne', sans-serif;
+  font-size: 6rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -4px;
+}
+.sec-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.sec-title { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+.sec-desc { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.7; font-weight: 300; }
+
+/* ── SECTION BODY ── */
+.sec-body { padding: 44px 56px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+/* ── CARDS ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: border-color .2s, transform .2s; }
+.card:hover { border-color: rgba(0,229,192,0.2); transform: translateY(-2px); }
+.card-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.card-body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* ── IMAGE SLOT ── */
+.img-slot {
+  width: 100%; aspect-ratio: 16/10;
+  background: var(--surface2);
+  border: 1.5px dashed rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; color: var(--muted); font-size: 0.8rem; margin-bottom: 16px; overflow: hidden;
+}
+.img-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+/* ── SUMMARY STRIP ── */
+.summary-strip {
+  display: flex; gap: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden; margin-bottom: 32px;
+}
+.strip-item { flex: 1; padding: 18px 20px; border-right: 1px solid var(--border); text-align: center; }
+.strip-item:last-child { border-right: none; }
+.strip-val { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); display: block; margin-bottom: 4px; }
+.strip-key { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── OBJ LIST ── */
+.obj-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.obj-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+.obj-icon { font-size: 1rem; margin-top: 2px; }
+.obj-text { font-size: 0.9rem; line-height: 1.55; }
+.obj-text strong { color: var(--white); }
+
+/* ── FAMILY VOCAB GRID ── */
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.family-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 16px;
+  text-align: center;
+  transition: border-color .2s, transform .15s, background .15s;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.family-card:hover { border-color: rgba(0,229,192,0.4); transform: translateY(-3px); background: rgba(0,229,192,0.04); }
+.family-card:active { transform: scale(0.96); }
+.family-card.speaking {
+  border-color: var(--accent) !important;
+  background: rgba(0,229,192,0.12) !important;
+}
+.family-card.speaking .family-word { color: var(--accent) !important; }
+.family-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 10px; display: block; }
+.family-word { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+.family-es { font-size: 0.75rem; color: var(--muted); }
+.family-card::after {
+  content: '♪';
+  position: absolute;
+  bottom: 6px; right: 8px;
+  font-size: 0.55rem;
+  color: var(--muted);
+  opacity: 0.5;
+  transition: opacity .2s;
+}
+.family-card:hover::after { opacity: 1; color: var(--accent); }
+
+/* ── DIALOGUE BLOCK ── */
+.dialogue-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+.dialogue-header { padding: 14px 22px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); }
+.dialogue-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.d-line { display: flex; align-items: flex-start; gap: 14px; }
+.d-speaker { min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.d-speaker.a { background: rgba(0,229,192,0.15); color: var(--accent); border: 1px solid rgba(0,229,192,0.3); }
+.d-speaker.b { background: rgba(79,158,255,0.15); color: var(--accent2); border: 1px solid rgba(79,158,255,0.3); }
+.d-text { font-size: 0.92rem; line-height: 1.55; padding-top: 5px; }
+.d-text strong { color: var(--white); }
+.d-text .note { font-size: 0.76rem; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+/* ── GRAMMAR TABLE ── */
+.g-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+.g-table thead th { background: rgba(255,255,255,0.04); padding: 12px 16px; text-align: left; font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); }
+.g-table tbody td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.g-table tbody tr:last-child td { border-bottom: none; }
+.g-table .en { font-family: 'Syne', sans-serif; font-weight: 600; color: var(--white); font-size: 0.95rem; }
+.g-table .es { color: var(--muted); font-size: 0.82rem; }
+.g-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── PRON BLOCK ── */
+.pron-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pron-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+.pron-symbol { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.pron-name { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.pron-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pron-chip { padding: 4px 12px; background: rgba(0,229,192,0.08); border: 1px solid rgba(0,229,192,0.18); border-radius: 999px; font-size: 0.82rem; color: var(--accent); font-style: italic; }
+.pron-tip { font-size: 0.82rem; color: var(--muted); line-height: 1.6; border-left: 2px solid rgba(0,229,192,0.3); padding-left: 12px; }
+
+/* ── CONTEXT BLOCK ── */
+.context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.context-list { list-style: none; }
+.context-list li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+.context-list li:last-child { border-bottom: none; }
+.context-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 0.78rem; min-width: 20px; padding-top: 2px; }
+
+/* ── PRACTICE ── */
+.fill-blank {
+  display: inline-block; min-width: 90px; padding: 6px 10px; margin: 0 4px;
+  background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+  color: var(--muted); font-weight: 500; text-align: center; transition: all 0.2s;
+}
+.fill-blank.drag-over { border-color: var(--accent); background: rgba(0,229,192,0.1); }
+.fill-blank.filled { background: rgba(0,229,192,0.15); border: 2px solid var(--accent); color: var(--accent); }
+.fill-blank.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+.fill-blank.incorrect { background: rgba(255,107,107,0.2); border-color: var(--accent3); color: var(--accent3); }
+.word-bank-word {
+  display: inline-block; padding: 8px 18px; margin: 5px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+  font-size: 0.9rem; font-weight: 500; cursor: grab; transition: all 0.2s; user-select: none;
+}
+.word-bank-word:active { cursor: grabbing; }
+.word-bank-word.dragging { opacity: 0.5; }
+.word-bank-word.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+.option-btn {
+  display: inline-block; margin: 0 8px; padding: 5px 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  cursor: pointer; transition: all 0.2s;
+}
+.option-btn:hover { background: var(--surface2); border-color: var(--accent2); }
+.option-btn.selected { background: rgba(79,158,255,0.2); border-color: var(--accent2); color: var(--accent2); }
+.option-btn.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+.option-btn.incorrect { background: rgba(255,107,107,0.2); border-color: var(--accent3); color: var(--accent3); }
+.feedback-msg { font-size: 0.85rem; padding: 8px 12px; border-radius: 8px; margin-top: 12px; }
+.feedback-correct { background: rgba(0,229,192,0.1); color: var(--accent); }
+.feedback-incorrect { background: rgba(255,107,107,0.1); color: var(--accent3); }
+.check-btn { margin-top: 12px; padding: 8px 20px; background: var(--accent2); border: none; border-radius: 8px; color: var(--bg); font-weight: 600; cursor: pointer; }
+.check-btn:hover { opacity: 0.9; }
+
+/* ── HIGHLIGHTS ── */
+.hl { color: var(--accent); }
+.hl2 { color: var(--accent2); }
+.hl3 { color: var(--accent3); }
+.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+.tag-green { background: rgba(0,229,192,0.1); color: var(--accent); border: 1px solid rgba(0,229,192,0.2); }
+.tag-blue  { background: rgba(79,158,255,0.1); color: var(--accent2); border: 1px solid rgba(79,158,255,0.2); }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); }
+.nav-btn { display: flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 9px; border: 1px solid var(--border); background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+.nav-btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+.nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 700; }
+.nav-btn.primary:hover { background: #00cca8; }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn:disabled:hover { background: transparent; }
+.page-indicator { font-size: 0.82rem; color: var(--muted); }
+
+/* ── SCROLL ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+/* ── FAMILY TREE VISUAL ── */
+.family-tree {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.tree-level { display: flex; justify-content: center; gap: 32px; margin-bottom: 8px; }
+.tree-node {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  min-width: 90px;
+}
+.tree-emoji { font-size: 1.8rem; }
+.tree-label { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--white); }
+.tree-es { font-size: 0.68rem; color: var(--muted); }
+.tree-connector {
+  display: flex; justify-content: center; align-items: center;
+  height: 20px; margin-bottom: 0;
+  position: relative;
+}
+.tree-line {
+  width: 2px; height: 20px; background: var(--border);
+  display: inline-block;
+}
+.tree-line-h {
+  width: 120px; height: 2px; background: var(--border);
+  display: inline-block; margin: 0 -2px;
+}
+.tree-you {
+  display: flex; justify-content: center; margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .sidebar { width: 56px; }
+  .sidebar-logo, .nav-link span, .sidebar-footer .progress-label { display: none; }
+  .nav-link { justify-content: center; padding: 9px; }
+  .main { margin-left: 56px; }
+  .sec-header, .sec-body { padding-left: 28px; padding-right: 28px; }
+  .grid-2, .grid-3, .pron-grid, .context-grid { grid-template-columns: 1fr 1fr; }
+  .family-grid { grid-template-columns: repeat(2, 1fr); }
+  .sec-title { font-size: 1.7rem; }
+  .summary-strip { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="course-tag">English A1 · Month 1 · Week 2</span>
+    <h2>Family Members</h2>
+  </div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item"><a class="nav-link active" onclick="goTo(0)" data-idx="0"><span class="nav-step">1</span><span>Overview</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(1)" data-idx="1"><span class="nav-step">2</span><span>Vocabulary</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(2)" data-idx="2"><span class="nav-step">3</span><span>Grammar</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(3)" data-idx="3"><span class="nav-step">4</span><span>Dialogue</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(4)" data-idx="4"><span class="nav-step">5</span><span>Pronunciation</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(5)" data-idx="5"><span class="nav-step">6</span><span>Practice</span></a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <div class="progress-label" id="progressLabel">Section 1 of 6</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ═══════════ SECTION 0 — OVERVIEW ═══════════ -->
+  <section class="section active" id="sec0">
+    <div class="sec-header" data-label="04">
+      <div class="sec-eyebrow">Topic 4 · Week 2 · Month 1</div>
+      <h1 class="sec-title">Family Members</h1>
+      <p class="sec-desc">Learn the names of the most important family members in English and how to introduce your family using <em>This is my…</em> and <em>I have a…</em></p>
+    </div>
+    <div class="sec-body">
+      <div class="summary-strip">
+        <div class="strip-item"><span class="strip-val hl">6</span><span class="strip-key">Family words</span></div>
+        <div class="strip-item"><span class="strip-val hl2">2</span><span class="strip-key">Key structures</span></div>
+        <div class="strip-item"><span class="strip-val hl3">TH</span><span class="strip-key">Sound focus</span></div>
+        <div class="strip-item"><span class="strip-val" style="color:var(--white)">A1</span><span class="strip-key">Level</span></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Learning Objectives</p>
+          <ul class="obj-list">
+            <li class="obj-item"><span class="obj-icon">👨‍👩‍👧‍👦</span><span class="obj-text"><strong>Name and recognize</strong> 6 key family members: mother, father, brother, sister, grandmother, grandfather.</span></li>
+            <li class="obj-item"><span class="obj-icon">🗣️</span><span class="obj-text"><strong>Introduce family members</strong> using "This is my mother." and "I have a brother."</span></li>
+            <li class="obj-item"><span class="obj-icon">👂</span><span class="obj-text"><strong>Identify family relationships</strong> in listening activities and short descriptions.</span></li>
+            <li class="obj-item"><span class="obj-icon">🔊</span><span class="obj-text"><strong>Pronounce the TH sound</strong> correctly in: <em>mother, father, brother</em>.</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Why This Matters</p>
+          <div class="card" style="margin-bottom:16px"><div class="card-body">Family is one of the <strong style="color:var(--white)">first topics</strong> children talk about in any language. Knowing these words lets students describe who they live with, who they love, and make real conversations with classmates.</div></div>
+          <div class="img-slot"><img src="https://images.pexels.com/photos/1128318/pexels-photo-1128318.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Happy family together" /></div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" disabled>← Previous</button><span class="page-indicator">1 / 6</span><button class="nav-btn primary" onclick="goTo(1)">Vocabulary →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 1 — VOCABULARY ═══════════ -->
+  <section class="section" id="sec1">
+    <div class="sec-header" data-label="FAM"><div class="sec-eyebrow">Section 2 of 6</div><h1 class="sec-title">Family Vocabulary</h1><p class="sec-desc">6 essential family words. Learn each one — click any card to hear the pronunciation.</p></div>
+    <div class="sec-body">
+
+      <div class="family-grid" id="familyGrid">
+        <!-- JS renders -->
+      </div>
+      <p style="font-size:0.72rem;color:var(--muted);margin-bottom:24px;text-align:center">♪ Click any card to hear its pronunciation</p>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Family Tree — See how they connect</p>
+
+      <div class="family-tree">
+        <!-- Grandparents row -->
+        <div class="tree-level">
+          <div class="tree-node">
+            <span class="tree-emoji">👴</span>
+            <span class="tree-label">Grandfather</span>
+            <span class="tree-es">Abuelo</span>
+          </div>
+          <div class="tree-node">
+            <span class="tree-emoji">👵</span>
+            <span class="tree-label">Grandmother</span>
+            <span class="tree-es">Abuela</span>
+          </div>
+        </div>
+        <!-- Connector line -->
+        <div class="tree-connector">
+          <div class="tree-line"></div>
+        </div>
+        <!-- Parents row -->
+        <div class="tree-level">
+          <div class="tree-node">
+            <span class="tree-emoji">👨</span>
+            <span class="tree-label">Father</span>
+            <span class="tree-es">Papá</span>
+          </div>
+          <div class="tree-node">
+            <span class="tree-emoji">👩</span>
+            <span class="tree-label">Mother</span>
+            <span class="tree-es">Mamá</span>
+          </div>
+        </div>
+        <!-- Connector line -->
+        <div class="tree-connector">
+          <div class="tree-line"></div>
+        </div>
+        <!-- Children row -->
+        <div class="tree-level">
+          <div class="tree-node">
+            <span class="tree-emoji">👦</span>
+            <span class="tree-label">Brother</span>
+            <span class="tree-es">Hermano</span>
+          </div>
+          <div class="tree-node" style="border:2px solid rgba(0,229,192,0.4);border-radius:12px;padding:8px 12px;background:rgba(0,229,192,0.05)">
+            <span class="tree-emoji">🧒</span>
+            <span class="tree-label" style="color:var(--accent)">YOU</span>
+            <span class="tree-es">Tú</span>
+          </div>
+          <div class="tree-node">
+            <span class="tree-emoji">👧</span>
+            <span class="tree-label">Sister</span>
+            <span class="tree-es">Hermana</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04)">
+        <div class="card-label" style="color:var(--accent3)">⚠ Watch out! — "Grandmother" vs "Grandfather"</div>
+        <div class="card-body">
+          In Spanish we say <em>abuelo/abuela</em>. In English: <strong style="color:var(--white)">Grand<u>father</u></strong> (hombre) and <strong style="color:var(--white)">Grand<u>mother</u></strong> (mujer). The word "grand" means they belong to a generation above your parents. Short forms: <strong style="color:var(--white)">"grandpa"</strong> and <strong style="color:var(--white)">"grandma"</strong> are common in casual speech.
+        </div>
+      </div>
+
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(0)">← Overview</button><span class="page-indicator">2 / 6</span><button class="nav-btn primary" onclick="goTo(2)">Grammar →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 2 — GRAMMAR ═══════════ -->
+  <section class="section" id="sec2">
+    <div class="sec-header" data-label="GRM"><div class="sec-eyebrow">Section 3 of 6</div><h1 class="sec-title">Grammar Focus</h1><p class="sec-desc">Two key structures to present and talk about family members: <span class="hl">This is my…</span> and <span class="hl2">I have a…</span></p></div>
+    <div class="sec-body">
+
+      <div class="grid-2" style="margin-bottom:28px">
+        <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+          <div class="card-label">Structure 1 — Introducing someone</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:14px">
+            <div>
+              <span style="font-size:0.78rem;color:var(--muted)">Formula:</span><br/>
+              <span style="font-family:'Syne',sans-serif;font-size:1.15rem;color:var(--white)">This is my <span class="hl">[family member]</span>.</span>
+            </div>
+            <hr style="border:none;border-top:1px solid var(--border)"/>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:0.78rem;color:var(--muted)">Examples:</span>
+              <span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">This is my mother.</span>
+              <span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">This is my brother.</span>
+              <span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">This is my grandfather.</span>
+            </div>
+            <div class="card-body" style="border-left:2px solid rgba(0,229,192,0.3);padding-left:12px">
+              Use this structure when you <strong style="color:var(--white)">point to a photo or person</strong> and want to say who they are.
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04)">
+          <div class="card-label" style="color:var(--accent2)">Structure 2 — Talking about your family</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:14px">
+            <div>
+              <span style="font-size:0.78rem;color:var(--muted)">Formula:</span><br/>
+              <span style="font-family:'Syne',sans-serif;font-size:1.15rem;color:var(--white)">I have a <span class="hl2">[family member]</span>.</span>
+            </div>
+            <hr style="border:none;border-top:1px solid var(--border)"/>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:0.78rem;color:var(--muted)">Examples:</span>
+              <span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent2)">I have a sister.</span>
+              <span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent2)">I have a grandfather.</span>
+              <span style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent2)">I have a brother and a sister.</span>
+            </div>
+            <div class="card-body" style="border-left:2px solid rgba(79,158,255,0.3);padding-left:12px">
+              Use this to <strong style="color:var(--white)">describe your family</strong> — telling others who is in it.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Full structure comparison</p>
+      <table class="g-table" style="margin-bottom:28px">
+        <thead>
+          <tr><th>Structure</th><th>English</th><th>Spanish</th><th>Use it when…</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span style="color:var(--accent);font-weight:700">This is my…</span></td>
+            <td class="en">This is my father.</td>
+            <td class="es">Este es mi papá.</td>
+            <td class="es">Pointing to / introducing someone</td>
+          </tr>
+          <tr>
+            <td><span style="color:var(--accent2);font-weight:700">I have a…</span></td>
+            <td class="en">I have a sister.</td>
+            <td class="es">Tengo una hermana.</td>
+            <td class="es">Describing your family in general</td>
+          </tr>
+          <tr>
+            <td><span style="color:var(--muted);font-weight:700">She / He is…</span></td>
+            <td class="en">She is my mother.</td>
+            <td class="es">Ella es mi mamá.</td>
+            <td class="es">Describing who someone is (from Tema 2)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04)">
+        <div class="card-label" style="color:var(--accent3)">⚠ Important — "a" vs "my"</div>
+        <div class="card-body">
+          <strong style="color:var(--white)">"I have <u>a</u> sister"</strong> — use "a" when you say what you have in general.<br/>
+          <strong style="color:var(--white)">"This is <u>my</u> sister"</strong> — use "my" to show it belongs to you.<br/><br/>
+          Never mix them: ✗ <span class="hl3">"This is a my sister"</span> → ✓ <span class="hl">"This is my sister"</span>
+        </div>
+      </div>
+
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(1)">← Vocabulary</button><span class="page-indicator">3 / 6</span><button class="nav-btn primary" onclick="goTo(3)">Dialogue →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 3 — DIALOGUE ═══════════ -->
+  <section class="section" id="sec3">
+    <div class="sec-header" data-label="DLG"><div class="sec-eyebrow">Section 4 of 6</div><h1 class="sec-title">Dialogue</h1><p class="sec-desc">Two real conversations: presenting a family member and talking about your family. See both structures in action.</p></div>
+    <div class="sec-body">
+      <div class="context-grid">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Dialogue 1 — "This is my family"</p>
+          <div class="dialogue-wrap">
+            <div class="dialogue-header">Dialogue · Presenting family members</div>
+            <div class="dialogue-body">
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Who is this?"</strong><div class="note">Asking about someone in a photo</div></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"This is my mother. Her name is Sofia."</strong><div class="note">This is my + family member</div></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"And who is he?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"He is my father. His name is Carlos."</strong><div class="note">He / She is my + family member</div></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Do you have a brother or sister?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Yes! I have a brother. His name is Mateo."</strong><div class="note">I have a + family member</div></div></div>
+            </div>
+          </div>
+
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;margin-top:24px">Dialogue 2 — "My grandparents"</p>
+          <div class="dialogue-wrap">
+            <div class="dialogue-header">Dialogue · Grandparents</div>
+            <div class="dialogue-body">
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Do you have grandparents?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Yes. This is my grandmother. She is very kind."</strong><div class="note">This is my + adjective (from Tema 5 preview)</div></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"And your grandfather?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"My grandfather is tall and funny!"</strong></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="img-slot" style="aspect-ratio:1.2;margin-bottom:0"><img src="https://janzenco.com/wp-content/uploads/sites/2/2017/09/shutterstock_142794673-35.jpg" alt="Kids talking about family in class" /></div>
+          <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+            <div class="card-label">Key phrases in these dialogues</div>
+            <ul class="context-list">
+              <li><span class="context-num">→</span>This is my [family member].</li>
+              <li><span class="context-num">→</span>I have a [family member].</li>
+              <li><span class="context-num">→</span>His / Her name is…</li>
+              <li><span class="context-num">→</span>Do you have a brother / sister?</li>
+              <li><span class="context-num">→</span>Yes! / Yes, I do.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04)">
+            <div class="card-label" style="color:var(--accent2)">💡 Tip — His vs Her</div>
+            <div class="card-body">
+              <strong style="color:var(--white)">His</strong> = for boys/men (father, brother, grandfather)<br/>
+              <strong style="color:var(--white)">Her</strong> = for girls/women (mother, sister, grandmother)<br/><br/>
+              "His name is Carlos." · "Her name is Sofia."
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(2)">← Grammar</button><span class="page-indicator">4 / 6</span><button class="nav-btn primary" onclick="goTo(4)">Pronunciation →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 4 — PRONUNCIATION ═══════════ -->
+  <section class="section" id="sec4">
+    <div class="sec-header" data-label="SND"><div class="sec-eyebrow">Section 5 of 6</div><h1 class="sec-title">Pronunciation</h1><p class="sec-desc">The biggest challenge for Spanish speakers: the <span class="hl">TH sound</span> — essential for saying <em>mother</em>, <em>father</em>, and <em>brother</em> correctly.</p></div>
+    <div class="sec-body">
+
+      <div class="pron-grid" style="margin-bottom:28px">
+        <div class="pron-card" style="grid-column: 1 / -1">
+          <div class="pron-symbol">TH — /ð/</div>
+          <div class="pron-name">The voiced "TH" sound — used in family words</div>
+          <div class="pron-examples">
+            <span class="pron-chip">mo<strong>th</strong>er</span>
+            <span class="pron-chip">fa<strong>th</strong>er</span>
+            <span class="pron-chip">bro<strong>th</strong>er</span>
+          </div>
+          <div class="pron-tip">
+            In Spanish, there is <strong style="color:var(--white)">no TH sound</strong>. Many students say <em>"moder"</em> or <em>"fader"</em> — this is incorrect.<br/><br/>
+            How to make the <strong style="color:var(--white)">TH /ð/ sound</strong>:<br/>
+            1. Put the tip of your tongue <strong style="color:var(--white)">gently between your teeth</strong>.<br/>
+            2. Blow air while making your voice vibrate — like a soft buzzing "d".<br/>
+            3. Practice slowly: <em>th… th… th… mo-th-er</em>.<br/><br/>
+            This is the <strong style="color:var(--white)">voiced TH</strong> (voice vibrates). There's also a voiceless TH (like in "think") — but we focus on the voiced one for now.
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Common mistakes — Spanish speakers</p>
+      <div class="grid-3" style="margin-bottom:28px">
+        <div class="card" style="text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--white);margin-bottom:6px">mother</div>
+          <div style="font-size:0.78rem;color:var(--accent3);margin-bottom:4px">✗ "moder" / "moser"</div>
+          <div style="font-size:0.78rem;color:var(--accent);margin-bottom:8px">✓ /ˈmʌð.ər/</div>
+          <div class="card-body">Tongue between teeth, not a D or S sound.</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--white);margin-bottom:6px">father</div>
+          <div style="font-size:0.78rem;color:var(--accent3);margin-bottom:4px">✗ "fader" / "faser"</div>
+          <div style="font-size:0.78rem;color:var(--accent);margin-bottom:8px">✓ /ˈfɑː.ðər/</div>
+          <div class="card-body">The F at the start is correct — only the TH needs work.</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:1.3rem;color:var(--white);margin-bottom:6px">brother</div>
+          <div style="font-size:0.78rem;color:var(--accent3);margin-bottom:4px">✗ "broder" / "broser"</div>
+          <div style="font-size:0.78rem;color:var(--accent);margin-bottom:8px">✓ /ˈbrʌð.ər/</div>
+          <div class="card-body">The trickiest — BR blend + TH together. Go slow!</div>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+        <div class="card-label">💡 Fun trick — "The Tongue Game"</div>
+        <div class="card-body">
+          Tell your students: <strong style="color:var(--white)">"Stick your tongue out a tiny bit — like you're making a funny face — then say the word."</strong><br/><br/>
+          This physical action (TPR) helps kids instantly feel the correct position. Practice: <span class="hl">mother → father → brother</span> — repeat 3 times fast!
+        </div>
+      </div>
+
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(3)">← Dialogue</button><span class="page-indicator">5 / 6</span><button class="nav-btn primary" onclick="goTo(5)">Practice →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 5 — PRACTICE ═══════════ -->
+  <section class="section" id="sec5">
+    <div class="sec-header" data-label="DO">
+      <div class="sec-eyebrow">Section 6 of 6</div>
+      <h1 class="sec-title">Practice</h1>
+      <p class="sec-desc">Three exercises on family vocabulary, grammar structures, and speaking. Let's put it all together!</p>
+    </div>
+    <div class="sec-body">
+
+      <div class="grid-2" style="margin-bottom:28px">
+
+        <!-- Exercise 1 — Fill in the blanks -->
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 1 — Fill in the blanks (Drag & Drop)</p>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-body" style="display:flex;flex-direction:column;gap:14px">
+              <p>1. <strong style="color:var(--white)">"<span class="fill-blank" data-blank-idx="0" data-correct="This">___</span> is my mother."</strong></p>
+              <p>2. <strong style="color:var(--white)">"I have a <span class="fill-blank" data-blank-idx="1" data-correct="sister,brother">___</span>."</strong></p>
+              <p>3. <strong style="color:var(--white)">"This is my <span class="fill-blank" data-blank-idx="2" data-correct="brother,sister">___</span>."</strong></p>
+              <p>4. <strong style="color:var(--white)">"<span class="fill-blank" data-blank-idx="3" data-correct="Her">___</span> name is Ana."</strong></p>
+            </div>
+          </div>
+          <div class="card" style="border-color:rgba(0,229,192,0.15);background:rgba(0,229,192,0.03)">
+            <div class="card-label">Word bank (drag and drop — drag each word to the correct blank)</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="wordBank">
+              <span class="word-bank-word" draggable="true" data-word="This">This</span>
+              <span class="word-bank-word" draggable="true" data-word="sister">sister</span>
+              <span class="word-bank-word" draggable="true" data-word="brother">brother</span>
+              <span class="word-bank-word" draggable="true" data-word="Her">Her</span>
+              <span class="word-bank-word" draggable="true" data-word="His">His</span>
+              <span class="word-bank-word" draggable="true" data-word="That">That</span>
+            </div>
+          </div>
+          <div id="ex1Feedback" class="feedback-msg" style="margin-top:12px"></div>
+          <button class="check-btn" onclick="checkExercise1()">Check Exercise 1 ✓</button>
+          <button class="check-btn" style="margin-left:10px;background:var(--surface2);color:var(--text);" onclick="resetExercise1()">Reset</button>
+        </div>
+
+        <!-- Exercise 2 — Multiple choice -->
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 2 — Choose the correct answer</p>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">Your mom's dad is your…</p>
+                <div data-situation="grandfather">
+                  <span class="option-btn" data-opt="father">(a) father</span>
+                  <span class="option-btn" data-opt="grandfather">(b) grandfather</span>
+                  <span class="option-btn" data-opt="brother">(c) brother</span>
+                </div>
+              </div>
+              <hr class="divider" style="margin:0"/>
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">"___ is my sister." — pointing to a photo</p>
+                <div data-situation="this">
+                  <span class="option-btn" data-opt="I">(a) I</span>
+                  <span class="option-btn" data-opt="This">(b) This</span>
+                  <span class="option-btn" data-opt="Have">(c) Have</span>
+                </div>
+              </div>
+              <hr class="divider" style="margin:0"/>
+              <div>
+                <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">Your parents' daughter (not you) is your…</p>
+                <div data-situation="sister">
+                  <span class="option-btn" data-opt="mother">(a) mother</span>
+                  <span class="option-btn" data-opt="grandmother">(b) grandmother</span>
+                  <span class="option-btn" data-opt="sister">(c) sister</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="ex2Feedback" class="feedback-msg" style="margin-top:12px"></div>
+          <button class="check-btn" onclick="checkExercise2()">Check Exercise 2 ✓</button>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">Exercise 3 — Speaking task: Present your family</p>
+      <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:22px">
+        <div class="card-body">
+          <p style="margin-bottom:14px">Use a photo or drawing of your family. Present each member using the structures from this lesson.</p>
+          <div class="dialogue-body" style="padding:0;gap:10px">
+            <div class="d-line"><div class="d-speaker a">1</div><div class="d-text"><strong>"This is my [family member]. His / Her name is [NAME]."</strong></div></div>
+            <div class="d-line"><div class="d-speaker a">2</div><div class="d-text"><strong>"I have a [brother / sister / grandmother…]."</strong></div></div>
+            <div class="d-line"><div class="d-speaker a">3</div><div class="d-text"><strong>"He / She is [adjective]."</strong> <span style="font-size:0.8rem;color:var(--muted)">(e.g. tall, funny, kind)</span></div></div>
+            <div class="d-line"><div class="d-speaker a">4</div><div class="d-text"><strong>"I love my family!"</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="img-slot" style="aspect-ratio:12/6"><img src="https://breakintoenglish.com/wp-content/uploads/2025/11/family-members--1024x559.webp" /></div>
+
+      <hr class="divider"/>
+
+      <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+        <div class="card-label">Lesson Summary — What you learned today</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px">
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> 6 family members: mother, father, brother, sister, grandmother, grandfather</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> "This is my…" — to introduce someone</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> "I have a…" — to talk about your family</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> His vs Her — possessives for people</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> The TH /ð/ sound in mother, father, brother</div>
+          <div style="font-size:0.88rem;color:var(--muted)"><span class="hl">✓</span> Family tree — how the members connect</div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="nav-btn" onclick="goTo(4)">← Pronunciation</button>
+        <span class="page-indicator">6 / 6</span>
+        <button class="nav-btn" style="background:var(--surface2);border-color:var(--border);color:var(--text);font-weight:600;cursor:default">✓ Complete</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i === idx));
+    document.querySelectorAll('.nav-link').forEach(l => {
+      const i = parseInt(l.dataset.idx);
+      l.classList.remove('active', 'done');
+      if (i === idx) l.classList.add('active');
+      else if (i < idx) l.classList.add('done');
+    });
+    document.getElementById('progressFill').style.width = ((idx + 1) / TOTAL * 100) + '%';
+    document.getElementById('progressLabel').textContent = `Section ${idx + 1} of ${TOTAL}`;
+    current = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // ── SPEECH ──
+  let activeSpeakCard = null;
+  function speakWord(word, cardEl) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    if (activeSpeakCard) activeSpeakCard.classList.remove('speaking');
+    const utter = new SpeechSynthesisUtterance(word);
+    utter.lang = 'en-US';
+    utter.rate = 0.8;
+    utter.pitch = 1.0;
+    activeSpeakCard = cardEl;
+    cardEl.classList.add('speaking');
+    utter.onend = () => cardEl.classList.remove('speaking');
+    utter.onerror = () => cardEl.classList.remove('speaking');
+    window.speechSynthesis.speak(utter);
+  }
+
+  // ── FAMILY VOCABULARY GRID ──
+  const familyMembers = [
+    { word: 'Mother',      emoji: '👩',  es: 'Mamá' },
+    { word: 'Father',      emoji: '👨',  es: 'Papá' },
+    { word: 'Brother',     emoji: '👦',  es: 'Hermano' },
+    { word: 'Sister',      emoji: '👧',  es: 'Hermana' },
+    { word: 'Grandmother', emoji: '👵',  es: 'Abuela' },
+    { word: 'Grandfather', emoji: '👴',  es: 'Abuelo' },
+    { word: 'Uncle',       emoji: '🧔',  es: 'Tío' },
+    { word: 'Aunt',        emoji: '👩‍🦰', es: 'Tía' },
+    { word: 'Cousin',      emoji: '👦👧', es: 'Primo/a' },
+    { word: 'Parents',     emoji: '👨‍👩‍👧', es: 'Padres' },
+    { word: 'Grandparents',emoji: '👴👵', es: 'Abuelos' },
+  ];
+  const familyGrid = document.getElementById('familyGrid');
+  familyMembers.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'family-card';
+    card.innerHTML = `<span class="family-emoji">${m.emoji}</span><div class="family-word">${m.word}</div><div class="family-es">${m.es}</div>`;
+    card.addEventListener('click', () => speakWord(m.word, card));
+    card.setAttribute('title', `Click to hear: "${m.word}"`);
+    familyGrid.appendChild(card);
+  });
+
+  // ── EXERCISE 1: Drag & Drop ──
+  const blanks = document.querySelectorAll('.fill-blank');
+  const wordBankWords = document.querySelectorAll('.word-bank-word');
+  let userAnswers = new Array(blanks.length).fill(null);
+  let draggedWord = null;
+
+  wordBankWords.forEach(wordEl => {
+    wordEl.addEventListener('dragstart', (e) => {
+      if (wordEl.classList.contains('used')) { e.preventDefault(); return false; }
+      draggedWord = wordEl;
+      e.dataTransfer.setData('text/plain', wordEl.getAttribute('data-word'));
+      e.dataTransfer.effectAllowed = 'copy';
+      wordEl.classList.add('dragging');
+    });
+    wordEl.addEventListener('dragend', () => { wordEl.classList.remove('dragging'); draggedWord = null; });
+  });
+
+  blanks.forEach(blank => {
+    blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+    blank.addEventListener('dragleave', () => { blank.classList.remove('drag-over'); });
+    blank.addEventListener('drop', (e) => {
+      e.preventDefault();
+      blank.classList.remove('drag-over');
+      if (!draggedWord || draggedWord.classList.contains('used')) return;
+      const word = draggedWord.getAttribute('data-word');
+      const blankIdx = parseInt(blank.getAttribute('data-blank-idx'));
+      const wordBankIndex = Array.from(wordBankWords).indexOf(draggedWord);
+      if (userAnswers[blankIdx] !== null) {
+        const oldWord = userAnswers[blankIdx];
+        const oldWordIndex = Array.from(wordBankWords).findIndex(w => w.getAttribute('data-word') === oldWord);
+        if (oldWordIndex !== -1) { wordBankWords[oldWordIndex].classList.remove('used'); }
+      }
+      userAnswers[blankIdx] = word;
+      blank.textContent = word;
+      blank.classList.add('filled');
+      blank.classList.remove('incorrect', 'correct');
+      draggedWord.classList.add('used');
+      document.getElementById('ex1Feedback').innerHTML = '';
+    });
+  });
+
+  function resetExercise1() {
+    userAnswers.fill(null);
+    blanks.forEach(blank => { blank.textContent = '___'; blank.classList.remove('filled', 'correct', 'incorrect', 'drag-over'); });
+    wordBankWords.forEach(w => { w.classList.remove('used', 'dragging'); });
+    draggedWord = null;
+    document.getElementById('ex1Feedback').innerHTML = '';
+  }
+
+  function checkExercise1() {
+    // ── VALIDACIÓN INDIVIDUAL POR ESPACIO ──
+    // Cada blank se evalúa por sí mismo, sin depender de los demás
+    
+    blanks.forEach((blank, idx) => {
+      const userAnswer = userAnswers[idx];
+      blank.classList.remove('correct', 'incorrect');
+      
+      if (userAnswer === null) {
+        // Vacío: no colorear (o dejar en blanco)
+        return;
+      }
+      
+      if (idx === 0) {
+        // Blank 0: solo "This" es correcto
+        if (userAnswer === 'This') {
+          blank.classList.add('correct');
+        } else {
+          blank.classList.add('incorrect');
+        }
+      } else if (idx === 1) {
+        // Blank 1: "sister" o "brother" son correctos, PERO no puede ser igual al blank 2
+        if (userAnswer === 'sister' || userAnswer === 'brother') {
+          // Verificar que no sea igual al blank 2 (si el blank 2 ya está lleno)
+          if (userAnswers[2] !== null && userAnswer === userAnswers[2]) {
+            blank.classList.add('incorrect');
+          } else {
+            blank.classList.add('correct');
+          }
+        } else {
+          blank.classList.add('incorrect');
+        }
+      } else if (idx === 2) {
+        // Blank 2: "sister" o "brother" son correctos, PERO no puede ser igual al blank 1
+        if (userAnswer === 'sister' || userAnswer === 'brother') {
+          // Verificar que no sea igual al blank 1 (si el blank 1 ya está lleno)
+          if (userAnswers[1] !== null && userAnswer === userAnswers[1]) {
+            blank.classList.add('incorrect');
+          } else {
+            blank.classList.add('correct');
+          }
+        } else {
+          blank.classList.add('incorrect');
+        }
+      } else if (idx === 3) {
+        // Blank 3: solo "Her" es correcto
+        if (userAnswer === 'Her') {
+          blank.classList.add('correct');
+        } else {
+          blank.classList.add('incorrect');
+        }
+      }
+    });
+    
+    // Evaluación global para el mensaje
+    const allFilled = userAnswers.every(a => a !== null);
+    let allCorrect = false;
+    
+    if (allFilled) {
+      const thisOK = userAnswers[0] === 'This';
+      const herOK = userAnswers[3] === 'Her';
+      const sib1 = userAnswers[1];
+      const sib2 = userAnswers[2];
+      const sibsOK = (sib1 === 'sister' || sib1 === 'brother') && 
+                     (sib2 === 'sister' || sib2 === 'brother') && 
+                     sib1 !== sib2;
+      const noDistractors = !userAnswers.includes('His') && !userAnswers.includes('That');
+      allCorrect = thisOK && herOK && sibsOK && noDistractors;
+    }
+    
+    const fb = document.getElementById('ex1Feedback');
+    if (allCorrect) {
+      fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ ¡Excelente! All answers are correct. Great job!</div>';
+    } else if (!allFilled) {
+      fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Fill in all 4 blanks, then click Check. Each blank is evaluated individually: 1 = THIS, 2 & 3 = SISTER/BROTHER (different from each other), 4 = HER. "His" and "That" are NOT correct!</div>';
+    } else {
+      fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers are incorrect. Remember: 1 = THIS, 2 & 3 = SISTER and BROTHER (one each, any order), 4 = HER. "His" and "That" are distractors — they are NOT correct!</div>';
+    }
+  }
+
+  // ── EXERCISE 2: Multiple Choice ──
+  const situationData = {
+    grandfather: { correct: 'grandfather' },
+    this: { correct: 'This' },
+    sister: { correct: 'sister' }
+  };
+  let userSelections = { grandfather: null, this: null, sister: null };
+
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parentDiv = btn.closest('[data-situation]');
+      if (!parentDiv) return;
+      const situation = parentDiv.getAttribute('data-situation');
+      parentDiv.querySelectorAll('.option-btn').forEach(opt => opt.classList.remove('selected'));
+      btn.classList.add('selected');
+      userSelections[situation] = btn.getAttribute('data-opt');
+      document.getElementById('ex2Feedback').innerHTML = '';
+    });
+  });
+
+  function checkExercise2() {
+    let allCorrect = true;
+    ['grandfather', 'this', 'sister'].forEach(sit => {
+      const selected = userSelections[sit];
+      const correct = situationData[sit].correct;
+      const container = document.querySelector(`[data-situation="${sit}"]`);
+      container.querySelectorAll('.option-btn').forEach(opt => {
+        opt.classList.remove('correct', 'incorrect');
+        if (opt.getAttribute('data-opt') === correct) opt.classList.add('correct');
+        if (opt.getAttribute('data-opt') === selected && selected !== correct) opt.classList.add('incorrect');
+      });
+      if (selected !== correct) allCorrect = false;
+    });
+    const fb = document.getElementById('ex2Feedback');
+    if (allCorrect) {
+      fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! You know your family vocabulary!</div>';
+    } else {
+      fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some are wrong. Tip: Mom\'s dad = grandfather · Pointing to a photo = "This is…" · Parents\' daughter = sister. Try again!</div>';
+    }
+  }
+</script>
+</body>
+</html>
