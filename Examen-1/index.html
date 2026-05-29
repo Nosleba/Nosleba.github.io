@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Exam 1 — Topics 1–3 | English A1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #0d0f14;
+  --surface:  #141720;
+  --surface2: #1c2030;
+  --border:   rgba(255,255,255,0.07);
+  --accent:   #00e5c0;
+  --accent2:  #4f9eff;
+  --red:      #ff6b6b;
+  --text:     #e8eaf0;
+  --muted:    #6b7280;
+  --white:    #ffffff;
+  --r:        12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13,15,20,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.topbar-left { display: flex; flex-direction: column; gap: 2px; }
+.topbar-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+}
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.counter {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.counter span { color: var(--accent); font-weight: 600; }
+.progress-wrap { width: 140px; background: var(--surface2); border-radius: 99px; height: 5px; }
+.progress-fill {
+  height: 5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width .4s ease;
+  width: 0%;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 60px 32px 48px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.hero::before {
+  content: 'EXAM';
+  position: absolute;
+  top: 20px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Syne', sans-serif;
+  font-size: 8rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.025);
+  pointer-events: none;
+  letter-spacing: -4px;
+  white-space: nowrap;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(0,229,192,0.25);
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.hero p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+}
+.hero-info {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.info-pill {
+  font-size: 0.78rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 7px 16px;
+  border-radius: 99px;
+}
+
+/* ── MAIN WRAPPER ── */
+.wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── SECTION BLOCK ── */
+.section-block {
+  margin-bottom: 48px;
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(0,229,192,0.12);
+  border: 1.5px solid rgba(0,229,192,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.section-info h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+}
+.section-info p { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+/* ── QUESTION ── */
+.question {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 22px 18px;
+  margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.question.answered { border-color: rgba(0,229,192,0.2); }
+.question.correct   { border-color: rgba(0,229,192,0.5); background: rgba(0,229,192,0.04); }
+.question.wrong     { border-color: rgba(255,107,107,0.5); background: rgba(255,107,107,0.04); }
+
+.q-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.q-num {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--surface2);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.q-text {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.55;
+  font-weight: 400;
+}
+.q-text em {
+  font-style: italic;
+  color: var(--accent2);
+}
+
+/* ── OPTIONS ── */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-left: 38px;
+}
+.opt {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: all .18s;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+}
+.opt:hover:not(:disabled) {
+  border-color: rgba(79,158,255,0.4);
+  background: rgba(79,158,255,0.06);
+  color: var(--white);
+}
+.opt.selected {
+  border-color: var(--accent2);
+  background: rgba(79,158,255,0.12);
+  color: var(--white);
+}
+.opt.correct-ans {
+  border-color: var(--accent);
+  background: rgba(0,229,192,0.12);
+  color: var(--accent);
+  font-weight: 500;
+}
+.opt.wrong-ans {
+  border-color: var(--red);
+  background: rgba(255,107,107,0.1);
+  color: var(--red);
+}
+.opt:disabled { cursor: default; }
+
+/* ── FILL IN THE BLANK ── */
+.fill-wrap {
+  padding-left: 38px;
+}
+.fill-input {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  width: 100%;
+  max-width: 340px;
+  outline: none;
+  transition: border-color .2s;
+}
+.fill-input:focus { border-color: rgba(79,158,255,0.5); }
+.fill-input.correct-inp { border-color: var(--accent); color: var(--accent); }
+.fill-input.wrong-inp   { border-color: var(--red);   color: var(--red); }
+.fill-hint { font-size: 0.75rem; color: var(--muted); margin-top: 5px; }
+
+/* ── SUBMIT ZONE ── */
+.submit-zone {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+  margin-top: 40px;
+}
+.submit-zone h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.submit-zone p { font-size: 0.85rem; color: var(--muted); margin-bottom: 22px; }
+.btn-submit {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 9px;
+  padding: 13px 36px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: opacity .2s, transform .15s;
+}
+.btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-submit:disabled { opacity: 0.35; cursor: default; transform: none; }
+
+/* ── RESULTS ── */
+.results-panel {
+  display: none;
+  background: var(--surface);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  padding: 40px 32px;
+  text-align: center;
+  margin-top: 40px;
+}
+.results-panel.show { display: block; }
+.score-ring {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  border: 3px solid var(--accent);
+  background: rgba(0,229,192,0.07);
+}
+.score-num { font-size: 2.2rem; color: var(--accent); line-height: 1; }
+.score-total { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+.results-panel h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.results-panel .grade {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 5px 16px;
+  border-radius: 99px;
+  margin-bottom: 16px;
+}
+.grade.a  { background: rgba(0,229,192,0.15); color: var(--accent); border: 1px solid rgba(0,229,192,0.3); }
+.grade.b  { background: rgba(79,158,255,0.12); color: var(--accent2); border: 1px solid rgba(79,158,255,0.3); }
+.grade.c  { background: rgba(255,200,60,0.12); color: #ffc83c; border: 1px solid rgba(255,200,60,0.3); }
+.grade.d  { background: rgba(255,107,107,0.1); color: var(--red); border: 1px solid rgba(255,107,107,0.3); }
+.results-panel p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0 28px;
+}
+.breakdown-item {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 14px 10px;
+}
+.breakdown-item .bi-score { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); }
+.breakdown-item .bi-label { font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
+.btn-retry {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 11px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .2s;
+  margin-right: 10px;
+}
+.btn-retry:hover { border-color: var(--accent2); color: var(--white); }
+.btn-home {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 11px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: border-color .2s;
+}
+.btn-home:hover { border-color: var(--accent); color: var(--white); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .options { grid-template-columns: 1fr; }
+  .topbar { padding: 12px 16px; }
+  .progress-wrap { width: 80px; }
+  .hero { padding: 40px 16px 32px; }
+  .wrapper { padding: 0 16px 60px; }
+  .breakdown { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-eyebrow">English A1 — Exam 1</span>
+    <span class="topbar-title">Topics 1 · 2 · 3</span>
+  </div>
+  <div class="topbar-right">
+    <span class="counter">Answered: <span id="answeredCount">0</span> / 30</span>
+    <div class="progress-wrap">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-badge">📝 Assessment · A1 Level</span>
+  <h1>Exam 1</h1>
+  <p>This exam evaluates your understanding of Greetings, Personal Pronouns & Verb To Be, and the Alphabet, Numbers & Age.</p>
+  <div class="hero-info">
+    <span class="info-pill">📚 30 Questions</span>
+    <span class="info-pill">🗂 3 Topics</span>
+    <span class="info-pill">⏱ No time limit</span>
+  </div>
+</div>
+
+<!-- WRAPPER -->
+<div class="wrapper">
+
+  <!-- ════════════════════════════
+       TOPIC 1 — Greetings
+  ════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-label">
+      <div class="section-num">1</div>
+      <div class="section-info">
+        <h3>Topic 1 — Greetings &amp; Introductions</h3>
+        <p>Questions 1–10 · Hello, Good morning, Nice to meet you, Verb To Be basics</p>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question" id="q1">
+      <div class="q-header">
+        <span class="q-num">1</span>
+        <span class="q-text">Which phrase is used to greet someone in the <em>morning</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="1" data-val="a">Good afternoon</button>
+        <button class="opt" data-q="1" data-val="b">Good morning ✓</button>
+        <button class="opt" data-q="1" data-val="c">Good night</button>
+        <button class="opt" data-q="1" data-val="d">Goodbye</button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question" id="q2">
+      <div class="q-header">
+        <span class="q-num">2</span>
+        <span class="q-text">What is the correct response to <em>"How are you?"</em></span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="2" data-val="a">My name is Ana.</button>
+        <button class="opt" data-q="2" data-val="b">I am fine, thank you.</button>
+        <button class="opt" data-q="2" data-val="c">Nice to meet you.</button>
+        <button class="opt" data-q="2" data-val="d">Goodbye!</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question" id="q3">
+      <div class="q-header">
+        <span class="q-num">3</span>
+        <span class="q-text">Complete the sentence: <em>"___ is your name?"</em></span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="3" data-val="a">Who</button>
+        <button class="opt" data-q="3" data-val="b">Where</button>
+        <button class="opt" data-q="3" data-val="c">What</button>
+        <button class="opt" data-q="3" data-val="d">How</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question" id="q4">
+      <div class="q-header">
+        <span class="q-num">4</span>
+        <span class="q-text">Which greeting is used when meeting someone <em>for the first time</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="4" data-val="a">See you later!</button>
+        <button class="opt" data-q="4" data-val="b">Nice to meet you.</button>
+        <button class="opt" data-q="4" data-val="c">How are you?</button>
+        <button class="opt" data-q="4" data-val="d">Good night.</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question" id="q5">
+      <div class="q-header">
+        <span class="q-num">5</span>
+        <span class="q-text">Choose the correct sentence: <em>"My name ___ Carlos."</em></span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="5" data-val="a">My name are Carlos.</button>
+        <button class="opt" data-q="5" data-val="b">My name am Carlos.</button>
+        <button class="opt" data-q="5" data-val="c">My name is Carlos.</button>
+        <button class="opt" data-q="5" data-val="d">My name be Carlos.</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question" id="q6">
+      <div class="q-header">
+        <span class="q-num">6</span>
+        <span class="q-text">Which word do you use to say goodbye <em>informally</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="6" data-val="a">Hello</button>
+        <button class="opt" data-q="6" data-val="b">Hi</button>
+        <button class="opt" data-q="6" data-val="c">Bye</button>
+        <button class="opt" data-q="6" data-val="d">Good morning</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question" id="q7">
+      <div class="q-header">
+        <span class="q-num">7</span>
+        <span class="q-text">Select the correct introduction: A student says — <em>"___ name is Sofia and ___ am 11 years old."</em></span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="7" data-val="a">Your / you</button>
+        <button class="opt" data-q="7" data-val="b">My / I</button>
+        <button class="opt" data-q="7" data-val="c">Her / she</button>
+        <button class="opt" data-q="7" data-val="d">His / he</button>
+      </div>
+    </div>
+
+    <!-- Q8 FILL -->
+    <div class="question" id="q8">
+      <div class="q-header">
+        <span class="q-num">8</span>
+        <span class="q-text">Fill in the blank — <em>"Good ___, class! Let's start our lesson."</em> (said at 9:00 AM)</span>
+      </div>
+      <div class="fill-wrap">
+        <input class="fill-input" type="text" id="fill8" placeholder="Type your answer…" autocomplete="off"/>
+        <div class="fill-hint">Hint: it's one word — the part of the day.</div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question" id="q9">
+      <div class="q-header">
+        <span class="q-num">9</span>
+        <span class="q-text">Maria says: <em>"Hello! I am Maria. Nice to meet you."</em> — What should the other person respond?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="9" data-val="a">Goodbye, Maria!</button>
+        <button class="opt" data-q="9" data-val="b">Nice to meet you too!</button>
+        <button class="opt" data-q="9" data-val="c">Good night, Maria!</button>
+        <button class="opt" data-q="9" data-val="d">How old are you?</button>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question" id="q10">
+      <div class="q-header">
+        <span class="q-num">10</span>
+        <span class="q-text">Which sentence correctly uses <em>"Hi"</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="10" data-val="a">Hi, my name is Tom!</button>
+        <button class="opt" data-q="10" data-val="b">Hi to meet you.</button>
+        <button class="opt" data-q="10" data-val="c">Hi are you?</button>
+        <button class="opt" data-q="10" data-val="d">Hi morning!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TOPIC 2 — Pronouns + To Be
+  ════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-label">
+      <div class="section-num">2</div>
+      <div class="section-info">
+        <h3>Topic 2 — Personal Pronouns &amp; Verb To Be</h3>
+        <p>Questions 11–20 · I am, You are, He/She is, Contractions</p>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="question" id="q11">
+      <div class="q-header">
+        <span class="q-num">11</span>
+        <span class="q-text">Choose the correct form: <em>"___ is happy."</em> (talking about a girl)</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="11" data-val="a">I</button>
+        <button class="opt" data-q="11" data-val="b">He</button>
+        <button class="opt" data-q="11" data-val="c">She</button>
+        <button class="opt" data-q="11" data-val="d">They</button>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="question" id="q12">
+      <div class="q-header">
+        <span class="q-num">12</span>
+        <span class="q-text">What is the contraction of <em>"I am"</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="12" data-val="a">I'm</button>
+        <button class="opt" data-q="12" data-val="b">Im'</button>
+        <button class="opt" data-q="12" data-val="c">I'am</button>
+        <button class="opt" data-q="12" data-val="d">Iam</button>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="question" id="q13">
+      <div class="q-header">
+        <span class="q-num">13</span>
+        <span class="q-text">Select the correct sentence about a <em>boy</em>.</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="13" data-val="a">She is tall.</button>
+        <button class="opt" data-q="13" data-val="b">He are tall.</button>
+        <button class="opt" data-q="13" data-val="c">He is tall.</button>
+        <button class="opt" data-q="13" data-val="d">They is tall.</button>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="question" id="q14">
+      <div class="q-header">
+        <span class="q-num">14</span>
+        <span class="q-text">Which pronoun replaces <em>"the cat"</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="14" data-val="a">He</button>
+        <button class="opt" data-q="14" data-val="b">She</button>
+        <button class="opt" data-q="14" data-val="c">It</button>
+        <button class="opt" data-q="14" data-val="d">We</button>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="question" id="q15">
+      <div class="q-header">
+        <span class="q-num">15</span>
+        <span class="q-text">Complete: <em>"You ___ my friend."</em></span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="15" data-val="a">is</button>
+        <button class="opt" data-q="15" data-val="b">am</button>
+        <button class="opt" data-q="15" data-val="c">are</button>
+        <button class="opt" data-q="15" data-val="d">be</button>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="question" id="q16">
+      <div class="q-header">
+        <span class="q-num">16</span>
+        <span class="q-text">Which contraction is correct for <em>"He is"</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="16" data-val="a">He's</button>
+        <button class="opt" data-q="16" data-val="b">Hes'</button>
+        <button class="opt" data-q="16" data-val="c">He'is</button>
+        <button class="opt" data-q="16" data-val="d">H'es</button>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="question" id="q17">
+      <div class="q-header">
+        <span class="q-num">17</span>
+        <span class="q-text">Look at the image: a happy girl. Choose the correct sentence.</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="17" data-val="a">He is happy.</button>
+        <button class="opt" data-q="17" data-val="b">She's happy.</button>
+        <button class="opt" data-q="17" data-val="c">They are happy.</button>
+        <button class="opt" data-q="17" data-val="d">It is happy.</button>
+      </div>
+    </div>
+
+    <!-- Q18 FILL -->
+    <div class="question" id="q18">
+      <div class="q-header">
+        <span class="q-num">18</span>
+        <span class="q-text">Fill in the blank — <em>"We ___ students."</em></span>
+      </div>
+      <div class="fill-wrap">
+        <input class="fill-input" type="text" id="fill18" placeholder="Type your answer…" autocomplete="off"/>
+        <div class="fill-hint">Hint: it's a form of the verb To Be.</div>
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="question" id="q19">
+      <div class="q-header">
+        <span class="q-num">19</span>
+        <span class="q-text">Which sentence uses <em>"They"</em> correctly?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="19" data-val="a">They is funny.</button>
+        <button class="opt" data-q="19" data-val="b">They are funny.</button>
+        <button class="opt" data-q="19" data-val="c">They am funny.</button>
+        <button class="opt" data-q="19" data-val="d">They be funny.</button>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="question" id="q20">
+      <div class="q-header">
+        <span class="q-num">20</span>
+        <span class="q-text">What does <em>"She's"</em> mean?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="20" data-val="a">She are</button>
+        <button class="opt" data-q="20" data-val="b">She am</button>
+        <button class="opt" data-q="20" data-val="c">She is</button>
+        <button class="opt" data-q="20" data-val="d">She be</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TOPIC 3 — Alphabet, Numbers & Age
+  ════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-label">
+      <div class="section-num">3</div>
+      <div class="section-info">
+        <h3>Topic 3 — Alphabet, Numbers &amp; Age</h3>
+        <p>Questions 21–30 · A–Z, Numbers 1–20, How old are you?</p>
+      </div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="question" id="q21">
+      <div class="q-header">
+        <span class="q-num">21</span>
+        <span class="q-text">How many letters does the English alphabet have?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="21" data-val="a">24</button>
+        <button class="opt" data-q="21" data-val="b">25</button>
+        <button class="opt" data-q="21" data-val="c">26</button>
+        <button class="opt" data-q="21" data-val="d">27</button>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="question" id="q22">
+      <div class="q-header">
+        <span class="q-num">22</span>
+        <span class="q-text">What is the correct answer to <em>"How old are you?"</em> for an 11-year-old?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="22" data-val="a">I have 11 years.</button>
+        <button class="opt" data-q="22" data-val="b">I am 11 years old.</button>
+        <button class="opt" data-q="22" data-val="c">My age is the 11.</button>
+        <button class="opt" data-q="22" data-val="d">I years 11 old.</button>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="question" id="q23">
+      <div class="q-header">
+        <span class="q-num">23</span>
+        <span class="q-text">Which letters are <em>vowels</em> in English?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="23" data-val="a">A, B, C, D, E</button>
+        <button class="opt" data-q="23" data-val="b">A, E, I, O, U</button>
+        <button class="opt" data-q="23" data-val="c">E, I, K, O, U</button>
+        <button class="opt" data-q="23" data-val="d">A, E, I, P, U</button>
+      </div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="question" id="q24">
+      <div class="q-header">
+        <span class="q-num">24</span>
+        <span class="q-text">How do you write the number <em>15</em> in English?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="24" data-val="a">fifty</button>
+        <button class="opt" data-q="24" data-val="b">fiveteen</button>
+        <button class="opt" data-q="24" data-val="c">fifteen</button>
+        <button class="opt" data-q="24" data-val="d">fiftien</button>
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="question" id="q25">
+      <div class="q-header">
+        <span class="q-num">25</span>
+        <span class="q-text">A student spells their name: <em>S – O – F – I – A</em>. What is the student's name?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="25" data-val="a">Sofia</button>
+        <button class="opt" data-q="25" data-val="b">Sopia</button>
+        <button class="opt" data-q="25" data-val="c">Soifa</button>
+        <button class="opt" data-q="25" data-val="d">Safia</button>
+      </div>
+    </div>
+
+    <!-- Q26 -->
+    <div class="question" id="q26">
+      <div class="q-header">
+        <span class="q-num">26</span>
+        <span class="q-text">Which number comes after <em>thirteen</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="26" data-val="a">twelve</button>
+        <button class="opt" data-q="26" data-val="b">fifteen</button>
+        <button class="opt" data-q="26" data-val="c">fourteen</button>
+        <button class="opt" data-q="26" data-val="d">seventeen</button>
+      </div>
+    </div>
+
+    <!-- Q27 FILL -->
+    <div class="question" id="q27">
+      <div class="q-header">
+        <span class="q-num">27</span>
+        <span class="q-text">Write the number <em>20</em> in English words.</span>
+      </div>
+      <div class="fill-wrap">
+        <input class="fill-input" type="text" id="fill27" placeholder="Type your answer…" autocomplete="off"/>
+        <div class="fill-hint">Hint: it comes after nineteen.</div>
+      </div>
+    </div>
+
+    <!-- Q28 -->
+    <div class="question" id="q28">
+      <div class="q-header">
+        <span class="q-num">28</span>
+        <span class="q-text">Which question asks about someone's <em>age</em>?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="28" data-val="a">What is your name?</button>
+        <button class="opt" data-q="28" data-val="b">Where are you from?</button>
+        <button class="opt" data-q="28" data-val="c">How old are you?</button>
+        <button class="opt" data-q="28" data-val="d">How do you spell it?</button>
+      </div>
+    </div>
+
+    <!-- Q29 -->
+    <div class="question" id="q29">
+      <div class="q-header">
+        <span class="q-num">29</span>
+        <span class="q-text">The teacher says: <em>"How do you spell your name?"</em> — What does she want?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="29" data-val="a">To know your age.</button>
+        <button class="opt" data-q="29" data-val="b">To hear the letters of your name.</button>
+        <button class="opt" data-q="29" data-val="c">To know where you live.</button>
+        <button class="opt" data-q="29" data-val="d">To know your phone number.</button>
+      </div>
+    </div>
+
+    <!-- Q30 -->
+    <div class="question" id="q30">
+      <div class="q-header">
+        <span class="q-num">30</span>
+        <span class="q-text">Which number is written correctly in English?</span>
+      </div>
+      <div class="options">
+        <button class="opt" data-q="30" data-val="a">eleven ✓</button>
+        <button class="opt" data-q="30" data-val="b">elven</button>
+        <button class="opt" data-q="30" data-val="c">eleveen</button>
+        <button class="opt" data-q="30" data-val="d">elevan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-zone" id="submitZone">
+    <h3>Ready to submit?</h3>
+    <p>Make sure you have answered all 30 questions before submitting.</p>
+    <button class="btn-submit" id="btnSubmit" onclick="submitExam()">Submit Exam →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-panel" id="resultsPanel">
+    <div class="score-ring">
+      <span class="score-num" id="scoreNum">0</span>
+      <span class="score-total">/ 30</span>
+    </div>
+    <h2 id="resultsTitle">Your Results</h2>
+    <span class="grade" id="gradeTag"></span>
+    <p id="resultsMsg"></p>
+    <div class="breakdown">
+      <div class="breakdown-item">
+        <div class="bi-score" id="score1">—</div>
+        <div class="bi-label">Topic 1<br>Greetings</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="bi-score" id="score2">—</div>
+        <div class="bi-label">Topic 2<br>Pronouns</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="bi-score" id="score3">—</div>
+        <div class="bi-label">Topic 3<br>Alphabet</div>
+      </div>
+    </div>
+    <button class="btn-retry" onclick="retryExam()">↺ Try Again</button>
+    <a class="btn-home" href="https://nosleba.github.io/home-ingles/">⌂ Back to Home</a>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+// ─────────────────────────────────────────
+//  ANSWER KEY
+// ─────────────────────────────────────────
+const ANSWERS = {
+  1:  { type: 'mc',   correct: 'b' },
+  2:  { type: 'mc',   correct: 'b' },
+  3:  { type: 'mc',   correct: 'c' },
+  4:  { type: 'mc',   correct: 'b' },
+  5:  { type: 'mc',   correct: 'c' },
+  6:  { type: 'mc',   correct: 'c' },
+  7:  { type: 'mc',   correct: 'b' },
+  8:  { type: 'fill', correct: 'morning' },
+  9:  { type: 'mc',   correct: 'b' },
+  10: { type: 'mc',   correct: 'a' },
+  11: { type: 'mc',   correct: 'c' },
+  12: { type: 'mc',   correct: 'a' },
+  13: { type: 'mc',   correct: 'c' },
+  14: { type: 'mc',   correct: 'c' },
+  15: { type: 'mc',   correct: 'c' },
+  16: { type: 'mc',   correct: 'a' },
+  17: { type: 'mc',   correct: 'b' },
+  18: { type: 'fill', correct: 'are' },
+  19: { type: 'mc',   correct: 'b' },
+  20: { type: 'mc',   correct: 'c' },
+  21: { type: 'mc',   correct: 'c' },
+  22: { type: 'mc',   correct: 'b' },
+  23: { type: 'mc',   correct: 'b' },
+  24: { type: 'mc',   correct: 'c' },
+  25: { type: 'mc',   correct: 'a' },
+  26: { type: 'mc',   correct: 'c' },
+  27: { type: 'fill', correct: 'twenty' },
+  28: { type: 'mc',   correct: 'c' },
+  29: { type: 'mc',   correct: 'b' },
+  30: { type: 'mc',   correct: 'a' },
+};
+
+const userAnswers = {};
+let submitted = false;
+
+// ─────────────────────────────────────────
+//  MULTIPLE CHOICE — click handler
+// ─────────────────────────────────────────
+document.querySelectorAll('.opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (submitted) return;
+    const q = btn.dataset.q;
+    document.querySelectorAll(`.opt[data-q="${q}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[q] = btn.dataset.val;
+    document.getElementById(`q${q}`).classList.add('answered');
+    updateProgress();
+  });
+});
+
+// ─────────────────────────────────────────
+//  FILL INPUT — listener
+// ─────────────────────────────────────────
+[8, 18, 27].forEach(n => {
+  const inp = document.getElementById(`fill${n}`);
+  if (!inp) return;
+  inp.addEventListener('input', () => {
+    userAnswers[n] = inp.value.trim().toLowerCase();
+    const q = document.getElementById(`q${n}`);
+    if (inp.value.trim()) q.classList.add('answered');
+    else q.classList.remove('answered');
+    updateProgress();
+  });
+});
+
+// ─────────────────────────────────────────
+//  PROGRESS
+// ─────────────────────────────────────────
+function updateProgress() {
+  const count = Object.keys(userAnswers).filter(k => userAnswers[k] !== '').length;
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('progressFill').style.width = (count / 30 * 100) + '%';
+}
+
+// ─────────────────────────────────────────
+//  SUBMIT
+// ─────────────────────────────────────────
+function submitExam() {
+  submitted = true;
+  document.getElementById('btnSubmit').disabled = true;
+
+  let total = 0;
+  const sectionScores = [0, 0, 0];
+
+  for (let n = 1; n <= 30; n++) {
+    const ans = ANSWERS[n];
+    const qEl = document.getElementById(`q${n}`);
+    let correct = false;
+
+    if (ans.type === 'mc') {
+      const userVal = userAnswers[n];
+      const btns = document.querySelectorAll(`.opt[data-q="${n}"]`);
+      btns.forEach(b => {
+        b.disabled = true;
+        if (b.dataset.val === ans.correct) b.classList.add('correct-ans');
+        else if (b.dataset.val === userVal && userVal !== ans.correct) b.classList.add('wrong-ans');
+      });
+      correct = userVal === ans.correct;
+    } else {
+      const inp = document.getElementById(`fill${n}`);
+      const userVal = (inp ? inp.value.trim().toLowerCase() : '');
+      correct = userVal === ans.correct;
+      if (inp) {
+        inp.disabled = true;
+        inp.classList.add(correct ? 'correct-inp' : 'wrong-inp');
+        if (!correct) inp.value = `✗ "${inp.value}" → correct: "${ans.correct}"`;
+      }
+    }
+
+    qEl.classList.remove('answered');
+    qEl.classList.add(correct ? 'correct' : 'wrong');
+    if (correct) {
+      total++;
+      if (n <= 10) sectionScores[0]++;
+      else if (n <= 20) sectionScores[1]++;
+      else sectionScores[2]++;
+    }
+  }
+
+  // Show results
+  document.getElementById('submitZone').style.display = 'none';
+  const panel = document.getElementById('resultsPanel');
+  panel.classList.add('show');
+
+  document.getElementById('scoreNum').textContent = total;
+  document.getElementById('score1').textContent = `${sectionScores[0]}/10`;
+  document.getElementById('score2').textContent = `${sectionScores[1]}/10`;
+  document.getElementById('score3').textContent = `${sectionScores[2]}/10`;
+
+  const pct = (total / 30) * 100;
+  let grade, msg, cls;
+  if (pct >= 90)      { grade = 'A — Excellent'; cls = 'a'; msg = 'Outstanding performance! You have a strong command of the basic structures in Topics 1–3. Keep it up!'; }
+  else if (pct >= 75) { grade = 'B — Good';      cls = 'b'; msg = 'Good job! You understand most of the material. Review the questions you missed and you will be ready for the next topics.'; }
+  else if (pct >= 60) { grade = 'C — Acceptable';cls = 'c'; msg = 'Acceptable result. It is recommended to review the topics where you had difficulty before moving forward.'; }
+  else                { grade = 'D — Needs Review'; cls = 'd'; msg = 'You need to review Topics 1–3 more carefully. Go back to the lessons and practise the vocabulary and grammar again.'; }
+
+  document.getElementById('gradeTag').textContent = grade;
+  document.getElementById('gradeTag').className = `grade ${cls}`;
+  document.getElementById('resultsTitle').textContent = total >= 20 ? '🎉 Well done!' : 'Keep practising!';
+  document.getElementById('resultsMsg').textContent = msg;
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─────────────────────────────────────────
+//  RETRY
+// ─────────────────────────────────────────
+function retryExam() {
+  location.reload();
+}
+</script>
+</body>
+</html>
