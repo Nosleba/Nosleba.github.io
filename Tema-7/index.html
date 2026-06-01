@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Present Simple Basics — Daily Routines (A1) · 10 Action Verbs</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --border: rgba(255,255,255,0.07);
+  --accent: #00e5c0;
+  --accent2: #4f9eff;
+  --accent3: #ff6b6b;
+  --text: #e8eaf0;
+  --muted: #6b7280;
+  --white: #ffffff;
+  --r: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 28px 0 20px;
+}
+.sidebar-logo {
+  padding: 0 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .course-tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+}
+.sidebar-logo h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.3;
+}
+.nav-list { list-style: none; flex: 1; overflow-y: auto; padding: 18px 0; }
+.nav-item { padding: 0 14px; margin-bottom: 2px; }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: all .2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-link:hover { background: var(--surface2); color: var(--text); }
+.nav-link.active { background: rgba(0,229,192,0.1); border-color: rgba(0,229,192,0.25); color: var(--accent); }
+.nav-step {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: all .2s;
+}
+.nav-link.active .nav-step { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.nav-link.done .nav-step { background: rgba(0,229,192,0.15); border-color: var(--accent); color: var(--accent); }
+.sidebar-footer { padding: 16px 22px 0; border-top: 1px solid var(--border); }
+.progress-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 7px; }
+.progress-bar { background: var(--surface2); border-radius: 999px; height: 4px; }
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width .5s ease;
+  width: 0%;
+}
+
+/* ── MAIN ── */
+.main { margin-left: 220px; min-height: 100vh; }
+.section { display: none; animation: fadeIn .35s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  padding: 52px 56px 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.sec-header::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 40px; top: 30px;
+  font-family: 'Syne', sans-serif;
+  font-size: 6rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -4px;
+}
+.sec-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.sec-title { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+.sec-desc { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.7; font-weight: 300; }
+
+/* ── SECTION BODY ── */
+.sec-body { padding: 44px 56px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+/* ── CARDS ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: border-color .2s, transform .2s; }
+.card:hover { border-color: rgba(0,229,192,0.2); transform: translateY(-2px); }
+.card-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.card-body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* ── IMAGE SLOT ── */
+.img-slot {
+  width: 100%; aspect-ratio: 16/10;
+  background: var(--surface2);
+  border: 1.5px dashed rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; color: var(--muted); font-size: 0.8rem; margin-bottom: 16px; overflow: hidden;
+}
+.img-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+/* ── SUMMARY STRIP ── */
+.summary-strip {
+  display: flex; gap: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden; margin-bottom: 32px;
+}
+.strip-item { flex: 1; padding: 18px 20px; border-right: 1px solid var(--border); text-align: center; }
+.strip-item:last-child { border-right: none; }
+.strip-val { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); display: block; margin-bottom: 4px; }
+.strip-key { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── OBJ LIST ── */
+.obj-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.obj-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+.obj-icon { font-size: 1rem; margin-top: 2px; }
+.obj-text { font-size: 0.9rem; line-height: 1.55; }
+.obj-text strong { color: var(--white); }
+
+/* ── VOCAB GRID (daily actions) ── */
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.family-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 16px;
+  text-align: center;
+  transition: border-color .2s, transform .15s, background .15s;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.family-card:hover { border-color: rgba(0,229,192,0.4); transform: translateY(-3px); background: rgba(0,229,192,0.04); }
+.family-card:active { transform: scale(0.96); }
+.family-card.speaking {
+  border-color: var(--accent) !important;
+  background: rgba(0,229,192,0.12) !important;
+}
+.family-card.speaking .family-word { color: var(--accent) !important; }
+.family-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 10px; display: block; }
+.family-word { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+.family-es { font-size: 0.75rem; color: var(--muted); }
+.family-card::after {
+  content: '♪';
+  position: absolute;
+  bottom: 6px; right: 8px;
+  font-size: 0.55rem;
+  color: var(--muted);
+  opacity: 0.5;
+  transition: opacity .2s;
+}
+.family-card:hover::after { opacity: 1; color: var(--accent); }
+
+/* ── DIALOGUE BLOCK ── */
+.dialogue-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+.dialogue-header { padding: 14px 22px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); }
+.dialogue-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.d-line { display: flex; align-items: flex-start; gap: 14px; }
+.d-speaker { min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.d-speaker.a { background: rgba(0,229,192,0.15); color: var(--accent); border: 1px solid rgba(0,229,192,0.3); }
+.d-speaker.b { background: rgba(79,158,255,0.15); color: var(--accent2); border: 1px solid rgba(79,158,255,0.3); }
+.d-text { font-size: 0.92rem; line-height: 1.55; padding-top: 5px; }
+.d-text strong { color: var(--white); }
+.d-text .note { font-size: 0.76rem; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+/* ── GRAMMAR TABLE ── */
+.g-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+.g-table thead th { background: rgba(255,255,255,0.04); padding: 12px 16px; text-align: left; font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); }
+.g-table tbody td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.g-table tbody tr:last-child td { border-bottom: none; }
+.g-table .en { font-family: 'Syne', sans-serif; font-weight: 600; color: var(--white); font-size: 0.95rem; }
+.g-table .es { color: var(--muted); font-size: 0.82rem; }
+.g-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── PRON BLOCK ── */
+.pron-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pron-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+.pron-symbol { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.pron-name { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.pron-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pron-chip { padding: 4px 12px; background: rgba(0,229,192,0.08); border: 1px solid rgba(0,229,192,0.18); border-radius: 999px; font-size: 0.82rem; color: var(--accent); font-style: italic; }
+.pron-tip { font-size: 0.82rem; color: var(--muted); line-height: 1.6; border-left: 2px solid rgba(0,229,192,0.3); padding-left: 12px; }
+
+/* ── CONTEXT BLOCK ── */
+.context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.context-list { list-style: none; }
+.context-list li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+.context-list li:last-child { border-bottom: none; }
+.context-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 0.78rem; min-width: 20px; padding-top: 2px; }
+
+/* ── PRACTICE ── */
+.fill-blank {
+  display: inline-block; min-width: 90px; padding: 6px 10px; margin: 0 4px;
+  background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+  color: var(--muted); font-weight: 500; text-align: center; transition: all 0.2s;
+}
+.fill-blank.drag-over { border-color: var(--accent); background: rgba(0,229,192,0.1); }
+.fill-blank.filled { background: rgba(0,229,192,0.15); border: 2px solid var(--accent); color: var(--accent); }
+.fill-blank.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+.fill-blank.incorrect { background: rgba(255,107,107,0.2); border-color: var(--accent3); color: var(--accent3); }
+.word-bank-word {
+  display: inline-block; padding: 8px 18px; margin: 5px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+  font-size: 0.9rem; font-weight: 500; cursor: grab; transition: all 0.2s; user-select: none;
+}
+.word-bank-word:active { cursor: grabbing; }
+.word-bank-word.dragging { opacity: 0.5; }
+.word-bank-word.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+.option-btn {
+  display: inline-block; margin: 0 8px; padding: 5px 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  cursor: pointer; transition: all 0.2s;
+}
+.option-btn:hover { background: var(--surface2); border-color: var(--accent2); }
+.option-btn.selected { background: rgba(79,158,255,0.2); border-color: var(--accent2); color: var(--accent2); }
+.option-btn.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+.option-btn.incorrect { background: rgba(255,107,107,0.2); border-color: var(--accent3); color: var(--accent3); }
+.feedback-msg { font-size: 0.85rem; padding: 8px 12px; border-radius: 8px; margin-top: 12px; }
+.feedback-correct { background: rgba(0,229,192,0.1); color: var(--accent); }
+.feedback-incorrect { background: rgba(255,107,107,0.1); color: var(--accent3); }
+.check-btn { margin-top: 12px; padding: 8px 20px; background: var(--accent2); border: none; border-radius: 8px; color: var(--bg); font-weight: 600; cursor: pointer; }
+.check-btn:hover { opacity: 0.9; }
+
+/* ── HIGHLIGHTS ── */
+.hl { color: var(--accent); }
+.hl2 { color: var(--accent2); }
+.hl3 { color: var(--accent3); }
+.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+.tag-green { background: rgba(0,229,192,0.1); color: var(--accent); border: 1px solid rgba(0,229,192,0.2); }
+.tag-blue  { background: rgba(79,158,255,0.1); color: var(--accent2); border: 1px solid rgba(79,158,255,0.2); }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); }
+.nav-btn { display: flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 9px; border: 1px solid var(--border); background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+.nav-btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+.nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 700; }
+.nav-btn.primary:hover { background: #00cca8; }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn:disabled:hover { background: transparent; }
+.page-indicator { font-size: 0.82rem; color: var(--muted); }
+
+/* ── SCROLL ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+/* ── DAILY CHART ── */
+.daily-chart {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.routine-line { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.routine-line:last-child { border: none; }
+.routine-time { font-size: 0.85rem; font-weight: 700; color: var(--accent2); min-width: 70px; text-align: left; }
+.routine-action { font-size: 0.9rem; color: var(--white); text-align: left; }
+
+@media (max-width: 900px) {
+  .sidebar { width: 56px; }
+  .sidebar-logo, .nav-link span, .sidebar-footer .progress-label { display: none; }
+  .nav-link { justify-content: center; padding: 9px; }
+  .main { margin-left: 56px; }
+  .sec-header, .sec-body { padding-left: 28px; padding-right: 28px; }
+  .grid-2, .grid-3, .pron-grid, .context-grid { grid-template-columns: 1fr 1fr; }
+  .family-grid { grid-template-columns: repeat(2, 1fr); }
+  .sec-title { font-size: 1.7rem; }
+  .summary-strip { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="course-tag">English A1 · Month 1 · Week 3</span>
+    <h2>Present Simple Basics</h2>
+  </div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item"><a class="nav-link active" onclick="goTo(0)" data-idx="0"><span class="nav-step">1</span><span>Overview</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(1)" data-idx="1"><span class="nav-step">2</span><span>Vocabulary</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(2)" data-idx="2"><span class="nav-step">3</span><span>Grammar</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(3)" data-idx="3"><span class="nav-step">4</span><span>Dialogue</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(4)" data-idx="4"><span class="nav-step">5</span><span>Pronunciation</span></a></li>
+    <li class="nav-item"><a class="nav-link" onclick="goTo(5)" data-idx="5"><span class="nav-step">6</span><span>Practice</span></a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <div class="progress-label" id="progressLabel">Section 1 of 6</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ═══════════ SECTION 0 — OVERVIEW ═══════════ -->
+  <section class="section active" id="sec0">
+    <div class="sec-header" data-label="10">
+      <div class="sec-eyebrow">Tema 7 · Week 3 · Month 1</div>
+      <h1 class="sec-title">Present Simple Basics</h1>
+      <p class="sec-desc">Learn to talk about daily routines and habits using the present simple tense. Compare "I am happy" (to be) with "I play soccer" (action verbs).</p>
+    </div>
+    <div class="sec-body">
+      <div class="summary-strip">
+        <div class="strip-item"><span class="strip-val hl">10</span><span class="strip-key">Action verbs</span></div>
+        <div class="strip-item"><span class="strip-val hl2">3</span><span class="strip-key">Spelling rules</span></div>
+        <div class="strip-item"><span class="strip-val hl3">/s/ /z/ /ɪz/</span><span class="strip-key">Final sounds</span></div>
+        <div class="strip-item"><span class="strip-val" style="color:var(--white)">A1+</span><span class="strip-key">Real routines</span></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Learning Objectives</p>
+          <ul class="obj-list">
+            <li class="obj-item"><span class="obj-icon">⏰</span><span class="obj-text"><strong>Talk about daily routines</strong> using present simple: <em>I eat breakfast, I go to school.</em></span></li>
+            <li class="obj-item"><span class="obj-icon">🔤</span><span class="obj-text"><strong>Understand the difference</strong> between verb "to be" (I am happy) and action verbs (I play soccer).</span></li>
+            <li class="obj-item"><span class="obj-icon">➕</span><span class="obj-text"><strong>Add -s / -es / -ies</strong> for he, she, it: <em>She plays, He studies, It watches, He goes.</em></span></li>
+            <li class="obj-item"><span class="obj-icon">🎧</span><span class="obj-text"><strong>Identify daily activities</strong> in listening tasks and short conversations.</span></li>
+            <li class="obj-item"><span class="obj-icon">🗣️</span><span class="obj-text"><strong>Pronounce final -s correctly</strong> in <em>plays, drinks, watches, goes, brushes</em>.</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Why This Matters</p>
+          <div class="card" style="margin-bottom:16px"><div class="card-body">The <strong style="color:var(--white)">present simple</strong> is the most common tense in English. You use it every day to describe what you do, what you like, and what happens around you. Mastering it helps you speak fluently about your life.</div></div>
+          <div class="img-slot"><img src="https://www.shutterstock.com/image-photo/mental-therapy-session-young-woman-600nw-2623120047.jpg" alt="Daily routine collage" /></div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" disabled>← Previous</button><span class="page-indicator">1 / 6</span><button class="nav-btn primary" onclick="goTo(1)">Vocabulary →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 1 — VOCABULARY (10 ACTIONS) ═══════════ -->
+  <section class="section" id="sec1">
+    <div class="sec-header" data-label="ACT"><div class="sec-eyebrow">Section 2 of 6</div><h1 class="sec-title">Daily Actions Vocabulary</h1><p class="sec-desc">10 essential verbs for daily routines. Click any card to hear the pronunciation.</p></div>
+    <div class="sec-body">
+      <div class="family-grid" id="vocabGrid"></div>
+      <p style="font-size:0.72rem;color:var(--muted);margin-bottom:24px;text-align:center">♪ Click any card to hear the verb in present simple (base form)</p>
+      <hr class="divider"/>
+      
+      <div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04)">
+        <div class="card-label" style="color:var(--accent3)">⚠ Watch out! — "go" becomes "goes" for he/she</div>
+        <div class="card-body">In present simple: <strong style="color:var(--white)">He goes, she watches, he brushes</strong>. Don't forget the -es for verbs ending in -o, -sh, -ch!</div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(0)">← Overview</button><span class="page-indicator">2 / 6</span><button class="nav-btn primary" onclick="goTo(2)">Grammar →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 2 — GRAMMAR ═══════════ -->
+  <section class="section" id="sec2">
+    <div class="sec-header" data-label="GRM"><div class="sec-eyebrow">Section 3 of 6</div><h1 class="sec-title">Grammar Focus</h1><p class="sec-desc">Key difference: <span class="hl">I am happy</span> (to be) vs <span class="hl2">I play soccer</span> (action). Conjugation rules for present simple.</p></div>
+    <div class="sec-body">
+      <div class="grid-2" style="margin-bottom:28px">
+        <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+          <div class="card-label">Verb TO BE (state / feeling)</div>
+          <div style="margin-top:12px"><div><span style="font-size:0.78rem;color:var(--muted)">Examples:</span></div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">I am happy.</div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">She is a teacher.</div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent)">They are tired.</div>
+          </div>
+          <div class="card-body" style="margin-top:12px;border-left:2px solid var(--accent);padding-left:12px">We use TO BE for feelings, descriptions, and states — NOT for actions.</div>
+        </div>
+        <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04)">
+          <div class="card-label" style="color:var(--accent2)">ACTION VERBS (do / routines)</div>
+          <div style="margin-top:12px"><div><span style="font-size:0.78rem;color:var(--muted)">Examples:</span></div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent2)">I play soccer / drink coffee / go to school.</div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent2)">She studies / watches TV / brushes teeth.</div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.95rem;color:var(--accent2)">We eat dinner at 7.</div>
+          </div>
+          <div class="card-body" style="margin-top:12px;border-left:2px solid var(--accent2);padding-left:12px">Use action verbs to talk about <strong>activities</strong> and <strong>habits</strong>.</div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Present Simple Conjugation Table</p>
+      <table class="g-table" style="margin-bottom:28px">
+        <thead><tr><th>Subject</th><th>Verb form</th><th>Example (play/drink/go/watch)</th><th>Spanish</th></tr></thead>
+        <tbody>
+          <tr><td>I</td><td>base form</td><td class="en">I play / drink / go / watch</td><td class="es">Yo juego/bebo/voy/miro</td></tr>
+          <tr><td>You</td><td>base form</td><td class="en">You play / drink / go / watch</td><td class="es">Tú juegas/bebes/vas/miras</td></tr>
+          <tr><td>We</td><td>base form</td><td class="en">We play / drink / go / watch</td><td class="es">Nosotros jugamos/bebemos/vamos/miramos</td></tr>
+          <tr><td>They</td><td>base form</td><td class="en">They play / drink / go / watch</td><td class="es">Ellos juegan/beben/van/miran</td></tr>
+          <tr><td>He / She / It</td><td>base + <span class="hl">-s/-es/-ies</span></td><td class="en">He plays / drinks / goes / watches</td><td class="es">Él juega/bebe/va/mira</td></tr>
+        </tbody>
+      </table>
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="card"><div class="card-label">📘 Spelling rules (-s / -es / -ies)</div><div class="card-body">• Most verbs: add <strong>-s</strong> (play→plays, drink→drinks)<br/>• Verbs ending in <strong>-sh, -ch, -s, -x, -o</strong>: add <strong>-es</strong> (watch→watches, go→goes, brush→brushes)<br/>• Verbs ending in <strong>consonant + y</strong>: change y to <strong>-ies</strong> (study→studies, cry→cries)</div></div>
+        <div class="card"><div class="card-label">⚠ Important: don't use "to be" for actions</div><div class="card-body">❌ I am play soccer → ✅ I play soccer<br/>❌ She is go to school → ✅ She goes to school.<br/>Remember: <strong>am/is/are</strong> is only for states, not for actions.</div></div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(1)">← Vocabulary</button><span class="page-indicator">3 / 6</span><button class="nav-btn primary" onclick="goTo(3)">Dialogue →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 3 — DIALOGUE ═══════════ -->
+  <section class="section" id="sec3">
+    <div class="sec-header" data-label="DLG"><div class="sec-eyebrow">Section 4 of 6</div><h1 class="sec-title">Dialogue</h1><p class="sec-desc">Real conversations about daily routines using the new verbs.</p></div>
+    <div class="sec-body">
+      <div class="context-grid">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Dialogue 1 — Morning routine</p>
+          <div class="dialogue-wrap">
+            <div class="dialogue-header">Dialogue · What do you do every morning?</div>
+            <div class="dialogue-body">
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"What do you do every morning?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"I wake up at 7, then I drink coffee and eat breakfast."</strong><div class="note">I + base verb</div></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Does your brother go to school early?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Yes, he goes to school at 8 AM and studies English there."</strong><div class="note">He/She + verb-s/es</div></div></div>
+            </div>
+          </div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;margin-top:24px">Dialogue 2 — After school activities</p>
+          <div class="dialogue-wrap">
+            <div class="dialogue-header">Dialogue · Free time & chores</div>
+            <div class="dialogue-body">
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Do you play soccer on weekends?"</strong></div></div>
+              <div class="d-line"><div class="d-speaker b">B</div><div class="d-text"><strong>"Yes, I play with my friends. My sister watches TV or reads books."</strong></div></div>
+              <div class="d-line"><div class="d-speaker a">A</div><div class="d-text"><strong>"Cool! We work on projects together on Fridays."</strong></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="img-slot" style="aspect-ratio:1.2;margin-bottom:0"><img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Kids daily routine" /></div>
+          <div class="card"><div class="card-label">Key phrases from dialogues</div><ul class="context-list"><li><span class="context-num">→</span>What do you do every morning?</li><li><span class="context-num">→</span>I drink coffee / go to school / work.</li><li><span class="context-num">→</span>Does your brother go? → Yes, he goes.</li><li><span class="context-num">→</span>Do you watch TV? → Yes, I watch.</li></ul></div>
+        </div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(2)">← Grammar</button><span class="page-indicator">4 / 6</span><button class="nav-btn primary" onclick="goTo(4)">Pronunciation →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 4 — PRONUNCIATION: FINAL -S ═══════════ -->
+  <section class="section" id="sec4">
+    <div class="sec-header" data-label="SND"><div class="sec-eyebrow">Section 5 of 6</div><h1 class="sec-title">Pronunciation</h1><p class="sec-desc">Final -s in present simple has three different sounds: <span class="hl">/s/ , /z/ , /ɪz/</span>. Learn with all 10 verbs.</p></div>
+    <div class="sec-body">
+      <div class="pron-grid" style="margin-bottom:28px">
+        <div class="pron-card"><div class="pron-symbol">/s/</div><div class="pron-name">Voiceless sound</div><div class="pron-examples"><span class="pron-chip">eats</span><span class="pron-chip">sleeps</span><span class="pron-chip">drinks</span><span class="pron-chip">works</span></div><div class="pron-tip">After voiceless consonants: /p/, /t/, /k/, /f/. No vibration.</div></div>
+        <div class="pron-card"><div class="pron-symbol">/z/</div><div class="pron-name">Voiced sound</div><div class="pron-examples"><span class="pron-chip">plays</span><span class="pron-chip">reads</span><span class="pron-chip">studies</span><span class="pron-chip">goes</span><span class="pron-chip">brushes</span><span class="pron-chip">watches</span></div><div class="pron-tip">After vowels and voiced consonants. Most common! (goes → /ɡoʊz/)</div></div>
+        <div class="pron-card"><div class="pron-symbol">/ɪz/</div><div class="pron-name">Extra syllable</div><div class="pron-examples"><span class="pron-chip">watches</span><span class="pron-chip">brushes</span></div><div class="pron-tip">After -s, -sh, -ch, -x, -z. Adds a syllable: "watch-es" → /ˈwɒtʃ.ɪz/</div></div>
+      </div>
+      <div class="grid-2" style="margin-bottom:28px">
+        <div class="card"><div class="card-label">🎯 Focus on our 10 verbs</div><div class="card-body"><strong>plays, studies, goes, reads, brushes, watches</strong> → /z/ or /ɪz/ (brushes/watches = /ɪz/)<br/><strong>drinks, eats, sleeps, works</strong> → /s/ (voiceless final).</div></div>
+        <div class="card"><div class="card-label">💡 TPR trick — Hand on throat</div><div class="card-body">Place your hand on your throat. Say <strong style="color:var(--accent)">goes, plays</strong> → vibration. Say <strong style="color:var(--accent3)">drinks</strong> → no vibration. Practice the difference!</div></div>
+      </div>
+      <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04)">
+        <div class="card-label">🎧 Listen & repeat</div><div class="card-body">Practice pairs: drink/drinks, go/goes, watch/watches, brush/brushes, work/works. Use the vocabulary cards for accurate audio models.</div>
+      </div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(3)">← Dialogue</button><span class="page-indicator">5 / 6</span><button class="nav-btn primary" onclick="goTo(5)">Practice →</button></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 5 — PRACTICE (expanded) ═══════════ -->
+  <section class="section" id="sec5">
+    <div class="sec-header" data-label="DO"><div class="sec-eyebrow">Section 6 of 6</div><h1 class="sec-title">Practice</h1><p class="sec-desc">Three exercises: drag & drop (8 blanks), multiple choice, and speaking about your routine.</p></div>
+    <div class="sec-body">
+      <div class="grid-2" style="margin-bottom:28px">
+        <div><p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 1 — Choose the correct form (drag & drop)</p>
+          <div class="card" style="margin-bottom:14px"><div class="card-body" style="display:flex;flex-direction:column;gap:14px">
+            <p>1. She <span class="fill-blank" data-blank-idx="0" data-correct="studies">___</span> English every day.</p>
+            <p>2. They <span class="fill-blank" data-blank-idx="1" data-correct="play">___</span> soccer on Saturdays.</p>
+            <p>3. He <span class="fill-blank" data-blank-idx="2" data-correct="eats">___</span> breakfast at 8:00.</p>
+            <p>4. I <span class="fill-blank" data-blank-idx="3" data-correct="read">___</span> a book at night.</p>
+            <p>5. She <span class="fill-blank" data-blank-idx="4" data-correct="drinks">___</span> coffee in the morning.</p>
+            <p>6. He <span class="fill-blank" data-blank-idx="5" data-correct="goes">___</span> to school by bus.</p>
+            <p>7. My dad <span class="fill-blank" data-blank-idx="6" data-correct="works">___</span> at an office.</p>
+            <p>8. We <span class="fill-blank" data-blank-idx="7" data-correct="watch">___</span> TV in the evening.</p>
+          </div></div>
+          <div class="card"><div class="card-label">Word bank (drag to blanks)</div><div style="display:flex;flex-wrap:wrap;gap:8px" id="wordBank">
+            <span class="word-bank-word" draggable="true" data-word="studies">studies</span>
+            <span class="word-bank-word" draggable="true" data-word="play">play</span>
+            <span class="word-bank-word" draggable="true" data-word="eats">eats</span>
+            <span class="word-bank-word" draggable="true" data-word="read">read</span>
+            <span class="word-bank-word" draggable="true" data-word="drinks">drinks</span>
+            <span class="word-bank-word" draggable="true" data-word="goes">goes</span>
+            <span class="word-bank-word" draggable="true" data-word="works">works</span>
+            <span class="word-bank-word" draggable="true" data-word="watch">watch</span>
+            <span class="word-bank-word" draggable="true" data-word="study">study</span>
+            <span class="word-bank-word" draggable="true" data-word="plays">plays</span>
+            <span class="word-bank-word" draggable="true" data-word="drink">drink</span>
+            <span class="word-bank-word" draggable="true" data-word="work">work</span>
+          </div></div>
+          <div id="ex1Feedback" class="feedback-msg"></div><button class="check-btn" onclick="checkExercise1()">Check Exercise 1 ✓</button><button class="check-btn" style="margin-left:10px;background:var(--surface2);color:var(--text);" onclick="resetExercise1()">Reset</button>
+        </div>
+        <div><p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 2 — Multiple choice (verb forms)</p>
+          <div class="card"><div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+            <div><p style="color:var(--muted)">My sister ___ very hard for exams.</p><div data-situation="studies"><span class="option-btn" data-opt="study">(a) study</span><span class="option-btn" data-opt="studies">(b) studies</span><span class="option-btn" data-opt="studyes">(c) studyes</span></div></div>
+            <hr class="divider" style="margin:0"/><div><p style="color:var(--muted)">We ___ dinner together every evening.</p><div data-situation="eat"><span class="option-btn" data-opt="eat">(a) eat</span><span class="option-btn" data-opt="eats">(b) eats</span><span class="option-btn" data-opt="eating">(c) eating</span></div></div>
+            <hr class="divider" style="margin:0"/><div><p style="color:var(--muted)">He ___ video games after school.</p><div data-situation="play"><span class="option-btn" data-opt="play">(a) play</span><span class="option-btn" data-opt="plays">(b) plays</span><span class="option-btn" data-opt="plaies">(c) plaies</span></div></div>
+            <hr class="divider" style="margin:0"/><div><p style="color:var(--muted)">She ___ water every morning.</p><div data-situation="drink"><span class="option-btn" data-opt="drink">(a) drink</span><span class="option-btn" data-opt="drinks">(b) drinks</span><span class="option-btn" data-opt="drinking">(c) drinking</span></div></div>
+            <hr class="divider" style="margin:0"/><div><p style="color:var(--muted)">He ___ to the park on Sundays.</p><div data-situation="go"><span class="option-btn" data-opt="go">(a) go</span><span class="option-btn" data-opt="goes">(b) goes</span><span class="option-btn" data-opt="gos">(c) gos</span></div></div>
+          </div></div>
+          <div id="ex2Feedback" class="feedback-msg"></div><button class="check-btn" onclick="checkExercise2()">Check Exercise 2 ✓</button>
+        </div>
+      </div>
+      <hr class="divider"/>
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">Exercise 3 — Speaking Task: My Daily Routine</p>
+      <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:22px"><div class="card-body"><p>Tell the class about your daily routine. Use at least 6 present simple verbs (play, eat, study, drink, go, work, watch, read, sleep, brush).</p>
+        <div class="dialogue-body" style="padding:0;gap:10px"><div class="d-line"><div class="d-speaker a">🎤</div><div class="d-text"><strong>"Every morning, I drink coffee and eat breakfast. Then I go to school. I study English in the afternoon, and I play soccer after class. At night, I watch TV and read a book. I sleep at 10 PM."</strong></div></div></div>
+      </div></div>
+      <div class="img-slot" style="aspect-ratio:12/6"><img src="https://fortune.com/img-assets/wp-content/uploads/2024/11/GettyImages-1771594783-e1731955854432.jpg?format=webp&w=1440&q=100" alt="present simple daily routine" /></div>
+      <div class="card" style="margin-top:24px"><div class="card-label">Lesson Summary</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px"><div><span class="hl">✓</span> I/You/We/They → base verb</div><div><span class="hl">✓</span> He/She/It → verb + s/es/ies</div><div><span class="hl">✓</span> Difference: to be (state) vs action verbs</div><div><span class="hl">✓</span> Final -s: /s/, /z/, /ɪz/</div><div><span class="hl">✓</span> 10 verbs: play, eat, study, sleep, read, drink, go, work, watch, brush</div><div><span class="hl">✓</span> Talk about routines confidently</div></div></div>
+      <div class="bottom-nav"><button class="nav-btn" onclick="goTo(4)">← Pronunciation</button><span class="page-indicator">6 / 6</span><button class="nav-btn" style="background:var(--surface2);border-color:var(--border);color:var(--text);font-weight:600;cursor:default">✓ Complete</button></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+  function goTo(idx) { if (idx < 0 || idx >= TOTAL) return; document.querySelectorAll('.section').forEach((s,i)=>s.classList.toggle('active', i===idx)); document.querySelectorAll('.nav-link').forEach(l=>{const i=parseInt(l.dataset.idx);l.classList.remove('active','done');if(i===idx) l.classList.add('active');else if(i<idx) l.classList.add('done');}); document.getElementById('progressFill').style.width=((idx+1)/TOTAL*100)+'%'; document.getElementById('progressLabel').textContent=`Section ${idx+1} of ${TOTAL}`; current=idx; window.scrollTo({top:0,behavior:'smooth'});}
+  document.addEventListener('keydown', e=>{if(e.key==='ArrowRight') goTo(current+1); if(e.key==='ArrowLeft') goTo(current-1);});
+  
+  // Speech synthesis for vocabulary (10 verbs)
+  let activeCard=null;
+  function speakWord(word, cardEl){ if(!window.speechSynthesis) return; window.speechSynthesis.cancel(); if(activeCard) activeCard.classList.remove('speaking'); const utter=new SpeechSynthesisUtterance(word); utter.lang='en-US'; utter.rate=0.8; activeCard=cardEl; cardEl.classList.add('speaking'); utter.onend=()=>cardEl.classList.remove('speaking'); utter.onerror=()=>cardEl.classList.remove('speaking'); window.speechSynthesis.speak(utter);}
+  const actions=[{word:'play',emoji:'⚽',es:'jugar'},{word:'eat',emoji:'🍎',es:'comer'},{word:'study',emoji:'📚',es:'estudiar'},{word:'sleep',emoji:'😴',es:'dormir'},{word:'read',emoji:'📖',es:'leer'},{word:'drink',emoji:'🥛',es:'beber'},{word:'go',emoji:'🚶',es:'ir'},{word:'work',emoji:'💼',es:'trabajar'},{word:'watch',emoji:'📺',es:'mirar'},{word:'brush',emoji:'🪥',es:'cepillar'}];
+  const vocabGrid=document.getElementById('vocabGrid');
+  actions.forEach(a=>{const card=document.createElement('div');card.className='family-card';card.innerHTML=`<span class="family-emoji">${a.emoji}</span><div class="family-word">${a.word}</div><div class="family-es">${a.es}</div>`; card.addEventListener('click',()=>speakWord(a.word,card)); vocabGrid.appendChild(card);});
+  
+  // Exercise 1 drag & drop (8 blanks)
+  const blanks=document.querySelectorAll('.fill-blank');
+  const wordBankWords=document.querySelectorAll('.word-bank-word');
+  let userAnswers=new Array(blanks.length).fill(null);
+  let draggedWord=null;
+  wordBankWords.forEach(w=>{w.addEventListener('dragstart',e=>{if(w.classList.contains('used')){e.preventDefault();return false;} draggedWord=w; e.dataTransfer.setData('text/plain',w.getAttribute('data-word')); e.dataTransfer.effectAllowed='copy'; w.classList.add('dragging');}); w.addEventListener('dragend',()=>{w.classList.remove('dragging'); draggedWord=null;});});
+  blanks.forEach(blank=>{blank.addEventListener('dragover',e=>{e.preventDefault(); e.dataTransfer.dropEffect='copy'; blank.classList.add('drag-over');}); blank.addEventListener('dragleave',()=>blank.classList.remove('drag-over')); blank.addEventListener('drop',e=>{e.preventDefault(); blank.classList.remove('drag-over'); if(!draggedWord||draggedWord.classList.contains('used')) return; const word=draggedWord.getAttribute('data-word'); const idx=parseInt(blank.getAttribute('data-blank-idx')); if(userAnswers[idx]!==null){const oldWord=userAnswers[idx]; const oldIdx=Array.from(wordBankWords).findIndex(w=>w.getAttribute('data-word')===oldWord); if(oldIdx!==-1) wordBankWords[oldIdx].classList.remove('used');} userAnswers[idx]=word; blank.textContent=word; blank.classList.add('filled'); blank.classList.remove('incorrect','correct'); draggedWord.classList.add('used'); document.getElementById('ex1Feedback').innerHTML='';});});
+  function resetExercise1(){userAnswers.fill(null); blanks.forEach(b=>{b.textContent='___'; b.classList.remove('filled','correct','incorrect','drag-over');}); wordBankWords.forEach(w=>w.classList.remove('used','dragging')); draggedWord=null; document.getElementById('ex1Feedback').innerHTML='';}
+  function checkExercise1(){ blanks.forEach((blank,idx)=>{ const ans=userAnswers[idx]; blank.classList.remove('correct','incorrect'); if(ans===null) return; let correct=false; const correctAnswers=['studies','play','eats','read','drinks','goes','works','watch']; if(ans===correctAnswers[idx]) correct=true; if(correct) blank.classList.add('correct'); else blank.classList.add('incorrect'); }); const allFilled=userAnswers.every(a=>a!==null); const fb=document.getElementById('ex1Feedback'); const allCorrect = userAnswers.every((ans,i)=> ans===['studies','play','eats','read','drinks','goes','works','watch'][i]); if(allFilled && allCorrect) fb.innerHTML='<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! All 8 verbs are correct. Great subject-verb agreement!</div>'; else fb.innerHTML='<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers wrong: 1=studies, 2=play, 3=eats, 4=read, 5=drinks, 6=goes, 7=works, 8=watch. Check he/she/it + -s/-es!</div>';}
+  
+  // Exercise 2 multiple choice (extended)
+  const mcData={studies:{correct:'studies'}, eat:{correct:'eat'}, play:{correct:'plays'}, drink:{correct:'drinks'}, go:{correct:'goes'}};
+  let userSelections={studies:null, eat:null, play:null, drink:null, go:null};
+  document.querySelectorAll('.option-btn').forEach(btn=>{btn.addEventListener('click',()=>{const container=btn.closest('[data-situation]'); if(!container) return; const sit=container.getAttribute('data-situation'); container.querySelectorAll('.option-btn').forEach(opt=>opt.classList.remove('selected')); btn.classList.add('selected'); userSelections[sit]=btn.getAttribute('data-opt'); document.getElementById('ex2Feedback').innerHTML='';});});
+  function checkExercise2(){ let allCor=true; for(let sit of ['studies','eat','play','drink','go']){ const sel=userSelections[sit]; const cor=mcData[sit].correct; const cont=document.querySelector(`[data-situation="${sit}"]`); if(cont){ cont.querySelectorAll('.option-btn').forEach(opt=>{opt.classList.remove('correct','incorrect'); if(opt.getAttribute('data-opt')===cor) opt.classList.add('correct'); if(opt.getAttribute('data-opt')===sel && sel!==cor) opt.classList.add('incorrect');}); } if(sel!==cor) allCor=false; } const fb=document.getElementById('ex2Feedback'); if(allCor) fb.innerHTML='<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Excellent! You master present simple forms including go→goes, drink→drinks.</div>'; else fb.innerHTML='<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers wrong: sister → studies, we → eat, he → plays, she → drinks, he → goes. Remember -s/-es for third person singular!</div>';}
+</script>
+</body>
+</html>
