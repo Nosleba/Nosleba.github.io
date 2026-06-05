@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam 3 — Topics 7–9 | English A1 | Present Simple + Routines + Time</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --border: rgba(255,255,255,0.07);
+  --accent: #00e5c0;
+  --accent2: #4f9eff;
+  --red: #ff6b6b;
+  --gold: #f0b429;
+  --text: #e8eaf0;
+  --muted: #6b7280;
+  --white: #ffffff;
+  --r: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(13,15,20,0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.topbar-left { display: flex; flex-direction: column; gap: 2px; }
+.topbar-eyebrow { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+.topbar-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+.topbar-right { display: flex; align-items: center; gap: 20px; }
+.counter { font-size: 0.8rem; color: var(--muted); }
+.counter span { color: var(--gold); font-weight: 600; }
+.timer-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 5px 16px;
+  font-family: 'Syne', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+}
+.progress-wrap { width: 140px; background: var(--surface2); border-radius: 99px; height: 5px; }
+.progress-fill { height: 5px; border-radius: 99px; background: linear-gradient(90deg, var(--gold), var(--accent)); transition: width .3s ease; width: 0%; }
+
+.hero {
+  padding: 48px 32px 32px;
+  max-width: 860px; margin: 0 auto;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; gap: 7px;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  color: var(--gold); border: 1px solid rgba(240,180,41,0.3);
+  padding: 6px 14px; border-radius: 99px; margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--white);
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero p { font-size: 0.9rem; color: var(--muted); margin-top: 12px; }
+.start-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  max-width: 500px;
+  margin: 30px auto 0;
+  padding: 32px 24px;
+  text-align: center;
+}
+.btn-start {
+  background: var(--accent);
+  border: none;
+  color: var(--bg);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 14px 40px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-start:hover { opacity: 0.85; transform: scale(1.02); }
+.wrapper { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; display: none; }
+.section-block { margin-bottom: 52px; }
+.section-label {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(240,180,41,0.1); border: 1.5px solid rgba(240,180,41,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 700; color: var(--gold);
+}
+.section-info h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+.section-info p { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+.question {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 20px 18px;
+  margin-bottom: 14px;
+}
+.q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.q-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--surface2);
+  font-size: 0.75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; color: var(--muted);
+}
+.q-text { font-size: 0.95rem; line-height: 1.5; color: var(--text); }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.opt {
+  background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: 9px; padding: 9px 12px; font-size: 0.85rem;
+  color: var(--text); cursor: pointer; text-align: left;
+}
+.opt.selected { border-color: var(--gold); background: rgba(240,180,41,0.1); color: var(--white); }
+.opt.correct-ans { border-color: var(--accent); background: rgba(0,229,192,0.12); color: var(--accent); }
+.opt.wrong-ans { border-color: var(--red); background: rgba(255,107,107,0.1); color: var(--red); }
+.fill-input, .listen-input {
+  background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: 9px; padding: 10px 14px; font-size: 0.9rem;
+  color: var(--white); width: 100%; max-width: 360px; outline: none;
+}
+.fill-input:focus, .listen-input:focus { border-color: rgba(240,180,41,0.5); }
+.fill-input.correct-inp, .listen-input.correct-inp { border-color: var(--accent); color: var(--accent); }
+.fill-input.wrong-inp, .listen-input.wrong-inp { border-color: var(--red); color: var(--red); }
+.listen-btn {
+  background: var(--surface); border: 1px solid var(--accent2);
+  border-radius: 30px; padding: 5px 16px; font-size: 0.7rem;
+  color: var(--accent2); cursor: pointer; margin-right: 12px;
+}
+.listen-btn:hover { background: rgba(79,158,255,0.2); }
+.fill-hint { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+
+.submit-zone {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  margin: 30px 0;
+}
+.btn-submit {
+  background: var(--gold); color: var(--bg); border: none;
+  border-radius: 9px; padding: 12px 32px;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  cursor: pointer;
+}
+.btn-submit:disabled { opacity: 0.4; cursor: default; }
+.results-panel {
+  display: none; background: var(--surface);
+  border-radius: 18px; border: 1px solid var(--border);
+  padding: 36px 28px; text-align: center; margin-top: 30px;
+}
+.results-panel.show { display: block; }
+.score-ring {
+  width: 110px; height: 110px; border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 3px solid var(--gold);
+}
+.score-num { font-size: 2.2rem; color: var(--gold); font-weight: 800; }
+.grade { display: inline-block; padding: 5px 18px; border-radius: 99px; margin-bottom: 16px; }
+.grade.a { background: rgba(0,229,192,0.15); color: var(--accent); }
+.grade.b { background: rgba(79,158,255,0.12); color: var(--accent2); }
+.grade.c { background: rgba(240,180,41,0.12); color: var(--gold); }
+.grade.d { background: rgba(255,107,107,0.1); color: var(--red); }
+.breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0; }
+.btn-retry { background: transparent; border: 1.5px solid var(--border); color: var(--text); border-radius: 9px; padding: 10px 24px; cursor: pointer; margin-right: 10px; }
+@media (max-width: 600px) { .options { grid-template-columns: 1fr; } .topbar { padding: 10px 16px; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-eyebrow">English A1 — Exam 3</span>
+    <span class="topbar-title">Topics 7 · 8 · 9 | Present Simple, Routines, Days & Time</span>
+  </div>
+  <div class="topbar-right">
+    <span class="counter">Answered: <span id="answeredCount">0</span> / 30</span>
+    <div class="timer-box" id="timerDisplay">20:00</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-badge">📝 Final assessment · Topics 7–9</span>
+  <h1>Exam <em>3</em></h1>
+  <p>Present Simple (actions vs to be), daily routines, days of the week, telling time, and prepositions.</p>
+  <div class="start-panel" id="startPanel">
+    <p style="margin-bottom: 20px;">⏱️ 20 minutes · 30 questions · 3 sections</p>
+    <button class="btn-start" id="startExamBtn">▶ Start Exam</button>
+  </div>
+</div>
+
+<div class="wrapper" id="examWrapper">
+  <div id="questionsContainer"></div>
+  <div class="submit-zone">
+    <button class="btn-submit" id="submitBtn">✔ Submit Exam</button>
+  </div>
+  <div class="results-panel" id="resultsPanel">
+    <div class="score-ring"><span class="score-num" id="scoreNum">0</span><span style="font-size:0.7rem;">/30</span></div>
+    <h2 id="resultsTitle">Your Results</h2>
+    <span class="grade" id="gradeTag"></span>
+    <p id="resultsMsg"></p>
+    <div class="breakdown">
+      <div><div class="bi-score" id="score7">—</div><div class="bi-label">Topic 7<br>Present Simple</div></div>
+      <div><div class="bi-score" id="score8">—</div><div class="bi-label">Topic 8<br>Routines</div></div>
+      <div><div class="bi-score" id="score9">—</div><div class="bi-label">Topic 9<br>Days & Time</div></div>
+    </div>
+    <button class="btn-retry" id="retryBtn">↺ Try Again</button>
+  </div>
+</div>
+
+<script>
+// ---------- QUESTION BANK (30 unique questions, no duplicated answers) ----------
+// Changed listen #10 from "sleep" to "work" to avoid repetition with question #18.
+const QUESTIONS = [
+  // TOPIC 7: Present Simple Basics (questions 1-10)
+  { id:1, topic:7, type:'mc', text:'She ___ to school every day.', options:['go','goes','going','to go'], correct:'goes' },
+  { id:2, topic:7, type:'mc', text:'We ___ breakfast at 7 AM.', options:['eat','eats','eating','am eat'], correct:'eat' },
+  { id:3, topic:7, type:'mc', text:'Which sentence is correct?', options:['He play soccer.','He plays soccer.','He playing soccer.','He do play soccer.'], correct:'He plays soccer.' },
+  { id:4, topic:7, type:'fill', text:'Complete: "My brother _______ (study) English every night."', correct:'studies' },
+  { id:5, topic:7, type:'mc', text:'What is the third person singular form of "watch"?', options:['watchs','watches','watch','watching'], correct:'watches' },
+  { id:6, topic:7, type:'fill', text:'Write the correct verb: "I _______ (play) guitar on weekends."', correct:'play' },
+  { id:7, topic:7, type:'mc', text:'Choose the correct negative sentence (grammar rule reminder):', options:['I don’t like coffee.','I no like coffee.','I doesn’t like coffee.','I am not like coffee.'], correct:'I don’t like coffee.' },
+  { id:8, topic:7, type:'mc', text:'What does "He goes to work" mean in Spanish?', options:['Él va a trabajar','Él ir trabajar','Él va trabajo','Él va al trabajo'], correct:'Él va a trabajar' },
+  { id:9, topic:7, type:'fill', text:'Fill: "My sister _______ (brush) her teeth twice a day."', correct:'brushes' },
+  // listen #10 changed from "sleep" to "work" (distinct from #18)
+  { id:10, topic:7, type:'listen', text:'Listen: What daily activity does the speaker say? (type the base verb)', correct:'work', audioHint:'work' },
+  
+  // TOPIC 8: Daily Routines (11-20) — includes "sleep" as listening #18
+  { id:11, topic:8, type:'mc', text:'What do you do in the morning?', options:['I go to bed.','I wake up.','I sleep all day.','I watch TV at midnight.'], correct:'I wake up.' },
+  { id:12, topic:8, type:'mc', text:'Which sentence is correct about daily routine?', options:['She go to school at 8.','She goes to school at 8.','She going to school.','She are go to school.'], correct:'She goes to school at 8.' },
+  { id:13, topic:8, type:'fill', text:'Complete: "After school, I _______ (play) with my friends."', correct:'play' },
+  { id:14, topic:8, type:'mc', text:'What does "eat breakfast" mean?', options:['desayunar','almorzar','cenar','comer algo'], correct:'desayunar' },
+  { id:15, topic:8, type:'mc', text:'Choose the correct routine order:', options:['Wake up → sleep → eat breakfast','Eat breakfast → go to school → wake up','Wake up → eat breakfast → go to school','Go to school → wake up → eat breakfast'], correct:'Wake up → eat breakfast → go to school' },
+  { id:16, topic:8, type:'fill', text:'Verb needed: "He _______ (study) in the library every afternoon."', correct:'studies' },
+  { id:17, topic:8, type:'mc', text:'Which phrase means "ir a la escuela"?', options:['go to work','go to school','go to bed','go shopping'], correct:'go to school' },
+  { id:18, topic:8, type:'listen', text:'Listen to the sentence and type the missing verb: "I _______ at 10 PM."', correct:'sleep', audioHint:'sleep' },
+  { id:19, topic:8, type:'mc', text:'My brother is a student. He _______ to school by bus.', options:['go','going','goes','to go'], correct:'goes' },
+  { id:20, topic:8, type:'fill', text:'Complete: "Every morning we _______ (eat) breakfast together."', correct:'eat' },
+  
+  // TOPIC 9: Days, Parts of Day, Time (21-30)
+  { id:21, topic:9, type:'mc', text:'What day comes after Tuesday?', options:['Monday','Wednesday','Thursday','Friday'], correct:'Wednesday' },
+  { id:22, topic:9, type:'mc', text:'What time is "quarter past three"?', options:['3:15','3:30','3:45','3:00'], correct:'3:15' },
+  { id:23, topic:9, type:'fill', text:'Write the time in words: 2:30 → ', correct:'half past two' },
+  { id:24, topic:9, type:'mc', text:'Choose the correct preposition: "I study ___ the morning."', options:['in','on','at','for'], correct:'in' },
+  { id:25, topic:9, type:'mc', text:'Which day is the first day of the week in English calendars?', options:['Monday','Sunday','Saturday','Friday'], correct:'Monday' },
+  { id:26, topic:9, type:'listen', text:'Listen to the time and write it (e.g., "quarter to eight")', correct:'quarter to eight', audioHint:'quarter to eight' },
+  { id:27, topic:9, type:'mc', text:'Correct preposition: "We play soccer ___ Saturday."', options:['in','on','at','by'], correct:'on' },
+  { id:28, topic:9, type:'fill', text:'Complete: "Today is ______ (day after Wednesday)."', correct:'thursday' },
+  { id:29, topic:9, type:'mc', text:'What is "evening"?', options:['early morning','between afternoon and night','midnight','12 PM'], correct:'between afternoon and night' },
+  { id:30, topic:9, type:'fill', text:'Write the time: 5:45 → ', correct:'quarter to six' }
+];
+
+let examStarted = false;
+let timerInterval = null;
+let timeLeft = 20 * 60; // 20 minutes in seconds
+let userAnswers = new Array(30).fill(null);
+let submitted = false;
+
+// DOM elements
+const startPanel = document.getElementById('startPanel');
+const examWrapper = document.getElementById('examWrapper');
+const startBtn = document.getElementById('startExamBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resultsPanel = document.getElementById('resultsPanel');
+const timerDisplay = document.getElementById('timerDisplay');
+const answeredSpan = document.getElementById('answeredCount');
+const progressFill = document.getElementById('progressFill');
+
+// Render all questions dynamically
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  let topicSections = { 7: [], 8: [], 9: [] };
+  QUESTIONS.forEach((q) => {
+    topicSections[q.topic].push(q);
+  });
+  for (let topic of [7,8,9]) {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section-block';
+    let topicName = topic === 7 ? 'Present Simple Basics' : (topic === 8 ? 'Daily Routines' : 'Days, Time & Prepositions');
+    sectionDiv.innerHTML = `
+      <div class="section-label">
+        <div class="section-num">${topic}</div>
+        <div class="section-info"><h3>Topic ${topic} — ${topicName}</h3><p>Questions ${topic === 7 ? '1–10' : (topic === 8 ? '11–20' : '21–30')}</p></div>
+      </div>
+    `;
+    const questionsOfTopic = topicSections[topic];
+    questionsOfTopic.forEach((q) => {
+      const globalId = q.id - 1;
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = `q${q.id}`;
+      let innerHtml = `<div class="q-header"><span class="q-num">${q.id}</span><span class="q-text">${q.text}</span></div>`;
+      if (q.type === 'mc') {
+        let optsHtml = `<div class="options">`;
+        q.options.forEach(opt => {
+          optsHtml += `<button class="opt" data-qid="${q.id}" data-val="${opt}">${opt}</button>`;
+        });
+        optsHtml += `</div>`;
+        innerHtml += optsHtml;
+      } else if (q.type === 'fill') {
+        innerHtml += `<div class="fill-wrap"><input class="fill-input" id="fill${q.id}" type="text" placeholder="Type your answer..." autocomplete="off"/><div class="fill-hint">✏️ Write the correct form.</div></div>`;
+      } else if (q.type === 'listen') {
+        innerHtml += `<div class="fill-wrap"><button class="listen-btn" data-listenid="${q.id}">🔊 Listen</button><input class="listen-input" id="listen${q.id}" type="text" placeholder="Write what you hear..." style="width:70%"/><div class="fill-hint">🎧 Click listen, then write the word/phrase.</div></div>`;
+      }
+      qDiv.innerHTML = innerHtml;
+      sectionDiv.appendChild(qDiv);
+    });
+    container.appendChild(sectionDiv);
+  }
+  attachEventListeners();
+}
+
+function attachEventListeners() {
+  // MC clicks
+  document.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!examStarted || submitted) return;
+      const qid = parseInt(btn.dataset.qid);
+      const selectedVal = btn.dataset.val;
+      const questionDiv = document.getElementById(`q${qid}`);
+      questionDiv.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      userAnswers[qid-1] = selectedVal;
+      updateProgress();
+    });
+  });
+  // Fill inputs
+  QUESTIONS.forEach(q => {
+    if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+      const listenBtn = document.querySelector(`.listen-btn[data-listenid="${q.id}"]`);
+      if (listenBtn) {
+        listenBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const phrase = q.audioHint || q.correct;
+          speakPhrase(phrase);
+        });
+      }
+    }
+  });
+}
+
+function speakPhrase(phrase) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(phrase);
+  utter.lang = 'en-US';
+  utter.rate = 0.75;
+  window.speechSynthesis.speak(utter);
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null && a !== '').length;
+  answeredSpan.innerText = answered;
+  progressFill.style.width = (answered / 30 * 100) + '%';
+}
+
+// Timer logic
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!examStarted || submitted) return;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!submitted) submitExam(true);
+    } else {
+      timeLeft--;
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      timerDisplay.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      if (timeLeft === 0) timerDisplay.innerText = "0:00";
+    }
+  }, 1000);
+}
+
+// Evaluate all answers
+function evaluateExam() {
+  let total = 0;
+  let topicScores = {7:0,8:0,9:0};
+  const topicCounts = {7:0,8:0,9:0};
+  QUESTIONS.forEach((q, idx) => {
+    topicCounts[q.topic]++;
+    let isCorrect = false;
+    const userAns = userAnswers[idx];
+    if (q.type === 'mc') {
+      isCorrect = (userAns === q.correct);
+    } else { // fill or listen
+      const normalizedUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      const normalizedCorrect = q.correct.toLowerCase().trim();
+      isCorrect = (normalizedUser === normalizedCorrect);
+    }
+    if (isCorrect) { total++; topicScores[q.topic]++; }
+    // Mark UI (show correct/wrong after submission)
+    const questionDiv = document.getElementById(`q${q.id}`);
+    if (!questionDiv) return;
+    if (q.type === 'mc') {
+      const options = questionDiv.querySelectorAll('.opt');
+      options.forEach(opt => {
+        opt.disabled = true;
+        if (opt.dataset.val === q.correct) opt.classList.add('correct-ans');
+        if (opt.dataset.val === userAns && userAns !== q.correct) opt.classList.add('wrong-ans');
+      });
+    } else if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    }
+    questionDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+  });
+  return { total, topicScores, topicCounts };
+}
+
+function submitExam(autoTimeout = false) {
+  if (submitted) return;
+  submitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  examStarted = false;
+  const { total, topicScores, topicCounts } = evaluateExam();
+  // Disable all remaining inputs
+  document.querySelectorAll('.opt, .fill-input, .listen-input').forEach(el => el.disabled = true);
+  document.getElementById('submitBtn').disabled = true;
+  
+  // Show results panel
+  resultsPanel.classList.add('show');
+  document.getElementById('scoreNum').innerHTML = total;
+  document.getElementById('score7').innerText = `${topicScores[7]}/${topicCounts[7]}`;
+  document.getElementById('score8').innerText = `${topicScores[8]}/${topicCounts[8]}`;
+  document.getElementById('score9').innerText = `${topicScores[9]}/${topicCounts[9]}`;
+  const pct = (total / 30) * 100;
+  let grade, msg, cls;
+  if (pct >= 90) { grade = 'A — Excellent'; cls = 'a'; msg = 'Outstanding! You master Present Simple, routines, and time expressions.'; }
+  else if (pct >= 75) { grade = 'B — Good'; cls = 'b'; msg = 'Good job! Review third person -s and time prepositions to perfect.'; }
+  else if (pct >= 60) { grade = 'C — Acceptable'; cls = 'c'; msg = 'Acceptable. Study the verb endings for he/she/it and daily routine vocabulary.'; }
+  else { grade = 'D — Needs Review'; cls = 'd'; msg = 'Review Topics 7,8,9: action verbs, daily routines, days, and telling time.'; }
+  document.getElementById('gradeTag').innerHTML = grade;
+  document.getElementById('gradeTag').className = `grade ${cls}`;
+  document.getElementById('resultsTitle').innerHTML = total >= 20 ? '🎉 Well done!' : 'Keep practising!';
+  document.getElementById('resultsMsg').innerHTML = msg;
+  if (autoTimeout) {
+    document.getElementById('resultsMsg').innerHTML += `<br><span style="color:var(--accent3)">⏰ Time is up! Exam auto-submitted.</span>`;
+  }
+  resultsPanel.scrollIntoView({ behavior: 'smooth' });
+}
+
+function startExam() {
+  if (examStarted) return;
+  examStarted = true;
+  startPanel.style.display = 'none';
+  examWrapper.style.display = 'block';
+  renderQuestions();
+  // Reset userAnswers array after render
+  userAnswers = new Array(30).fill(null);
+  submitted = false;
+  timeLeft = 20 * 60;
+  timerDisplay.innerText = "20:00";
+  if (timerInterval) clearInterval(timerInterval);
+  startTimer();
+  updateProgress();
+}
+
+// Retry reloads page to reset fully
+document.getElementById('retryBtn')?.addEventListener('click', () => location.reload());
+startBtn.addEventListener('click', startExam);
+submitBtn.addEventListener('click', () => { if (examStarted && !submitted) submitExam(false); });
+
+// pre-show wrapper hidden until start
+examWrapper.style.display = 'none';
+resultsPanel.classList.remove('show');
+</script>
+</body>
+</html>
