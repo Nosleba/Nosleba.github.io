@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 4 · Review & Project — English A1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== ROOT & RESET ===== */
+        :root {
+            --bg: #0d0f14;
+            --surface: #141720;
+            --surface2: #1c2030;
+            --border: rgba(255, 255, 255, 0.07);
+            --accent: #00e5c0;
+            --accent2: #4f9eff;
+            --accent3: #ff6b6b;
+            --text: #e8eaf0;
+            --muted: #6b7280;
+            --white: #ffffff;
+            --r: 14px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 220px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            padding: 28px 0 20px;
+        }
+        .sidebar-logo {
+            padding: 0 22px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .sidebar-logo .course-tag {
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .sidebar-logo h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.3;
+        }
+        .nav-list {
+            list-style: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 0;
+        }
+        .nav-item {
+            padding: 0 14px;
+            margin-bottom: 2px;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--muted);
+            border: 1px solid transparent;
+            transition: all .2s;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            background: var(--surface2);
+            color: var(--text);
+        }
+        .nav-link.active {
+            background: rgba(0, 229, 192, 0.1);
+            border-color: rgba(0, 229, 192, 0.25);
+            color: var(--accent);
+        }
+        .nav-step {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--muted);
+            transition: all .2s;
+        }
+        .nav-link.active .nav-step {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+        .nav-link.done .nav-step {
+            background: rgba(0, 229, 192, 0.15);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .sidebar-footer {
+            padding: 16px 22px 0;
+            border-top: 1px solid var(--border);
+        }
+        .progress-label {
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+        .progress-bar {
+            background: var(--surface2);
+            border-radius: 999px;
+            height: 4px;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            transition: width .5s ease;
+            width: 0%;
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            margin-left: 220px;
+            min-height: 100vh;
+        }
+        .section {
+            display: none;
+            animation: fadeIn .35s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SECTION HEADER ===== */
+        .sec-header {
+            padding: 52px 56px 40px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .sec-header::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 40px;
+            top: 30px;
+            font-family: 'Syne', sans-serif;
+            font-size: 6rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            line-height: 1;
+            pointer-events: none;
+            letter-spacing: -4px;
+        }
+        .sec-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+        .sec-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+        .sec-desc {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 650px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ===== SECTION BODY ===== */
+        .sec-body {
+            padding: 44px 56px;
+        }
+
+        /* ===== GRIDS ===== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            transition: border-color .2s, transform .2s;
+        }
+        .card:hover {
+            border-color: rgba(0, 229, 192, 0.2);
+            transform: translateY(-2px);
+        }
+        .card-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .card-body {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ===== IMAGE SLOT ===== */
+        .img-slot {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--surface2);
+            border: 1.5px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .img-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* ===== SUMMARY STRIP ===== */
+        .summary-strip {
+            display: flex;
+            gap: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+        .strip-item {
+            flex: 1;
+            padding: 18px 20px;
+            border-right: 1px solid var(--border);
+            text-align: center;
+        }
+        .strip-item:last-child {
+            border-right: none;
+        }
+        .strip-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--white);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .strip-key {
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== OBJ LIST ===== */
+        .obj-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .obj-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 14px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .obj-icon {
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        .obj-text {
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+        .obj-text strong {
+            color: var(--white);
+        }
+
+        /* ===== VOCAB CARDS (click-to-speak) ===== */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .vocab-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px 12px;
+            text-align: center;
+            transition: border-color .2s, transform .15s, background .15s;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .vocab-card:hover {
+            border-color: rgba(0, 229, 192, 0.4);
+            transform: translateY(-3px);
+            background: rgba(0, 229, 192, 0.04);
+        }
+        .vocab-card:active {
+            transform: scale(0.96);
+        }
+        .vocab-card.speaking {
+            border-color: var(--accent) !important;
+            background: rgba(0, 229, 192, 0.12) !important;
+        }
+        .vocab-card.speaking .vocab-word {
+            color: var(--accent) !important;
+        }
+        .vocab-word {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .vocab-es {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        .vocab-card::after {
+            content: '♪';
+            position: absolute;
+            bottom: 6px;
+            right: 8px;
+            font-size: 0.55rem;
+            color: var(--muted);
+            opacity: 0.5;
+            transition: opacity .2s;
+        }
+        .vocab-card:hover::after {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        /* ===== DIALOGUE ===== */
+        .dialogue-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .dialogue-header {
+            padding: 14px 22px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+        .dialogue-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .d-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .d-speaker {
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .d-speaker.a {
+            background: rgba(0, 229, 192, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(0, 229, 192, 0.3);
+        }
+        .d-speaker.b {
+            background: rgba(79, 158, 255, 0.15);
+            color: var(--accent2);
+            border: 1px solid rgba(79, 158, 255, 0.3);
+        }
+        .d-text {
+            font-size: 0.92rem;
+            line-height: 1.55;
+            padding-top: 5px;
+        }
+        .d-text strong {
+            color: var(--white);
+        }
+        .d-text .note {
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 3px;
+        }
+
+        /* ===== GRAMMAR TABLE ===== */
+        .g-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            margin-top: 8px;
+        }
+        .g-table thead th {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+        }
+        .g-table tbody td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .g-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .g-table .en {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            color: var(--white);
+            font-size: 0.95rem;
+        }
+        .g-table .es {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+        .g-table tbody tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ===== CONTEXT LIST ===== */
+        .context-list {
+            list-style: none;
+        }
+        .context-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.88rem;
+        }
+        .context-list li:last-child {
+            border-bottom: none;
+        }
+        .context-num {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.78rem;
+            min-width: 20px;
+            padding-top: 2px;
+        }
+
+        /* ===== PRACTICE ===== */
+        .fill-blank {
+            display: inline-block;
+            min-width: 90px;
+            padding: 6px 10px;
+            margin: 0 4px;
+            background: var(--surface2);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            color: var(--muted);
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .fill-blank.drag-over {
+            border-color: var(--accent);
+            background: rgba(0, 229, 192, 0.1);
+        }
+        .fill-blank.filled {
+            background: rgba(0, 229, 192, 0.15);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .fill-blank.correct {
+            background: rgba(0, 229, 192, 0.25);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .fill-blank.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: var(--accent3);
+            color: var(--accent3);
+        }
+        .word-bank-word {
+            display: inline-block;
+            padding: 8px 18px;
+            margin: 5px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: grab;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .word-bank-word:active {
+            cursor: grabbing;
+        }
+        .word-bank-word.dragging {
+            opacity: 0.5;
+        }
+        .word-bank-word.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            background: var(--surface2);
+        }
+        .option-btn {
+            display: inline-block;
+            margin: 0 6px 6px 0;
+            padding: 5px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+        .option-btn:hover {
+            background: var(--surface2);
+            border-color: var(--accent2);
+        }
+        .option-btn.selected {
+            background: rgba(79, 158, 255, 0.2);
+            border-color: var(--accent2);
+            color: var(--accent2);
+        }
+        .option-btn.correct {
+            background: rgba(0, 229, 192, 0.25);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .option-btn.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: var(--accent3);
+            color: var(--accent3);
+        }
+        .feedback-msg {
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+        .feedback-correct {
+            background: rgba(0, 229, 192, 0.1);
+            color: var(--accent);
+        }
+        .feedback-incorrect {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent3);
+        }
+        .check-btn {
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: var(--accent2);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg);
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .check-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== WRITE INPUTS ===== */
+        .write-input {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--white);
+            width: 180px;
+            margin: 0 6px;
+        }
+        .write-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .write-input-sm {
+            width: 100px;
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .nav-btn:hover {
+            background: var(--surface2);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .nav-btn.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+            font-weight: 700;
+        }
+        .nav-btn.primary:hover {
+            background: #00cca8;
+        }
+        .nav-btn:disabled {
+            opacity: 0.25;
+            cursor: default;
+        }
+        .nav-btn:disabled:hover {
+            background: transparent;
+        }
+        .page-indicator {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        /* ===== HIGHLIGHTS ===== */
+        .hl {
+            color: var(--accent);
+        }
+        .hl2 {
+            color: var(--accent2);
+        }
+        .hl3 {
+            color: var(--accent3);
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 28px 0;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+        .tag-green {
+            background: rgba(0, 229, 192, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 229, 192, 0.2);
+        }
+        .tag-blue {
+            background: rgba(79, 158, 255, 0.1);
+            color: var(--accent2);
+            border: 1px solid rgba(79, 158, 255, 0.2);
+        }
+        .tag-red {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent3);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+        .tag-gold {
+            background: rgba(255, 179, 71, 0.1);
+            color: #ffb347;
+            border: 1px solid rgba(255, 179, 71, 0.2);
+        }
+
+        /* ===== PROJECT SECTION ===== */
+        .project-instructions {
+            background: var(--surface);
+            border: 2px solid rgba(0, 229, 192, 0.2);
+            border-radius: var(--r);
+            padding: 32px 28px;
+            margin-bottom: 24px;
+        }
+        .project-check {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .project-check-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: var(--surface2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+        .project-check-item .check-icon {
+            font-size: 1.2rem;
+            color: var(--muted);
+        }
+        .project-check-item.done .check-icon {
+            color: var(--accent);
+        }
+        .project-check-item.done {
+            border-color: rgba(0, 229, 192, 0.3);
+            background: rgba(0, 229, 192, 0.04);
+        }
+
+        /* ===== SCROLL ===== */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 56px;
+            }
+            .sidebar-logo,
+            .nav-link span,
+            .sidebar-footer .progress-label {
+                display: none;
+            }
+            .nav-link {
+                justify-content: center;
+                padding: 9px;
+            }
+            .main {
+                margin-left: 56px;
+            }
+            .sec-header,
+            .sec-body {
+                padding-left: 28px;
+                padding-right: 28px;
+            }
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .vocab-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .sec-title {
+                font-size: 1.7rem;
+            }
+            .summary-strip {
+                flex-wrap: wrap;
+            }
+            .project-check {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .vocab-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="course-tag">Week 4 · Month 1 · Review</span>
+            <h2>Review &amp; Project</h2>
+        </div>
+        <ul class="nav-list" id="navList">
+            <li class="nav-item"><a class="nav-link active" onclick="goTo(0)" data-idx="0"><span class="nav-step">1</span><span>Overview</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="goTo(1)" data-idx="1"><span class="nav-step">2</span><span>Greetings &amp; To Be</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="goTo(2)" data-idx="2"><span class="nav-step">3</span><span>Family &amp; Adjectives</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="goTo(3)" data-idx="3"><span class="nav-step">4</span><span>Routines &amp; Time</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="goTo(4)" data-idx="4"><span class="nav-step">5</span><span>Question Words</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="goTo(5)" data-idx="5"><span class="nav-step">6</span><span>Practice</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="goTo(6)" data-idx="6"><span class="nav-step">7</span><span>Project</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="progress-label" id="progressLabel">Section 1 of 7</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main">
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 0 — OVERVIEW                                   -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section active" id="sec0">
+            <div class="sec-header" data-label="W4">
+                <div class="sec-eyebrow">Week 4 · Month 1 · Review &amp; Project</div>
+                <h1 class="sec-title">Consolidate Everything<br>You've Learned</h1>
+                <p class="sec-desc">Review all Month 1 topics — Greetings, Verb to Be, Pronouns, Family, Adjectives, Daily Routines, and Time — then master <strong>Question Words</strong> and complete your final <strong>"About Me"</strong> project.</p>
+            </div>
+            <div class="sec-body">
+                <div class="summary-strip">
+                    <div class="strip-item"><span class="strip-val hl">7</span><span class="strip-key">Topics Reviewed</span></div>
+                    <div class="strip-item"><span class="strip-val hl2">5</span><span class="strip-key">Question Words</span></div>
+                    <div class="strip-item"><span class="strip-val hl3">6</span><span class="strip-key">Project Items</span></div>
+                    <div class="strip-item"><span class="strip-val" style="color:var(--white)">A1</span><span class="strip-key">Final Week</span></div>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">What You Will Do</p>
+                        <ul class="obj-list">
+                            <li class="obj-item"><span class="obj-icon">🔄</span><span class="obj-text"><strong>Review</strong> all key vocabulary and grammar from Topics 1–9.</span></li>
+                            <li class="obj-item"><span class="obj-icon">❓</span><span class="obj-text"><strong>Learn</strong> the 5 Question Words: What, Where, Who, When, How.</span></li>
+                            <li class="obj-item"><span class="obj-icon">🗣️</span><span class="obj-text"><strong>Practice</strong> forming and answering basic questions.</span></li>
+                            <li class="obj-item"><span class="obj-icon">👂</span><span class="obj-text"><strong>Identify</strong> WH-questions in listening tasks.</span></li>
+                            <li class="obj-item"><span class="obj-icon">📝</span><span class="obj-text"><strong>Create</strong> your "About Me" project — draw, write, and present.</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Topics Covered</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+                            <span class="tag tag-green">Greetings</span>
+                            <span class="tag tag-blue">Verb to Be</span>
+                            <span class="tag tag-gold">Pronouns</span>
+                            <span class="tag tag-green">Family</span>
+                            <span class="tag tag-blue">Adjectives</span>
+                            <span class="tag tag-gold">Daily Routines</span>
+                            <span class="tag tag-red">Time</span>
+                            <span class="tag tag-green">Question Words</span>
+                        </div>
+                        <div class="img-slot"><img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Review and project illustration" /></div>
+                    </div>
+                </div>
+                <div class="bottom-nav"><button class="nav-btn" disabled>← Previous</button><span class="page-indicator">1 / 7</span><button class="nav-btn primary" onclick="goTo(1)">Greetings →</button></div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 1 — GREETINGS & VERB TO BE (Review)          -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section" id="sec1">
+            <div class="sec-header" data-label="01">
+                <div class="sec-eyebrow">Review · Topics 1–2</div>
+                <h1 class="sec-title">Greetings &amp; Verb To Be</h1>
+                <p class="sec-desc">Quick review: greetings, introductions, personal pronouns, and the verb <strong>to be</strong> in present simple.</p>
+            </div>
+            <div class="sec-body">
+                <div class="grid-2">
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Greetings — Formal &amp; Informal</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);">Hello</div>
+                                <div style="font-size:0.7rem;color:var(--muted);">Formal / Informal</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);">Hi</div>
+                                <div style="font-size:0.7rem;color:var(--muted);">Informal</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);">Good morning</div>
+                                <div style="font-size:0.7rem;color:var(--muted);">Formal</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);">Good afternoon</div>
+                                <div style="font-size:0.7rem;color:var(--muted);">Formal</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);">Goodbye</div>
+                                <div style="font-size:0.7rem;color:var(--muted);">Formal / Informal</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--white);">Nice to meet you</div>
+                                <div style="font-size:0.7rem;color:var(--muted);">Formal / Informal</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Verb To Be — Present Simple</p>
+                        <table class="g-table">
+                            <thead><tr><th>Subject</th><th>Verb</th><th>Example</th></tr></thead>
+                            <tbody>
+                                <tr><td class="en">I</td><td class="en"><span class="hl">am</span></td><td class="es">I am happy.</td></tr>
+                                <tr><td class="en">You</td><td class="en"><span class="hl">are</span></td><td class="es">You are tall.</td></tr>
+                                <tr><td class="en">He / She / It</td><td class="en"><span class="hl">is</span></td><td class="es">She is kind.</td></tr>
+                                <tr><td class="en">We / They</td><td class="en"><span class="hl">are</span></td><td class="es">They are friends.</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="card" style="margin-top:14px;border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04);">
+                            <div class="card-label" style="color:var(--accent3);">Contractions</div>
+                            <div class="card-body">
+                                I am → <strong style="color:var(--white);">I'm</strong> &nbsp;·&nbsp; You are → <strong style="color:var(--white);">You're</strong><br/>
+                                He is → <strong style="color:var(--white);">He's</strong> &nbsp;·&nbsp; She is → <strong style="color:var(--white);">She's</strong><br/>
+                                It is → <strong style="color:var(--white);">It's</strong> &nbsp;·&nbsp; We are → <strong style="color:var(--white);">We're</strong> &nbsp;·&nbsp; They are → <strong style="color:var(--white);">They're</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);">
+                    <div class="card-label" style="color:var(--accent2);">Key Phrases</div>
+                    <div class="card-body">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                            <div><span class="hl">What is your name?</span> — My name is ____.</div>
+                            <div><span class="hl">How are you?</span> — I am fine, thank you.</div>
+                            <div><span class="hl">Where are you from?</span> — I am from ____.</div>
+                            <div><span class="hl">Nice to meet you!</span> — Nice to meet you too!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-nav"><button class="nav-btn" onclick="goTo(0)">← Overview</button><span class="page-indicator">2 / 7</span><button class="nav-btn primary" onclick="goTo(2)">Family →</button></div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 2 — FAMILY & ADJECTIVES (Review)             -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section" id="sec2">
+            <div class="sec-header" data-label="02">
+                <div class="sec-eyebrow">Review · Topics 4–5</div>
+                <h1 class="sec-title">Family &amp; Adjectives</h1>
+                <p class="sec-desc">Review family vocabulary and descriptive adjectives. Practice: <em>"My mother is kind and smart."</em></p>
+            </div>
+            <div class="sec-body">
+                <div class="grid-2">
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Family Members</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👩</span>
+                                <div style="font-weight:700;color:var(--white);">Mother</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👨</span>
+                                <div style="font-weight:700;color:var(--white);">Father</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👦</span>
+                                <div style="font-weight:700;color:var(--white);">Brother</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👧</span>
+                                <div style="font-weight:700;color:var(--white);">Sister</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👵</span>
+                                <div style="font-weight:700;color:var(--white);">Grandmother</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👴</span>
+                                <div style="font-weight:700;color:var(--white);">Grandfather</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">🧔</span>
+                                <div style="font-weight:700;color:var(--white);">Uncle</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+                                <span style="font-size:1.4rem;">👩‍🦰</span>
+                                <div style="font-weight:700;color:var(--white);">Aunt</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Adjectives — Describing People</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+                            <span class="tag tag-green">tall</span>
+                            <span class="tag tag-blue">short</span>
+                            <span class="tag tag-gold">kind</span>
+                            <span class="tag tag-green">funny</span>
+                            <span class="tag tag-blue">smart</span>
+                            <span class="tag tag-red">brave</span>
+                            <span class="tag tag-gold">happy</span>
+                            <span class="tag tag-green">sad</span>
+                            <span class="tag tag-blue">strong</span>
+                            <span class="tag tag-red">old</span>
+                            <span class="tag tag-gold">young</span>
+                            <span class="tag tag-green">wise</span>
+                            <span class="tag tag-blue">fast</span>
+                            <span class="tag tag-red">slow</span>
+                        </div>
+                        <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);">
+                            <div class="card-label">📝 Example Sentences</div>
+                            <div class="card-body">
+                                <div>• My <strong style="color:var(--white);">mother</strong> is <span class="hl">kind</span> and <span class="hl2">smart</span>.</div>
+                                <div>• My <strong style="color:var(--white);">brother</strong> is <span class="hl">tall</span> and <span class="hl2">funny</span>.</div>
+                                <div>• My <strong style="color:var(--white);">grandparents</strong> are <span class="hl">old</span> but <span class="hl2">wise</span>.</div>
+                                <div>• My <strong style="color:var(--white);">sister</strong> is <span class="hl">short</span> and <span class="hl2">happy</span>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div class="card" style="border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04);">
+                    <div class="card-label" style="color:var(--accent3);">⚠ Grammar Tip — Adjective Order</div>
+                    <div class="card-body">
+                        In English, adjectives come <strong style="color:var(--white);">after the verb "to be"</strong> (She <em>is</em> tall) or <strong style="color:var(--white);">before the noun</strong> (She is a <em>tall</em> girl).<br />
+                        ✗ <span class="hl3">"She tall is."</span> → ✓ <span class="hl">"She is tall."</span>
+                    </div>
+                </div>
+                <div class="bottom-nav"><button class="nav-btn" onclick="goTo(1)">← Greetings</button><span class="page-indicator">3 / 7</span><button class="nav-btn primary" onclick="goTo(3)">Routines →</button></div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 3 — ROUTINES & TIME (Review)                 -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section" id="sec3">
+            <div class="sec-header" data-label="03">
+                <div class="sec-eyebrow">Review · Topics 7–9</div>
+                <h1 class="sec-title">Daily Routines &amp; Time</h1>
+                <p class="sec-desc">Review present simple for routines, days of the week, parts of the day, and telling time.</p>
+            </div>
+            <div class="sec-body">
+                <div class="grid-2">
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Daily Routine Verbs</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">🌅</span>
+                                <div style="font-weight:700;color:var(--white);">wake up</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">🍳</span>
+                                <div style="font-weight:700;color:var(--white);">eat breakfast</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">🚌</span>
+                                <div style="font-weight:700;color:var(--white);">go to school</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">📚</span>
+                                <div style="font-weight:700;color:var(--white);">study</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">⚽</span>
+                                <div style="font-weight:700;color:var(--white);">play</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">😴</span>
+                                <div style="font-weight:700;color:var(--white);">sleep</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">📖</span>
+                                <div style="font-weight:700;color:var(--white);">read</div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;">
+                                <span style="font-size:1.2rem;">📺</span>
+                                <div style="font-weight:700;color:var(--white);">watch TV</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Time Expressions</p>
+                        <table class="g-table">
+                            <thead><tr><th>Expression</th><th>Meaning</th><th>Example</th></tr></thead>
+                            <tbody>
+                                <tr><td class="en">o'clock</td><td class="es">en punto</td><td class="en">It's 3 o'clock.</td></tr>
+                                <tr><td class="en">half past</td><td class="es">y media</td><td class="en">It's half past 4.</td></tr>
+                                <tr><td class="en">quarter past</td><td class="es">y cuarto</td><td class="en">It's quarter past 2.</td></tr>
+                                <tr><td class="en">quarter to</td><td class="es">menos cuarto</td><td class="en">It's quarter to 10.</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="card" style="margin-top:14px;border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);">
+                            <div class="card-label" style="color:var(--accent2);">Prepositions</div>
+                            <div class="card-body">
+                                <strong style="color:var(--white);">at</strong> + time: at 7 o'clock<br />
+                                <strong style="color:var(--white);">in</strong> + part of day: in the morning<br />
+                                <strong style="color:var(--white);">on</strong> + day: on Monday
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);">
+                    <div class="card-label">📝 Example Sentences</div>
+                    <div class="card-body">
+                        <div>• I <strong style="color:var(--white);">wake up</strong> at <span class="hl">half past six</span> <span class="hl2">in the morning</span>.</div>
+                        <div>• She <strong style="color:var(--white);">studies</strong> English <span class="hl2">on Mondays and Wednesdays</span>.</div>
+                        <div>• We <strong style="color:var(--white);">play</strong> soccer <span class="hl2">on Saturday</span> <span class="hl">at quarter past three</span>.</div>
+                        <div>• My brother <strong style="color:var(--white);">sleeps</strong> <span class="hl2">at 10 o'clock</span> <span class="hl2">at night</span>.</div>
+                    </div>
+                </div>
+                <div class="bottom-nav"><button class="nav-btn" onclick="goTo(2)">← Family</button><span class="page-indicator">4 / 7</span><button class="nav-btn primary" onclick="goTo(4)">Question Words →</button></div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 4 — QUESTION WORDS (NEW)                      -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section" id="sec4">
+            <div class="sec-header" data-label="10">
+                <div class="sec-eyebrow">Topic 10 · Question Words</div>
+                <h1 class="sec-title">Question Words<br>What · Where · Who · When · How</h1>
+                <p class="sec-desc">Learn to ask and answer basic questions using the 5 WH-words. This is the key to starting real conversations.</p>
+            </div>
+            <div class="sec-body">
+                <div class="grid-2">
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">The 5 Question Words</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;" onclick="speakWord('What', this)">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);">What</div>
+                                <div style="font-size:0.72rem;color:var(--muted);">¿Qué?</div>
+                                <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;"><em>"What is your name?"</em></div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;" onclick="speakWord('Where', this)">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent2);">Where</div>
+                                <div style="font-size:0.72rem;color:var(--muted);">¿Dónde?</div>
+                                <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;"><em>"Where do you live?"</em></div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;" onclick="speakWord('Who', this)">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent3);">Who</div>
+                                <div style="font-size:0.72rem;color:var(--muted);">¿Quién?</div>
+                                <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;"><em>"Who is she?"</em></div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;" onclick="speakWord('When', this)">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#ffb347;">When</div>
+                                <div style="font-size:0.72rem;color:var(--muted);">¿Cuándo?</div>
+                                <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;"><em>"When do you study?"</em></div>
+                            </div>
+                            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;grid-column:1/3;" onclick="speakWord('How', this)">
+                                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);">How</div>
+                                <div style="font-size:0.72rem;color:var(--muted);">¿Cómo? / ¿Qué tal?</div>
+                                <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;"><em>"How are you?" · "How old are you?"</em></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Question Structures</p>
+                        <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);margin-bottom:14px;">
+                            <div class="card-label">With Verb "To Be"</div>
+                            <div class="card-body">
+                                <div><span class="hl">What</span> is your name? → My name is Ana.</div>
+                                <div><span class="hl2">Where</span> are you from? → I am from Mexico.</div>
+                                <div><span class="hl3">Who</span> is she? → She is my sister.</div>
+                                <div><span class="hl" style="color:#ffb347;">How</span> are you? → I am fine.</div>
+                            </div>
+                        </div>
+                        <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);">
+                            <div class="card-label" style="color:var(--accent2);">With Action Verbs (Present Simple)</div>
+                            <div class="card-body">
+                                <div><span class="hl">What</span> do you do? → I am a student.</div>
+                                <div><span class="hl2">Where</span> do you live? → I live in Lima.</div>
+                                <div><span class="hl" style="color:#ffb347;">When</span> do you study? → I study in the morning.</div>
+                                <div><span class="hl3">How</span> do you go to school? → I go by bus.</div>
+                            </div>
+                        </div>
+                        <div class="card" style="margin-top:14px;border-color:rgba(255,107,107,0.2);background:rgba(255,107,107,0.04);">
+                            <div class="card-label" style="color:var(--accent3);">💡 Key Rule</div>
+                            <div class="card-body">
+                                <strong style="color:var(--white);">WH-word + auxiliary + subject + verb?</strong><br />
+                                <span class="hl">What</span> <span class="hl2">do</span> <strong>you</strong> <em>eat</em> for breakfast?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);">
+                    <div class="card-label">🎯 Speaking Goal — Formulate Basic Questions</div>
+                    <div class="card-body">
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+                            <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--accent);">❓ What</div>
+                                <div style="font-size:0.82rem;color:var(--white);">"What is your favorite color?"</div>
+                            </div>
+                            <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--accent2);">❓ Where</div>
+                                <div style="font-size:0.82rem;color:var(--white);">"Where do you live?"</div>
+                            </div>
+                            <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--accent3);">❓ Who</div>
+                                <div style="font-size:0.82rem;color:var(--white);">"Who is your best friend?"</div>
+                            </div>
+                            <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;color:#ffb347;">❓ When</div>
+                                <div style="font-size:0.82rem;color:var(--white);">"When do you wake up?"</div>
+                            </div>
+                            <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--accent);">❓ How</div>
+                                <div style="font-size:0.82rem;color:var(--white);">"How old are you?"</div>
+                            </div>
+                            <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+                                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--accent2);">❓ How</div>
+                                <div style="font-size:0.82rem;color:var(--white);">"How do you spell your name?"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-nav"><button class="nav-btn" onclick="goTo(3)">← Routines</button><span class="page-indicator">5 / 7</span><button class="nav-btn primary" onclick="goTo(5)">Practice →</button></div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 5 — INTEGRATED PRACTICE                        -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section" id="sec5">
+            <div class="sec-header" data-label="DO">
+                <div class="sec-eyebrow">Practice · All Topics</div>
+                <h1 class="sec-title">Integrated Practice</h1>
+                <p class="sec-desc">Mixed exercises on greetings, to be, family, adjectives, routines, time, and question words.</p>
+            </div>
+            <div class="sec-body">
+
+                <!-- Exercise 1: Drag & Drop — Fill the blanks -->
+                <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Exercise 1 — Fill in the blanks (Drag &amp; Drop)</p>
+                <div class="card" style="margin-bottom:14px;">
+                    <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+                        <p>1. <strong style="color:var(--white);">"<span class="fill-blank" data-blank-idx="0" data-correct="What">___</span> is your name?"</strong></p>
+                        <p>2. <strong style="color:var(--white);">"My mother is <span class="fill-blank" data-blank-idx="1" data-correct="kind">___</span> and smart."</strong></p>
+                        <p>3. <strong style="color:var(--white);">"She <span class="fill-blank" data-blank-idx="2" data-correct="studies">___</span> English every day."</strong></p>
+                        <p>4. <strong style="color:var(--white);">"I wake up <span class="fill-blank" data-blank-idx="3" data-correct="at">___</span> 7 o'clock."</strong></p>
+                        <p>5. <strong style="color:var(--white);">"<span class="fill-blank" data-blank-idx="4" data-correct="Where">___</span> do you live?"</strong></p>
+                        <p>6. <strong style="color:var(--white);">"My brother is tall <span class="fill-blank" data-blank-idx="5" data-correct="and">___</span> funny."</strong></p>
+                    </div>
+                </div>
+                <div class="card" style="border-color:rgba(0,229,192,0.15);background:rgba(0,229,192,0.03);margin-bottom:14px;">
+                    <div class="card-label">Word Bank — drag each word to the correct blank</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;" id="wordBankEx1">
+                        <span class="word-bank-word" draggable="true" data-word="What">What</span>
+                        <span class="word-bank-word" draggable="true" data-word="kind">kind</span>
+                        <span class="word-bank-word" draggable="true" data-word="studies">studies</span>
+                        <span class="word-bank-word" draggable="true" data-word="at">at</span>
+                        <span class="word-bank-word" draggable="true" data-word="Where">Where</span>
+                        <span class="word-bank-word" draggable="true" data-word="and">and</span>
+                        <span class="word-bank-word" draggable="true" data-word="Who">Who</span>
+                        <span class="word-bank-word" draggable="true" data-word="in">in</span>
+                        <span class="word-bank-word" draggable="true" data-word="study">study</span>
+                        <span class="word-bank-word" draggable="true" data-word="but">but</span>
+                    </div>
+                </div>
+                <div id="ex1Feedback" class="feedback-msg"></div>
+                <button class="check-btn" onclick="checkExercise1()">Check Exercise 1 ✓</button>
+                <button class="check-btn" style="margin-left:10px;background:var(--surface2);color:var(--text);" onclick="resetExercise1()">Reset</button>
+
+                <hr class="divider" />
+
+                <!-- Exercise 2: Multiple Choice -->
+                <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Exercise 2 — Choose the correct answer</p>
+                <div class="card" style="margin-bottom:14px;">
+                    <div class="card-body" style="display:flex;flex-direction:column;gap:16px;">
+                        <div>
+                            <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px;">"___ are you?" — "I am fine, thank you."</p>
+                            <div data-situation="q1">
+                                <span class="option-btn" data-opt="What">(a) What</span>
+                                <span class="option-btn" data-opt="How">(b) How</span>
+                                <span class="option-btn" data-opt="Who">(c) Who</span>
+                            </div>
+                        </div>
+                        <hr class="divider" style="margin:0;" />
+                        <div>
+                            <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px;">My sister ___ very tall. She is short.</p>
+                            <div data-situation="q2">
+                                <span class="option-btn" data-opt="is">(a) is</span>
+                                <span class="option-btn" data-opt="isn't">(b) isn't</span>
+                                <span class="option-btn" data-opt="are">(c) are</span>
+                            </div>
+                        </div>
+                        <hr class="divider" style="margin:0;" />
+                        <div>
+                            <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px;">We ___ soccer on Saturdays.</p>
+                            <div data-situation="q3">
+                                <span class="option-btn" data-opt="play">(a) play</span>
+                                <span class="option-btn" data-opt="plays">(b) plays</span>
+                                <span class="option-btn" data-opt="playing">(c) playing</span>
+                            </div>
+                        </div>
+                        <hr class="divider" style="margin:0;" />
+                        <div>
+                            <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px;">"___ is your favorite color?" — "It's blue."</p>
+                            <div data-situation="q4">
+                                <span class="option-btn" data-opt="Who">(a) Who</span>
+                                <span class="option-btn" data-opt="Where">(b) Where</span>
+                                <span class="option-btn" data-opt="What">(c) What</span>
+                            </div>
+                        </div>
+                        <hr class="divider" style="margin:0;" />
+                        <div>
+                            <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px;">It's 3:15. That's ___ past three.</p>
+                            <div data-situation="q5">
+                                <span class="option-btn" data-opt="half">(a) half</span>
+                                <span class="option-btn" data-opt="quarter">(b) quarter</span>
+                                <span class="option-btn" data-opt="ten">(c) ten</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ex2Feedback" class="feedback-msg"></div>
+                <button class="check-btn" onclick="checkExercise2()">Check Exercise 2 ✓</button>
+
+                <hr class="divider" />
+
+                <!-- Exercise 3: Listening — Identify the WH-question -->
+                <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;">Exercise 3 — Listening: Identify the WH-word</p>
+                <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:22px;">
+                    <div class="card-body">
+                        <p style="margin-bottom:12px;">Click "Listen" and write the <strong style="color:var(--white);">question word</strong> you hear.</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+                            <div>
+                                <button onclick="speakQuestion('What is your favorite food?')" style="background:var(--surface2);border:none;padding:6px 16px;border-radius:20px;cursor:pointer;color:var(--accent);">🔊 Listen 1</button>
+                                <input type="text" id="listenQW1" class="write-input write-input-sm" placeholder="WH?" style="width:100px;margin-top:6px;">
+                            </div>
+                            <div>
+                                <button onclick="speakQuestion('Where do you live?')" style="background:var(--surface2);border:none;padding:6px 16px;border-radius:20px;cursor:pointer;color:var(--accent2);">🔊 Listen 2</button>
+                                <input type="text" id="listenQW2" class="write-input write-input-sm" placeholder="WH?" style="width:100px;margin-top:6px;">
+                            </div>
+                            <div>
+                                <button onclick="speakQuestion('How do you go to school?')" style="background:var(--surface2);border:none;padding:6px 16px;border-radius:20px;cursor:pointer;color:#ffb347;">🔊 Listen 3</button>
+                                <input type="text" id="listenQW3" class="write-input write-input-sm" placeholder="WH?" style="width:100px;margin-top:6px;">
+                            </div>
+                        </div>
+                        <button class="check-btn" onclick="checkListening()" style="margin-top:14px;">Check Listening ✓</button>
+                        <div id="listenFeedback" class="feedback-msg"></div>
+                    </div>
+                </div>
+
+                <hr class="divider" />
+
+                <!-- Exercise 4: Speaking Task -->
+                <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;">Exercise 4 — Speaking Task: Ask & Answer</p>
+                <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);margin-bottom:22px;">
+                    <div class="card-body">
+                        <p style="margin-bottom:12px;">Work with a partner. Ask and answer questions using the WH-words. Use vocabulary from all topics.</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--surface2);border-radius:10px;padding:18px;">
+                            <div>
+                                <div style="font-weight:700;color:var(--accent);">Speaker A (Ask)</div>
+                                <ul style="list-style:none;line-height:2;font-size:0.88rem;color:var(--muted);">
+                                    <li>• What is your name?</li>
+                                    <li>• Where do you live?</li>
+                                    <li>• Who is your best friend?</li>
+                                    <li>• When do you wake up?</li>
+                                    <li>• How old are you?</li>
+                                    <li>• What is your favorite color?</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:var(--accent2);">Speaker B (Answer)</div>
+                                <ul style="list-style:none;line-height:2;font-size:0.88rem;color:var(--muted);">
+                                    <li>• My name is ___ .</li>
+                                    <li>• I live in ___ .</li>
+                                    <li>• My best friend is ___ .</li>
+                                    <li>• I wake up at ___ .</li>
+                                    <li>• I am ___ years old.</li>
+                                    <li>• My favorite color is ___ .</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button onclick="simulateSpeaking()" style="margin-top:16px;background:var(--accent2);border:none;padding:8px 20px;border-radius:30px;color:var(--bg);font-weight:600;cursor:pointer;">🎙️ Simulate practice</button>
+                        <div id="speakingFeedback" class="feedback-msg" style="margin-top:12px;"></div>
+                    </div>
+                </div>
+
+                <!-- Lesson Summary -->
+                <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);">
+                    <div class="card-label">📌 Week 4 — Summary</div>
+                    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px;">
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Greetings &amp; Introductions</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Verb to Be (am/is/are)</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Personal Pronouns</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Family Vocabulary</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Adjectives</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Daily Routines (Present Simple)</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Time &amp; Days of the Week</div>
+                        <div style="font-size:0.88rem;color:var(--muted);"><span class="hl">✓</span> Question Words (What/Where/Who/When/How)</div>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <button class="nav-btn" onclick="goTo(4)">← Question Words</button>
+                    <span class="page-indicator">6 / 7</span>
+                    <button class="nav-btn primary" onclick="goTo(6)">Project →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- SECTION 6 — MONTHLY PROJECT "ABOUT ME"               -->
+        <!-- ════════════════════════════════════════════════════════ -->
+        <section class="section" id="sec6">
+            <div class="sec-header" data-label="PROJ">
+                <div class="sec-eyebrow">Final Production · Month 1</div>
+                <h1 class="sec-title">Monthly Project<br>"About Me"</h1>
+                <p class="sec-desc">Draw, write short phrases, and present orally for 2–3 minutes. Show everything you've learned this month.</p>
+            </div>
+            <div class="sec-body">
+
+                <div class="project-instructions">
+                    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+                        <span style="font-size:3rem;">🎨</span>
+                        <div>
+                            <div style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--white);">Your "About Me" Presentation</div>
+                            <div style="color:var(--muted);font-size:0.95rem;">Duration: <strong style="color:var(--white);">2–3 minutes</strong> · Prepare for next class</div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div>
+                            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">What to do</p>
+                            <ul style="list-style:none;line-height:2.2;font-size:0.92rem;color:var(--muted);">
+                                <li>🎨 <strong style="color:var(--white);">Draw</strong> a picture of yourself or your family.</li>
+                                <li>✍️ <strong style="color:var(--white);">Write</strong> short sentences about yourself.</li>
+                                <li>🗣️ <strong style="color:var(--white);">Present</strong> orally in front of the class.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">What to include</p>
+                            <ul style="list-style:none;line-height:2.2;font-size:0.92rem;color:var(--muted);">
+                                <li>📛 <strong style="color:var(--white);">Name</strong> — My name is ___ .</li>
+                                <li>🎂 <strong style="color:var(--white);">Age</strong> — I am ___ years old.</li>
+                                <li>👨‍👩‍👧‍👦 <strong style="color:var(--white);">Family</strong> — I have a ___ .</li>
+                                <li>⏰ <strong style="color:var(--white);">Routine</strong> — I wake up at ___ .</li>
+                                <li>🎨 <strong style="color:var(--white);">Favorite Color</strong> — My favorite color is ___ .</li>
+                                <li>🕐 <strong style="color:var(--white);">Favorite Time</strong> — My favorite time is ___ .</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checklist -->
+                <div class="card" style="border-color:rgba(0,229,192,0.2);background:rgba(0,229,192,0.04);margin-bottom:24px;">
+                    <div class="card-label">✅ Project Checklist — Mark each item when ready</div>
+                    <div class="project-check" id="projectCheck">
+                        <div class="project-check-item" data-item="draw"><span class="check-icon">☐</span> I have drawn my picture</div>
+                        <div class="project-check-item" data-item="name"><span class="check-icon">☐</span> I have written my name</div>
+                        <div class="project-check-item" data-item="age"><span class="check-icon">☐</span> I have written my age</div>
+                        <div class="project-check-item" data-item="family"><span class="check-icon">☐</span> I have written about my family</div>
+                        <div class="project-check-item" data-item="routine"><span class="check-icon">☐</span> I have written my routine</div>
+                        <div class="project-check-item" data-item="color"><span class="check-icon">☐</span> I have written my favorite color</div>
+                        <div class="project-check-item" data-item="time"><span class="check-icon">☐</span> I have written my favorite time</div>
+                        <div class="project-check-item" data-item="practice"><span class="check-icon">☐</span> I have practiced my presentation</div>
+                    </div>
+                    <button onclick="toggleChecklist()" style="margin-top:16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 18px;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;">Toggle all ✓</button>
+                </div>
+
+                <!-- Example -->
+                <div class="card" style="border-color:rgba(79,158,255,0.2);background:rgba(79,158,255,0.04);">
+                    <div class="card-label" style="color:var(--accent2);">💡 Example Presentation</div>
+                    <div class="dialogue-body" style="padding:0;gap:10px;">
+                        <div class="d-line"><div class="d-speaker" style="background:rgba(79,158,255,0.15);color:var(--accent2);border:1px solid rgba(79,158,255,0.3);">📝</div><div class="d-text" style="font-size:0.95rem;color:var(--white);"><em>"Hello! My name is Lucas. I am 12 years old. I have a sister and a brother. My mother is kind and my father is tall. I wake up at half past six in the morning. I study English on Mondays and Wednesdays. My favorite color is blue. My favorite time is quarter past five in the afternoon because I play soccer with my friends. Thank you!"</em></div></div>
+                        <div style="font-size:0.82rem;color:var(--muted);padding-left:44px;">⏱️ This presentation takes about <strong style="color:var(--white);">2 minutes</strong>.</div>
+                    </div>
+                </div>
+
+                <!-- Writing space -->
+                <div class="card" style="margin-top:24px;border-color:rgba(255,179,71,0.2);background:rgba(255,179,71,0.04);">
+                    <div class="card-label" style="color:#ffb347;">✏️ Write Your Script Here</div>
+                    <textarea id="projectScript" rows="6" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.92rem;resize:vertical;" placeholder="Write your sentences here..."></textarea>
+                    <button onclick="simulateProject()" style="margin-top:12px;background:var(--accent2);border:none;padding:8px 20px;border-radius:30px;color:var(--bg);font-weight:600;cursor:pointer;">📤 Preview my script</button>
+                    <div id="projectFeedback" class="feedback-msg" style="margin-top:12px;"></div>
+                </div>
+
+                <div class="bottom-nav">
+                    <button class="nav-btn" onclick="goTo(5)">← Practice</button>
+                    <span class="page-indicator">7 / 7</span>
+                    <button class="nav-btn" style="background:var(--surface2);border-color:var(--border);color:var(--text);font-weight:600;cursor:default;">✓ Ready</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================= -->
+    <!-- ===== JAVASCRIPT ========================================= -->
+    <!-- ========================================================= -->
+    <script>
+        // ─── NAVIGATION ──────────────────────────────────────────────
+        const TOTAL = 7;
+        let current = 0;
+
+        function goTo(idx) {
+            if (idx < 0 || idx >= TOTAL) return;
+            document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === idx));
+            document.querySelectorAll('.nav-link').forEach(l => {
+                const i = parseInt(l.dataset.idx);
+                l.classList.remove('active', 'done');
+                if (i === idx) l.classList.add('active');
+                else if (i < idx) l.classList.add('done');
+            });
+            document.getElementById('progressFill').style.width = ((idx + 1) / TOTAL * 100) + '%';
+            document.getElementById('progressLabel').textContent = `Section ${idx + 1} of ${TOTAL}`;
+            current = idx;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') goTo(current + 1);
+            if (e.key === 'ArrowLeft') goTo(current - 1);
+        });
+
+        // ─── SPEECH SYNTHESIS ──────────────────────────────────────
+        let activeSpeakEl = null;
+
+        function speakWord(word, el) {
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            if (activeSpeakEl && activeSpeakEl !== el) activeSpeakEl.classList.remove('speaking');
+            const utter = new SpeechSynthesisUtterance(word);
+            utter.lang = 'en-US';
+            utter.rate = 0.8;
+            activeSpeakEl = el;
+            if (el) el.classList.add('speaking');
+            utter.onend = () => { if (el) el.classList.remove('speaking'); };
+            utter.onerror = () => { if (el) el.classList.remove('speaking'); };
+            window.speechSynthesis.speak(utter);
+        }
+
+        function speakQuestion(phrase) {
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(phrase);
+            utter.lang = 'en-US';
+            utter.rate = 0.85;
+            window.speechSynthesis.speak(utter);
+        }
+
+        // ─── EXERCISE 1: Drag & Drop ──────────────────────────────
+        const blanksEx1 = document.querySelectorAll('#sec5 .fill-blank');
+        const wordBankEx1 = document.querySelectorAll('#wordBankEx1 .word-bank-word');
+        let userAnswersEx1 = new Array(blanksEx1.length).fill(null);
+        let draggedWordEx1 = null;
+
+        wordBankEx1.forEach(w => {
+            w.addEventListener('dragstart', e => {
+                if (w.classList.contains('used')) { e.preventDefault(); return; }
+                draggedWordEx1 = w;
+                e.dataTransfer.setData('text/plain', w.getAttribute('data-word'));
+                e.dataTransfer.effectAllowed = 'copy';
+                w.classList.add('dragging');
+            });
+            w.addEventListener('dragend', () => { w.classList.remove('dragging');
+                draggedWordEx1 = null; });
+        });
+
+        blanksEx1.forEach(blank => {
+            blank.addEventListener('dragover', e => { e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+                blank.classList.add('drag-over'); });
+            blank.addEventListener('dragleave', () => blank.classList.remove('drag-over'));
+            blank.addEventListener('drop', e => {
+                e.preventDefault();
+                blank.classList.remove('drag-over');
+                if (!draggedWordEx1 || draggedWordEx1.classList.contains('used')) return;
+                const word = draggedWordEx1.getAttribute('data-word');
+                const idx = parseInt(blank.getAttribute('data-blank-idx'));
+                if (userAnswersEx1[idx] !== null) {
+                    const old = userAnswersEx1[idx];
+                    const oldEl = Array.from(wordBankEx1).find(w => w.getAttribute('data-word') === old);
+                    if (oldEl) oldEl.classList.remove('used');
+                }
+                userAnswersEx1[idx] = word;
+                blank.textContent = word;
+                blank.classList.add('filled');
+                blank.classList.remove('incorrect', 'correct');
+                draggedWordEx1.classList.add('used');
+                document.getElementById('ex1Feedback').innerHTML = '';
+            });
+        });
+
+        function resetExercise1() {
+            userAnswersEx1.fill(null);
+            blanksEx1.forEach(b => { b.textContent = '___';
+                b.classList.remove('filled', 'correct', 'incorrect', 'drag-over'); });
+            wordBankEx1.forEach(w => w.classList.remove('used', 'dragging'));
+            draggedWordEx1 = null;
+            document.getElementById('ex1Feedback').innerHTML = '';
+        }
+
+        function checkExercise1() {
+            const correct = ['What', 'kind', 'studies', 'at', 'Where', 'and'];
+            let allCorrect = true;
+            blanksEx1.forEach((blank, idx) => {
+                const ans = userAnswersEx1[idx];
+                blank.classList.remove('correct', 'incorrect');
+                if (ans === correct[idx]) {
+                    blank.classList.add('correct');
+                } else {
+                    blank.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+            const fb = document.getElementById('ex1Feedback');
+            if (allCorrect) {
+                fb.innerHTML =
+                    '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Excellent! All answers are correct.</div>';
+            } else {
+                fb.innerHTML =
+                    '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers are wrong. Check: 1=What, 2=kind, 3=studies, 4=at, 5=Where, 6=and.</div>';
+            }
+        }
+
+        // ─── EXERCISE 2: Multiple Choice ──────────────────────────
+        const mcData = { q1: { correct: 'How' }, q2: { correct: "isn't" }, q3: { correct: 'play' }, q4: { correct: 'What' },
+            q5: { correct: 'quarter' } };
+        let userSelections = { q1: null, q2: null, q3: null, q4: null, q5: null };
+
+        document.querySelectorAll('#sec5 .option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const parent = btn.closest('[data-situation]');
+                if (!parent) return;
+                const sit = parent.getAttribute('data-situation');
+                parent.querySelectorAll('.option-btn').forEach(o => o.classList.remove('selected'));
+                btn.classList.add('selected');
+                userSelections[sit] = btn.getAttribute('data-opt');
+                document.getElementById('ex2Feedback').innerHTML = '';
+            });
+        });
+
+        function checkExercise2() {
+            let allCorrect = true;
+            ['q1', 'q2', 'q3', 'q4', 'q5'].forEach(sit => {
+                const sel = userSelections[sit];
+                const cor = mcData[sit].correct;
+                const container = document.querySelector(`[data-situation="${sit}"]`);
+                if (container) {
+                    container.querySelectorAll('.option-btn').forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                        if (opt.getAttribute('data-opt') === cor) opt.classList.add('correct');
+                        if (opt.getAttribute('data-opt') === sel && sel !== cor) opt.classList.add('incorrect');
+                    });
+                }
+                if (sel !== cor) allCorrect = false;
+            });
+            const fb = document.getElementById('ex2Feedback');
+            if (allCorrect) {
+                fb.innerHTML =
+                    '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! All answers are correct.</div>';
+            } else {
+                fb.innerHTML =
+                    '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers wrong. Check: 1=How, 2=isn\'t, 3=play, 4=What, 5=quarter.</div>';
+            }
+        }
+
+        // ─── EXERCISE 3: Listening ────────────────────────────────
+        function checkListening() {
+            const user1 = document.getElementById('listenQW1').value.trim().toLowerCase();
+            const user2 = document.getElementById('listenQW2').value.trim().toLowerCase();
+            const user3 = document.getElementById('listenQW3').value.trim().toLowerCase();
+            const correct = ['what', 'where', 'how'];
+            let ok = true;
+            if (user1 !== correct[0]) ok = false;
+            if (user2 !== correct[1]) ok = false;
+            if (user3 !== correct[2]) ok = false;
+            const fb = document.getElementById('listenFeedback');
+            if (ok) {
+                fb.innerHTML = '<div class="feedback-correct">✓ Great! You identified all WH-words: What, Where, How.</div>';
+            } else {
+                fb.innerHTML =
+                    '<div class="feedback-incorrect">⚠ Listen again: 1 = What, 2 = Where, 3 = How.</div>';
+            }
+        }
+
+        // ─── SPEAKING SIMULATION ──────────────────────────────────
+        function simulateSpeaking() {
+            const fb = document.getElementById('speakingFeedback');
+            fb.innerHTML =
+                '<div class="feedback-correct" style="padding:10px;border-radius:8px;">🎤 Great! Now practice with a partner. Take turns asking and answering the questions. Use complete sentences!</div>';
+        }
+
+        // ─── PROJECT ───────────────────────────────────────────────
+        let checklistToggled = false;
+
+        function toggleChecklist() {
+            const items = document.querySelectorAll('.project-check-item');
+            checklistToggled = !checklistToggled;
+            items.forEach(item => {
+                if (checklistToggled) {
+                    item.classList.add('done');
+                    item.querySelector('.check-icon').textContent = '✅';
+                } else {
+                    item.classList.remove('done');
+                    item.querySelector('.check-icon').textContent = '☐';
+                }
+            });
+        }
+
+        // Click individual checklist item
+        document.querySelectorAll('.project-check-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('done');
+                const icon = this.querySelector('.check-icon');
+                icon.textContent = this.classList.contains('done') ? '✅' : '☐';
+            });
+        });
+
+        function simulateProject() {
+            const text = document.getElementById('projectScript').value.trim();
+            const fb = document.getElementById('projectFeedback');
+            if (text.length < 30) {
+                fb.innerHTML =
+                    '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">✏️ Write more sentences! Include: name, age, family, routine, favorite color, and favorite time.</div>';
+            } else {
+                fb.innerHTML =
+                    '<div class="feedback-correct" style="padding:10px;border-radius:8px;">🎉 Great script! Now practice saying it out loud. Time yourself — aim for 2–3 minutes!</div>';
+            }
+        }
+
+        // ─── AUTO-INIT: click-to-speak on Question Words cards ───
+        document.querySelectorAll('#sec4 .grid-2 > div:first-child > div > div').forEach(el => {
+            // already has onclick via inline attribute
+        });
+    </script>
+
+</body>
+</html>
