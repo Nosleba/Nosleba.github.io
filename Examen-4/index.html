@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 4 — Topics 10–12 | English A1 | Food, Likes, Ordering</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & VARIABLES (mismo estilo que antes) ─── */
+    :root {
+      --bg: #0d0f14;
+      --surface: #141720;
+      --surface2: #1c2030;
+      --border: rgba(255,255,255,0.07);
+      --accent: #f9a825;      /* dorado */
+      --accent2: #4f9eff;
+      --red: #ff6b6b;
+      --gold: #f0b429;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --r: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13,15,20,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-left { display: flex; flex-direction: column; gap: 2px; }
+    .topbar-eyebrow { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .topbar-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+    .topbar-right { display: flex; align-items: center; gap: 20px; }
+    .counter { font-size: 0.8rem; color: var(--muted); }
+    .counter span { color: var(--gold); font-weight: 600; }
+    .timer-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 5px 16px;
+      font-family: 'Syne', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .progress-wrap { width: 140px; background: var(--surface2); border-radius: 99px; height: 5px; }
+    .progress-fill { height: 5px; border-radius: 99px; background: linear-gradient(90deg, var(--gold), var(--accent)); transition: width .3s ease; width: 0%; }
+
+    .hero {
+      padding: 48px 32px 32px;
+      max-width: 860px; margin: 0 auto;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; gap: 7px;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      color: var(--gold); border: 1px solid rgba(240,180,41,0.3);
+      padding: 6px 14px; border-radius: 99px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { font-size: 0.9rem; color: var(--muted); margin-top: 12px; }
+    .start-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      max-width: 500px;
+      margin: 30px auto 0;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .btn-start {
+      background: var(--accent);
+      border: none;
+      color: var(--bg);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      padding: 14px 40px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-start:hover { opacity: 0.85; transform: scale(1.02); }
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; display: none; }
+    .section-block { margin-bottom: 52px; }
+    .section-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(240,180,41,0.1); border: 1.5px solid rgba(240,180,41,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700; color: var(--gold);
+    }
+    .section-info h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .section-info p { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    .question {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 20px 18px;
+      margin-bottom: 14px;
+      transition: border-color .2s;
+    }
+    .question.correct { border-color: rgba(0,229,192,0.5); background: rgba(0,229,192,0.04); }
+    .question.wrong   { border-color: rgba(255,107,107,0.5); background: rgba(255,107,107,0.04); }
+
+    .q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .q-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--surface2);
+      font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--muted);
+    }
+    .q-text { font-size: 0.95rem; line-height: 1.5; color: var(--text); }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .opt {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 9px 12px; font-size: 0.85rem;
+      color: var(--text); cursor: pointer; text-align: left;
+    }
+    .opt.selected { border-color: var(--gold); background: rgba(240,180,41,0.1); color: var(--white); }
+    .opt.correct-ans { border-color: var(--accent); background: rgba(0,229,192,0.12); color: var(--accent); }
+    .opt.wrong-ans   { border-color: var(--red); background: rgba(255,107,107,0.1); color: var(--red); }
+    .opt:disabled { cursor: default; }
+
+    .fill-input, .listen-input {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 10px 14px; font-size: 0.9rem;
+      color: var(--white); width: 100%; max-width: 360px; outline: none;
+    }
+    .fill-input:focus, .listen-input:focus { border-color: rgba(240,180,41,0.5); }
+    .fill-input.correct-inp, .listen-input.correct-inp { border-color: var(--accent); color: var(--accent); }
+    .fill-input.wrong-inp, .listen-input.wrong-inp { border-color: var(--red); color: var(--red); }
+    .listen-btn {
+      background: var(--surface); border: 1px solid var(--accent2);
+      border-radius: 30px; padding: 5px 16px; font-size: 0.7rem;
+      color: var(--accent2); cursor: pointer; margin-right: 12px;
+    }
+    .listen-btn:hover { background: rgba(79,158,255,0.2); }
+    .fill-hint { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+
+    /* drag & drop */
+    .drag-area {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; align-items: center;
+    }
+    .blank-slot {
+      display: inline-block; min-width: 80px; padding: 6px 10px;
+      background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+      color: var(--muted); font-weight: 500; text-align: center; transition: 0.2s;
+      margin: 0 4px;
+    }
+    .blank-slot.drag-over { border-color: var(--accent); background: rgba(249,168,37,0.1); }
+    .blank-slot.filled { background: rgba(249,168,37,0.15); border: 2px solid var(--accent); color: var(--accent); }
+    .blank-slot.correct { background: rgba(0,229,192,0.25); border-color: var(--accent); color: var(--accent); }
+    .blank-slot.incorrect { background: rgba(255,107,107,0.2); border-color: var(--red); color: var(--red); }
+    .word-bank {
+      display: inline-block; padding: 8px 18px; margin: 5px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+      font-size: 0.9rem; font-weight: 500; cursor: grab; transition: 0.2s; user-select: none;
+    }
+    .word-bank:active { cursor: grabbing; }
+    .word-bank.dragging { opacity: 0.5; }
+    .word-bank.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+
+    .submit-zone {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .btn-submit {
+      background: var(--gold); color: var(--bg); border: none;
+      border-radius: 9px; padding: 12px 32px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-submit:disabled { opacity: 0.4; cursor: default; }
+
+    .results-panel {
+      display: none; background: var(--surface);
+      border-radius: 18px; border: 1px solid var(--border);
+      padding: 36px 28px; text-align: center; margin-top: 30px;
+    }
+    .results-panel.show { display: block; }
+    .score-ring {
+      width: 110px; height: 110px; border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 3px solid var(--gold);
+    }
+    .score-num { font-size: 2.2rem; color: var(--gold); font-weight: 800; }
+    .grade { display: inline-block; padding: 5px 18px; border-radius: 99px; margin-bottom: 16px; }
+    .grade.a { background: rgba(0,229,192,0.15); color: var(--accent); }
+    .grade.b { background: rgba(79,158,255,0.12); color: var(--accent2); }
+    .grade.c { background: rgba(240,180,41,0.12); color: var(--gold); }
+    .grade.d { background: rgba(255,107,107,0.1); color: var(--red); }
+    .breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0; }
+    .btn-retry { background: transparent; border: 1.5px solid var(--border); color: var(--text); border-radius: 9px; padding: 10px 24px; cursor: pointer; margin-right: 10px; }
+    .btn-retry:hover { border-color: var(--gold); color: var(--white); }
+    .btn-home {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      color: var(--text); border-radius: 9px; padding: 10px 24px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color .2s;
+    }
+    .btn-home:hover { border-color: var(--accent); color: var(--white); }
+
+    .error-list { text-align: left; margin: 16px auto; max-width: 600px; color: var(--muted); font-size: 0.85rem; }
+    .error-list li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .error-list .wrong-answer { color: var(--red); }
+    .error-list .right-answer { color: var(--accent); }
+
+    @media (max-width: 600px) { .options { grid-template-columns: 1fr; } .topbar { padding: 10px 16px; } .progress-wrap { width: 80px; } }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-eyebrow">English A1 — Exam 4</span>
+    <span class="topbar-title">Topics 10 · 11 · 12 | Food, Likes, Ordering</span>
+  </div>
+  <div class="topbar-right">
+    <span class="counter">Answered: <span id="answeredCount">0</span> / 30</span>
+    <div class="timer-box" id="timerDisplay">20:00</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-badge">📝 Final assessment · Topics 10–12</span>
+  <h1>Exam <em>4</em></h1>
+  <p>Food &amp; drinks, expressing likes &amp; dislikes, and ordering food in a restaurant.</p>
+  <div class="start-panel" id="startPanel">
+    <p style="margin-bottom: 20px;">⏱️ 20 minutes · 30 questions · 3 sections</p>
+    <button class="btn-start" id="startExamBtn">▶ Start Exam</button>
+  </div>
+</div>
+
+<div class="wrapper" id="examWrapper">
+  <div id="questionsContainer"></div>
+  <div class="submit-zone">
+    <button class="btn-submit" id="submitBtn">✔ Submit Exam</button>
+  </div>
+  <div class="results-panel" id="resultsPanel">
+    <div class="score-ring"><span class="score-num" id="scoreNum">0</span><span style="font-size:0.7rem;">/30</span></div>
+    <h2 id="resultsTitle">Your Results</h2>
+    <span class="grade" id="gradeTag"></span>
+    <p id="resultsMsg"></p>
+    <div class="breakdown">
+      <div><div class="bi-score" id="score10">—</div><div class="bi-label">Topic 10<br>Food</div></div>
+      <div><div class="bi-score" id="score11">—</div><div class="bi-label">Topic 11<br>Likes</div></div>
+      <div><div class="bi-score" id="score12">—</div><div class="bi-label">Topic 12<br>Ordering</div></div>
+    </div>
+    <div id="errorDetails" class="error-list"></div>
+    <button class="btn-retry" id="retryBtn">↺ Try Again</button>
+    <a class="btn-home" href="#">⌂ Back to Home</a>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+//  QUESTION BANK — 30 preguntas (10 por tema)
+// ──────────────────────────────────────────────
+const QUESTIONS = [
+  // TOPIC 10: Food & Drinks (1-10)
+  { id:1, topic:10, type:'mc', text:'What is the English word for "manzana"?', options:['Apple','Banana','Orange','Grape'], correct:'Apple' },
+  { id:2, topic:10, type:'mc', text:'Which food is uncountable?', options:['Rice','Apple','Egg','Banana'], correct:'Rice' },
+  { id:3, topic:10, type:'fill', text:'Complete: "I eat _______ (bread) every morning."', correct:'bread' },
+  { id:4, topic:10, type:'mc', text:'What do you call the meal you have in the morning?', options:['Lunch','Dinner','Breakfast','Supper'], correct:'Breakfast' },
+  { id:5, topic:10, type:'listen', text:'Listen and write the food you hear.', correct:'chicken', audioHint:'chicken' },
+  { id:6, topic:10, type:'mc', text:'Which word means "pescado" in English?', options:['Meat','Chicken','Fish','Bread'], correct:'Fish' },
+  { id:7, topic:10, type:'drag', text:'Drag the correct word: "I like _______ (pizza / rice / chicken)."', blanks:['pizza','rice','chicken'], correct:'pizza' },
+  { id:8, topic:10, type:'fill', text:'Write the plural: "one vegetable, two _______"', correct:'vegetables' },
+  { id:9, topic:10, type:'mc', text:'What is a typical drink?', options:['Juice','Bread','Rice','Meat'], correct:'Juice' },
+  { id:10, topic:10, type:'listen', text:'Listen: What fruit does she like?', correct:'banana', audioHint:'banana' },
+
+  // TOPIC 11: Likes & Dislikes (11-20)
+  { id:11, topic:11, type:'mc', text:'Choose the correct sentence: "I ___ pizza."', options:['like','likes','liking','to like'], correct:'like' },
+  { id:12, topic:11, type:'fill', text:'Complete: "She _______ (like) chocolate."', correct:'likes' },
+  { id:13, topic:11, type:'mc', text:'What is the negative form of "She likes coffee"?', options:['She don\'t like coffee.','She doesn\'t like coffee.','She not like coffee.','She doesn\'t likes coffee.'], correct:'She doesn\'t like coffee.' },
+  { id:14, topic:11, type:'mc', text:'Question: "___ you like swimming?"', options:['Do','Does','Are','Is'], correct:'Do' },
+  { id:15, topic:11, type:'fill', text:'Short answer: "Yes, I _______."', correct:'do' },
+  { id:16, topic:11, type:'listen', text:'Listen: What does he like?', correct:'sports', audioHint:'sports' },
+  { id:17, topic:11, type:'drag', text:'Drag the word to make a correct question: "___ you like music?"', blanks:['Do','Does','Are'], correct:'Do' },
+  { id:18, topic:11, type:'mc', text:'Which is correct for "he"?', options:['He like pizza.','He likes pizza.','He liking pizza.','He do like pizza.'], correct:'He likes pizza.' },
+  { id:19, topic:11, type:'fill', text:'Complete: "They _______ (not like) vegetables."', correct:'don\'t like' },
+  { id:20, topic:11, type:'listen', text:'Listen: Does she like fish? (write yes/no)', correct:'yes', audioHint:'yes' },
+
+  // TOPIC 12: Ordering Food (21-30)
+  { id:21, topic:12, type:'mc', text:'What do you say to ask for the bill?', options:['The bill, please.','I want bill.','Give me bill.','Bill me.'], correct:'The bill, please.' },
+  { id:22, topic:12, type:'fill', text:'Complete: "Can I have a glass of _______ (water)?"', correct:'water' },
+  { id:23, topic:12, type:'mc', text:'What does "I\'d like" mean?', options:['I want','I have','I eat','I drink'], correct:'I want' },
+  { id:24, topic:12, type:'drag', text:'Drag the word to complete: "How much _______ the pizza?"', blanks:['is','are','am'], correct:'is' },
+  { id:25, topic:12, type:'mc', text:'Waiter: "Can I take your order?" Customer: "Yes, I\'d like the _______."', options:['hamburger','book','car','house'], correct:'hamburger' },
+  { id:26, topic:12, type:'fill', text:'Write the polite request: "_______ I have a coffee, please?"', correct:'Can' },
+  { id:27, topic:12, type:'listen', text:'Listen: What does the customer order?', correct:'salad', audioHint:'salad' },
+  { id:28, topic:12, type:'mc', text:'What is the price question for one item?', options:['How much are they?','How much is it?','How many is it?','How many are they?'], correct:'How much is it?' },
+  { id:29, topic:12, type:'fill', text:'Complete the waiter\'s question: "For here or to _______?"', correct:'go' },
+  { id:30, topic:12, type:'listen', text:'Listen: How much is the spaghetti? (write the number)', correct:'8.50', audioHint:'eight fifty' }
+];
+
+// ─── ESTADO ──────────────────────────────────
+let examStarted = false;
+let timerInterval = null;
+let timeLeft = 20 * 60;
+let userAnswers = new Array(30).fill(null);
+let submitted = false;
+
+// DOM references
+const startPanel = document.getElementById('startPanel');
+const examWrapper = document.getElementById('examWrapper');
+const startBtn = document.getElementById('startExamBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resultsPanel = document.getElementById('resultsPanel');
+const timerDisplay = document.getElementById('timerDisplay');
+const answeredSpan = document.getElementById('answeredCount');
+const progressFill = document.getElementById('progressFill');
+
+// ─── RENDER QUESTIONS ──────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  const topics = [10, 11, 12];
+  const topicNames = {
+    10: 'Food & Drinks',
+    11: 'Likes & Dislikes',
+    12: 'Ordering Food'
+  };
+  topics.forEach(topic => {
+    const qs = QUESTIONS.filter(q => q.topic === topic);
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section-block';
+    const range = qs.length ? `${qs[0].id}–${qs[qs.length-1].id}` : '';
+    sectionDiv.innerHTML = `
+      <div class="section-label">
+        <div class="section-num">${topic}</div>
+        <div class="section-info"><h3>Topic ${topic} — ${topicNames[topic]}</h3><p>Questions ${range}</p></div>
+      </div>
+    `;
+    qs.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = `q${q.id}`;
+      let inner = `<div class="q-header"><span class="q-num">${q.id}</span><span class="q-text">${q.text}</span></div>`;
+      if (q.type === 'mc') {
+        inner += `<div class="options">`;
+        q.options.forEach(opt => {
+          inner += `<button class="opt" data-qid="${q.id}" data-val="${opt}">${opt}</button>`;
+        });
+        inner += `</div>`;
+      } else if (q.type === 'fill') {
+        inner += `<div class="fill-wrap"><input class="fill-input" id="fill${q.id}" type="text" placeholder="Type your answer..." autocomplete="off"/><div class="fill-hint">✏️ Write the correct word.</div></div>`;
+      } else if (q.type === 'listen') {
+        inner += `<div class="fill-wrap"><button class="listen-btn" data-listenid="${q.id}">🔊 Listen</button><input class="listen-input" id="listen${q.id}" type="text" placeholder="Write what you hear..." style="width:70%"/><div class="fill-hint">🎧 Click listen, then write the word/phrase.</div></div>`;
+      } else if (q.type === 'drag') {
+        // For drag: show blank and word bank
+        const blankText = q.blanks ? q.blanks[0] : '___';
+        inner += `<div class="drag-area">
+                    <span>Choose: </span>
+                    <span class="blank-slot" data-qid="${q.id}" data-correct="${q.correct}">___</span>
+                    <span style="margin-left:12px;">from the options:</span>
+                  </div>
+                  <div class="word-bank-container" id="wordbank${q.id}">`;
+        const options = q.blanks || [q.correct, 'other'];
+        options.forEach(w => {
+          inner += `<span class="word-bank" data-qid="${q.id}" data-word="${w}">${w}</span>`;
+        });
+        inner += `</div>`;
+      }
+      qDiv.innerHTML = inner;
+      sectionDiv.appendChild(qDiv);
+    });
+    container.appendChild(sectionDiv);
+  });
+  attachEvents();
+}
+
+// ─── EVENTOS ────────────────────────────────
+function attachEvents() {
+  // MC
+  document.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (!examStarted || submitted) return;
+      const qid = parseInt(this.dataset.qid);
+      document.querySelectorAll(`.opt[data-qid="${qid}"]`).forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      userAnswers[qid-1] = this.dataset.val;
+      updateProgress();
+    });
+  });
+  // Fill
+  QUESTIONS.forEach(q => {
+    if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+      const listenBtn = document.querySelector(`.listen-btn[data-listenid="${q.id}"]`);
+      if (listenBtn) {
+        listenBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const phrase = q.audioHint || q.correct;
+          speakPhrase(phrase);
+        });
+      }
+    } else if (q.type === 'drag') {
+      // drag & drop: word-bank to blank-slot
+      const blank = document.querySelector(`.blank-slot[data-qid="${q.id}"]`);
+      const words = document.querySelectorAll(`.word-bank[data-qid="${q.id}"]`);
+      words.forEach(w => {
+        w.setAttribute('draggable', 'true');
+        w.addEventListener('dragstart', (e) => {
+          if (w.classList.contains('used')) { e.preventDefault(); return; }
+          e.dataTransfer.setData('text/plain', w.dataset.word);
+          e.dataTransfer.effectAllowed = 'copy';
+          w.classList.add('dragging');
+        });
+        w.addEventListener('dragend', () => w.classList.remove('dragging'));
+      });
+      if (blank) {
+        blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+        blank.addEventListener('dragleave', () => blank.classList.remove('drag-over'));
+        blank.addEventListener('drop', (e) => {
+          e.preventDefault();
+          blank.classList.remove('drag-over');
+          const word = e.dataTransfer.getData('text/plain');
+          const wordEl = document.querySelector(`.word-bank[data-qid="${q.id}"][data-word="${word}"]`);
+          if (!wordEl || wordEl.classList.contains('used')) return;
+          // Remove previous if any
+          const prev = userAnswers[q.id-1];
+          if (prev) {
+            const prevEl = document.querySelector(`.word-bank[data-qid="${q.id}"][data-word="${prev}"]`);
+            if (prevEl) prevEl.classList.remove('used');
+          }
+          userAnswers[q.id-1] = word;
+          blank.textContent = word;
+          blank.classList.add('filled');
+          blank.classList.remove('correct', 'incorrect');
+          wordEl.classList.add('used');
+          updateProgress();
+        });
+      }
+    }
+  });
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null && a !== '').length;
+  answeredSpan.innerText = answered;
+  progressFill.style.width = (answered / 30 * 100) + '%';
+}
+
+function speakPhrase(phrase) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(phrase);
+  utter.lang = 'en-US';
+  utter.rate = 0.75;
+  window.speechSynthesis.speak(utter);
+}
+
+// ─── TIMER ───────────────────────────────────
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!examStarted || submitted) return;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!submitted) submitExam(true);
+    } else {
+      timeLeft--;
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      timerDisplay.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      if (timeLeft === 0) timerDisplay.innerText = "0:00";
+    }
+  }, 1000);
+}
+
+// ─── EVALUACIÓN ─────────────────────────────
+function evaluateExam() {
+  let total = 0;
+  let topicScores = {10:0, 11:0, 12:0};
+  let topicCounts = {10:0, 11:0, 12:0};
+  QUESTIONS.forEach((q, idx) => {
+    topicCounts[q.topic]++;
+    let isCorrect = false;
+    const userAns = userAnswers[idx];
+    if (q.type === 'mc') {
+      isCorrect = (userAns === q.correct);
+    } else if (q.type === 'fill' || q.type === 'listen') {
+      const normalizedUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s.]/g, '');
+      const normalizedCorrect = q.correct.toLowerCase().trim();
+      isCorrect = (normalizedUser === normalizedCorrect);
+    } else if (q.type === 'drag') {
+      isCorrect = (userAns === q.correct);
+    }
+    if (isCorrect) { total++; topicScores[q.topic]++; }
+    // Marcar UI después del submit
+    const qDiv = document.getElementById(`q${q.id}`);
+    if (!qDiv) return;
+    if (q.type === 'mc') {
+      const opts = qDiv.querySelectorAll('.opt');
+      opts.forEach(opt => {
+        opt.disabled = true;
+        if (opt.dataset.val === q.correct) opt.classList.add('correct-ans');
+        if (opt.dataset.val === userAns && userAns !== q.correct) opt.classList.add('wrong-ans');
+      });
+    } else if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'drag') {
+      const blank = qDiv.querySelector('.blank-slot');
+      if (blank) {
+        if (isCorrect) blank.classList.add('correct');
+        else {
+          blank.classList.add('incorrect');
+          blank.textContent = `${blank.textContent} (correct: ${q.correct})`;
+        }
+      }
+      // deshabilitar palabras
+      qDiv.querySelectorAll('.word-bank').forEach(w => w.style.cursor = 'default');
+    }
+    qDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+  });
+  return { total, topicScores, topicCounts };
+}
+
+function submitExam(autoTimeout = false) {
+  if (submitted) return;
+  submitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  examStarted = false;
+  const { total, topicScores, topicCounts } = evaluateExam();
+  document.querySelectorAll('.opt, .fill-input, .listen-input').forEach(el => el.disabled = true);
+  document.getElementById('submitBtn').disabled = true;
+  
+  resultsPanel.classList.add('show');
+  document.getElementById('scoreNum').innerHTML = total;
+  document.getElementById('score10').innerText = `${topicScores[10]}/${topicCounts[10]}`;
+  document.getElementById('score11').innerText = `${topicScores[11]}/${topicCounts[11]}`;
+  document.getElementById('score12').innerText = `${topicScores[12]}/${topicCounts[12]}`;
+  const pct = (total / 30) * 100;
+  let grade, msg, cls;
+  if (pct >= 90) { grade = 'A — Excellent'; cls = 'a'; msg = 'Outstanding! You have a strong grasp of food vocabulary, likes/dislikes, and ordering food.'; }
+  else if (pct >= 75) { grade = 'B — Good'; cls = 'b'; msg = 'Good job! Review a few items to perfect your skills.'; }
+  else if (pct >= 60) { grade = 'C — Acceptable'; cls = 'c'; msg = 'Acceptable. Focus on the grammar structures and vocabulary from Topics 10–12.'; }
+  else { grade = 'D — Needs Review'; cls = 'd'; msg = 'Review the lessons on food, likes/dislikes, and ordering. Pay attention to verb forms and polite questions.'; }
+  document.getElementById('gradeTag').innerHTML = grade;
+  document.getElementById('gradeTag').className = `grade ${cls}`;
+  document.getElementById('resultsTitle').innerHTML = total >= 20 ? '🎉 Well done!' : 'Keep practising!';
+  document.getElementById('resultsMsg').innerHTML = msg;
+  if (autoTimeout) {
+    document.getElementById('resultsMsg').innerHTML += `<br><span style="color:var(--red);">⏰ Time is up! Exam auto-submitted.</span>`;
+  }
+  // Mostrar errores detallados
+  const errorDiv = document.getElementById('errorDetails');
+  let errors = [];
+  QUESTIONS.forEach((q, idx) => {
+    const userAns = userAnswers[idx];
+    let isCorrect = false;
+    if (q.type === 'mc') isCorrect = (userAns === q.correct);
+    else if (q.type === 'fill' || q.type === 'listen') {
+      const nUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s.]/g, '');
+      const nCorr = q.correct.toLowerCase().trim();
+      isCorrect = (nUser === nCorr);
+    } else if (q.type === 'drag') isCorrect = (userAns === q.correct);
+    if (!isCorrect) {
+      errors.push(`Q${q.id}: your answer "${userAns || '(empty)'}" → correct: "${q.correct}"`);
+    }
+  });
+  if (errors.length) {
+    errorDiv.innerHTML = `<h4 style="color:var(--red); margin-bottom:8px;">❌ You had ${errors.length} incorrect answers:</h4><ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+  } else {
+    errorDiv.innerHTML = `<p style="color:var(--accent);">✅ All answers correct! Perfect score.</p>`;
+  }
+  resultsPanel.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── INICIO ──────────────────────────────────
+function startExam() {
+  if (examStarted) return;
+  examStarted = true;
+  startPanel.style.display = 'none';
+  examWrapper.style.display = 'block';
+  renderQuestions();
+  userAnswers = new Array(30).fill(null);
+  submitted = false;
+  timeLeft = 20 * 60;
+  timerDisplay.innerText = "20:00";
+  if (timerInterval) clearInterval(timerInterval);
+  startTimer();
+  updateProgress();
+}
+
+// ─── EVENTOS DE BOTONES ─────────────────────
+document.getElementById('retryBtn')?.addEventListener('click', () => location.reload());
+startBtn.addEventListener('click', startExam);
+submitBtn.addEventListener('click', () => { if (examStarted && !submitted) submitExam(false); });
+
+examWrapper.style.display = 'none';
+resultsPanel.classList.remove('show');
+</script>
+</body>
+</html>
