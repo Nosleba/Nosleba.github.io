@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Body Parts & Health — Present Simple (A1) · Tema 13</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & VARIABLES (mismo estilo que temas anteriores) ─── */
+    :root {
+      --bg: #0d0f14;
+      --surface: #141720;
+      --surface2: #1c2030;
+      --border: rgba(255,255,255,0.07);
+      --accent: #4fc3f7;      /* azul claro para este tema */
+      --accent2: #81c784;     /* verde para salud */
+      --accent3: #ff8a65;     /* naranja para síntomas */
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --r: 14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 220px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      padding: 28px 0 20px;
+    }
+    .sidebar-logo {
+      padding: 0 22px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo .course-tag {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .sidebar-logo h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .nav-list { list-style: none; flex: 1; overflow-y: auto; padding: 18px 0; }
+    .nav-item { padding: 0 14px; margin-bottom: 2px; }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: all .2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-link:hover { background: var(--surface2); color: var(--text); }
+    .nav-link.active { background: rgba(79,195,247,0.1); border-color: rgba(79,195,247,0.25); color: var(--accent); }
+    .nav-step {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--muted);
+      transition: all .2s;
+    }
+    .nav-link.active .nav-step { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .nav-link.done .nav-step { background: rgba(79,195,247,0.15); border-color: var(--accent); color: var(--accent); }
+    .sidebar-footer { padding: 16px 22px 0; border-top: 1px solid var(--border); }
+    .progress-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 7px; }
+    .progress-bar { background: var(--surface2); border-radius: 999px; height: 4px; }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .5s ease;
+      width: 0%;
+    }
+
+    /* ─── MAIN ─── */
+    .main { margin-left: 220px; min-height: 100vh; }
+    .section { display: none; animation: fadeIn .35s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── HEADER ─── */
+    .sec-header {
+      padding: 52px 56px 40px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .sec-header::before {
+      content: attr(data-label);
+      position: absolute;
+      right: 40px; top: 30px;
+      font-family: 'Syne', sans-serif;
+      font-size: 6rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: -4px;
+    }
+    .sec-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .sec-title { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+    .sec-desc { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.7; font-weight: 300; }
+
+    /* ─── BODY ─── */
+    .sec-body { padding: 44px 56px; }
+
+    /* ─── GRIDS ─── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: rgba(79,195,247,0.2); transform: translateY(-2px); }
+    .card-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .card-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .card-body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ─── IMAGE SLOT ─── */
+    .img-slot {
+      width: 100%; aspect-ratio: 16/10;
+      background: var(--surface2);
+      border: 1.5px dashed rgba(255,255,255,0.12);
+      border-radius: 10px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 6px; color: var(--muted); font-size: 0.8rem; margin-bottom: 16px; overflow: hidden;
+    }
+    .img-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+    /* ─── SUMMARY STRIP ─── */
+    .summary-strip {
+      display: flex; gap: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden; margin-bottom: 32px;
+    }
+    .strip-item { flex: 1; padding: 18px 20px; border-right: 1px solid var(--border); text-align: center; }
+    .strip-item:last-child { border-right: none; }
+    .strip-val { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); display: block; margin-bottom: 4px; }
+    .strip-key { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ─── OBJECTIVES ─── */
+    .obj-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .obj-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+    .obj-icon { font-size: 1rem; margin-top: 2px; }
+    .obj-text { font-size: 0.9rem; line-height: 1.55; }
+    .obj-text strong { color: var(--white); }
+
+    /* ─── VOCAB GRID (body parts) ─── */
+    .body-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .body-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 12px;
+      text-align: center;
+      transition: border-color .2s, transform .15s, background .15s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .body-card:hover { border-color: rgba(79,195,247,0.4); transform: translateY(-3px); background: rgba(79,195,247,0.04); }
+    .body-card:active { transform: scale(0.96); }
+    .body-emoji { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+    .body-word { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 2px; }
+    .body-es { font-size: 0.75rem; color: var(--muted); }
+    .body-card.speaking { border-color: var(--accent); background: rgba(79,195,247,0.12); }
+    .body-card.speaking .body-word { color: var(--accent); }
+
+    /* ─── DIALOGUE ─── */
+    .dialogue-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 20px; }
+    .dialogue-header { padding: 14px 22px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); }
+    .dialogue-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .d-line { display: flex; align-items: flex-start; gap: 14px; }
+    .d-speaker { min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+    .d-speaker.a { background: rgba(79,195,247,0.15); color: var(--accent); border: 1px solid rgba(79,195,247,0.3); }
+    .d-speaker.b { background: rgba(129,199,132,0.15); color: var(--accent2); border: 1px solid rgba(129,199,132,0.3); }
+    .d-speaker.c { background: rgba(255,138,101,0.15); color: var(--accent3); border: 1px solid rgba(255,138,101,0.3); }
+    .d-text { font-size: 0.92rem; line-height: 1.55; padding-top: 5px; }
+    .d-text strong { color: var(--white); }
+    .d-text .note { font-size: 0.76rem; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+    /* ─── GRAMMAR TABLE ─── */
+    .g-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+    .g-table thead th { background: rgba(255,255,255,0.04); padding: 12px 16px; text-align: left; font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); }
+    .g-table tbody td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .g-table tbody tr:last-child td { border-bottom: none; }
+    .g-table .en { font-family: 'Syne', sans-serif; font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .g-table .es { color: var(--muted); font-size: 0.82rem; }
+    .g-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ─── PRONUNCIATION ─── */
+    .pron-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .pron-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+    .pron-symbol { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+    .pron-name { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+    .pron-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .pron-chip { padding: 4px 12px; background: rgba(79,195,247,0.08); border: 1px solid rgba(79,195,247,0.18); border-radius: 999px; font-size: 0.82rem; color: var(--accent); font-style: italic; }
+    .pron-tip { font-size: 0.82rem; color: var(--muted); line-height: 1.6; border-left: 2px solid rgba(79,195,247,0.3); padding-left: 12px; }
+
+    /* ─── CONTEXT LIST ─── */
+    .context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .context-list { list-style: none; }
+    .context-list li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+    .context-list li:last-child { border-bottom: none; }
+    .context-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 0.78rem; min-width: 20px; padding-top: 2px; }
+
+    /* ─── EXERCISES ─── */
+    .write-input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--white);
+      width: 140px;
+      margin: 0 4px;
+      transition: border-color 0.2s;
+    }
+    .write-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .fill-blank {
+      display: inline-block; min-width: 90px; padding: 6px 10px; margin: 0 4px;
+      background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+      color: var(--muted); font-weight: 500; text-align: center; transition: all 0.2s;
+    }
+    .fill-blank.drag-over { border-color: var(--accent); background: rgba(79,195,247,0.1); }
+    .fill-blank.filled { background: rgba(79,195,247,0.15); border: 2px solid var(--accent); color: var(--accent); }
+    .fill-blank.correct { background: rgba(79,195,247,0.25); border-color: var(--accent); color: var(--accent); }
+    .fill-blank.incorrect { background: rgba(255,138,101,0.2); border-color: var(--accent3); color: var(--accent3); }
+    .word-bank-word {
+      display: inline-block; padding: 8px 18px; margin: 5px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+      font-size: 0.9rem; font-weight: 500; cursor: grab; transition: all 0.2s; user-select: none;
+    }
+    .word-bank-word:active { cursor: grabbing; }
+    .word-bank-word.dragging { opacity: 0.5; }
+    .word-bank-word.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+    .option-btn {
+      display: inline-block; margin: 0 8px; padding: 5px 12px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .option-btn:hover { background: var(--surface2); border-color: var(--accent2); }
+    .option-btn.selected { background: rgba(129,199,132,0.2); border-color: var(--accent2); color: var(--accent2); }
+    .option-btn.correct { background: rgba(79,195,247,0.25); border-color: var(--accent); color: var(--accent); }
+    .option-btn.incorrect { background: rgba(255,138,101,0.2); border-color: var(--accent3); color: var(--accent3); }
+    .feedback-msg { font-size: 0.85rem; padding: 8px 12px; border-radius: 8px; margin-top: 12px; }
+    .feedback-correct { background: rgba(129,199,132,0.1); color: var(--accent2); }
+    .feedback-incorrect { background: rgba(255,138,101,0.1); color: var(--accent3); }
+    .check-btn {
+      margin-top: 12px; padding: 8px 20px;
+      background: var(--accent2); border: none; border-radius: 8px;
+      color: var(--bg); font-weight: 600; cursor: pointer;
+    }
+    .check-btn:hover { opacity: 0.9; }
+
+    /* ─── HIGHLIGHTS ─── */
+    .hl { color: var(--accent); }
+    .hl2 { color: var(--accent2); }
+    .hl3 { color: var(--accent3); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+    /* ─── BOTTOM NAV ─── */
+    .bottom-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 9px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 500; cursor: pointer;
+      transition: all .2s;
+    }
+    .nav-btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+    .nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 700; }
+    .nav-btn.primary:hover { background: #39b0e0; }
+    .nav-btn:disabled { opacity: 0.25; cursor: default; }
+    .nav-btn:disabled:hover { background: transparent; }
+    .page-indicator { font-size: 0.82rem; color: var(--muted); }
+
+    /* ─── SCROLL ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .sidebar { width: 56px; }
+      .sidebar-logo, .nav-link span, .sidebar-footer .progress-label { display: none; }
+      .nav-link { justify-content: center; padding: 9px; }
+      .main { margin-left: 56px; }
+      .sec-header, .sec-body { padding-left: 28px; padding-right: 28px; }
+      .grid-2, .grid-3, .pron-grid, .context-grid { grid-template-columns: 1fr; }
+      .body-grid { grid-template-columns: repeat(2, 1fr); }
+      .sec-title { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="course-tag">Tema 13 · A1 · Month 2 · Week 6</span>
+      <h2>Body & Health</h2>
+    </div>
+    <ul class="nav-list" id="navList">
+      <li class="nav-item"><a class="nav-link active" onclick="goTo(0)" data-idx="0"><span class="nav-step">1</span><span>Overview</span></a></li>
+      <li class="nav-item"><a class="nav-link" onclick="goTo(1)" data-idx="1"><span class="nav-step">2</span><span>Vocabulary</span></a></li>
+      <li class="nav-item"><a class="nav-link" onclick="goTo(2)" data-idx="2"><span class="nav-step">3</span><span>Structures</span></a></li>
+      <li class="nav-item"><a class="nav-link" onclick="goTo(3)" data-idx="3"><span class="nav-step">4</span><span>Dialogue</span></a></li>
+      <li class="nav-item"><a class="nav-link" onclick="goTo(4)" data-idx="4"><span class="nav-step">5</span><span>Pronunciation</span></a></li>
+      <li class="nav-item"><a class="nav-link" onclick="goTo(5)" data-idx="5"><span class="nav-step">6</span><span>Practice</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="progress-label" id="progressLabel">Section 1 of 6</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <main class="main">
+
+    <!-- ═══════ SECTION 0 — OVERVIEW ═══════ -->
+    <section class="section active" id="sec0">
+      <div class="sec-header" data-label="13">
+        <div class="sec-eyebrow">Topic 13 · Week 6 · Month 2</div>
+        <h1 class="sec-title">The Body & Health</h1>
+        <p class="sec-desc">Learn to name body parts, describe symptoms, and talk about common health problems. Practise useful phrases for the doctor's office.</p>
+      </div>
+      <div class="sec-body">
+        <div class="summary-strip">
+          <div class="strip-item"><span class="strip-val hl">25+</span><span class="strip-key">Body parts</span></div>
+          <div class="strip-item"><span class="strip-val hl2">4</span><span class="strip-key">Key structures</span></div>
+          <div class="strip-item"><span class="strip-val hl3">↗</span><span class="strip-key">Question intonation</span></div>
+          <div class="strip-item"><span class="strip-val" style="color:var(--white)">A1</span><span class="strip-key">Health roleplay</span></div>
+        </div>
+        <div class="grid-2">
+          <div>
+            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Learning Objectives</p>
+            <ul class="obj-list">
+              <li class="obj-item"><span class="obj-icon">🧠</span><span class="obj-text"><strong>Learn 25+ body parts</strong> – head, torso, limbs and more.</span></li>
+              <li class="obj-item"><span class="obj-icon">🩺</span><span class="obj-text"><strong>Describe symptoms</strong>: <em>I have a headache, my arm hurts, I've got a cold.</em></span></li>
+              <li class="obj-item"><span class="obj-icon">💬</span><span class="obj-text"><strong>Use structures</strong>: <em>have got</em>, <em>hurt</em>, <em>ache</em>, and questions with <em>What's the matter?</em></span></li>
+              <li class="obj-item"><span class="obj-icon">🎭</span><span class="obj-text"><strong>Act out a doctor-patient dialogue</strong> – describe symptoms and give advice.</span></li>
+              <li class="obj-item"><span class="obj-icon">🔊</span><span class="obj-text"><strong>Pronounce questions</strong> with correct intonation (rising/falling).</span></li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Why This Matters</p>
+            <div class="card" style="margin-bottom:16px"><div class="card-body">Knowing how to talk about your body and health is essential in everyday life. Whether you're at school, travelling, or visiting a doctor, these words and phrases help you express pain, discomfort, and get the help you need.</div></div>
+            <div class="img-slot"><img src="https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Doctor and patient" /></div>
+          </div>
+        </div>
+        <div class="bottom-nav"><button class="nav-btn" disabled>← Previous</button><span class="page-indicator">1 / 6</span><button class="nav-btn primary" onclick="goTo(1)">Vocabulary →</button></div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 1 — VOCABULARY ═══════ -->
+    <section class="section" id="sec1">
+      <div class="sec-header" data-label="BODY">
+        <div class="sec-eyebrow">Section 2 of 6</div>
+        <h1 class="sec-title">Body Parts Vocabulary</h1>
+        <p class="sec-desc">Click any card to hear the pronunciation. We've included more than 25 body parts – from head to toe.</p>
+      </div>
+      <div class="sec-body">
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Head & Face</p>
+        <div class="body-grid" id="headParts"></div>
+
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Torso & Upper Body</p>
+        <div class="body-grid" id="torsoParts"></div>
+
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Arms, Legs & Extremities</p>
+        <div class="body-grid" id="limbParts"></div>
+
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Internal Organs (basic)</p>
+        <div class="body-grid" id="organParts"></div>
+
+        <hr class="divider" />
+        <div class="card" style="border-color:rgba(255,138,101,0.2);background:rgba(255,138,101,0.04)">
+          <div class="card-label" style="color:var(--accent3)">💡 Tip — Singular vs Plural</div>
+          <div class="card-body">
+            Some body parts are usually plural: <em>eyes, ears, arms, legs, feet, hands, fingers, toes</em>. Others are singular: <em>head, nose, mouth, back, stomach</em>. Pay attention when you describe pain: <em>My eyes hurt</em> (plural), <em>My head hurts</em> (singular).
+          </div>
+        </div>
+
+        <div class="bottom-nav"><button class="nav-btn" onclick="goTo(0)">← Overview</button><span class="page-indicator">2 / 6</span><button class="nav-btn primary" onclick="goTo(2)">Structures →</button></div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 2 — STRUCTURES ═══════ -->
+    <section class="section" id="sec2">
+      <div class="sec-header" data-label="STR">
+        <div class="sec-eyebrow">Section 3 of 6</div>
+        <h1 class="sec-title">Key Structures</h1>
+        <p class="sec-desc">Learn how to describe symptoms, ask about health, and give advice.</p>
+      </div>
+      <div class="sec-body">
+
+        <div class="grid-2" style="margin-bottom:28px">
+          <div class="card" style="border-color:rgba(79,195,247,0.2);background:rgba(79,195,247,0.04)">
+            <div class="card-label">1. have / have got</div>
+            <table class="g-table">
+              <thead><tr><th>Structure</th><th>Example</th><th>Spanish</th></tr></thead>
+              <tbody>
+                <tr><td class="en">I have + symptom</td><td class="en">I have a headache.</td><td class="es">Tengo dolor de cabeza.</td></tr>
+                <tr><td class="en">I've got + symptom</td><td class="en">I've got a cold.</td><td class="es">Tengo un resfriado.</td></tr>
+                <tr><td class="en">She has / She's got</td><td class="en">She's got a fever.</td><td class="es">Ella tiene fiebre.</td></tr>
+              </tbody>
+            </table>
+            <div class="card-body" style="margin-top:14px;border-left:2px solid rgba(79,195,247,0.3);padding-left:12px">
+              <strong>Use:</strong> <em>have</em> and <em>have got</em> are both common. <em>Have got</em> is more informal and frequent in British English.
+            </div>
+          </div>
+
+          <div class="card" style="border-color:rgba(129,199,132,0.2);background:rgba(129,199,132,0.04)">
+            <div class="card-label" style="color:var(--accent2)">2. hurt / ache</div>
+            <table class="g-table">
+              <thead><tr><th>Structure</th><th>Example</th><th>Spanish</th></tr></thead>
+              <tbody>
+                <tr><td class="en">My [body part] hurts.</td><td class="en">My arm hurts.</td><td class="es">Me duele el brazo.</td></tr>
+                <tr><td class="en">[body part] aches.</td><td class="en">My head aches. (headache)</td><td class="es">Me duele la cabeza.</td></tr>
+                <tr><td class="en">I have a [body part]ache.</td><td class="en">I have a stomachache.</td><td class="es">Tengo dolor de estómago.</td></tr>
+              </tbody>
+            </table>
+            <div class="card-body" style="margin-top:14px;border-left:2px solid rgba(129,199,132,0.3);padding-left:12px">
+              <strong>Use:</strong> <em>hurt</em> is a verb; <em>ache</em> can be a noun or verb. Common compounds: headache, stomachache, earache, toothache.
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SECCIÓN MEJORADA DE "WHAT'S THE MATTER?" ===== -->
+        <div class="card" style="border-color:rgba(255,138,101,0.2);background:rgba(255,138,101,0.04);margin-bottom:16px">
+          <div class="card-label" style="color:var(--accent3); display:flex; align-items:center; gap:8px;">
+            <span>🩺</span> 3. Asking about health
+          </div>
+          <div class="card-body">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div style="background:var(--surface2); padding:16px; border-radius:10px; border-left: 4px solid var(--accent3);">
+                <h4 style="color:var(--white); font-size:0.9rem; margin-bottom:6px;">🔹 What's the matter?</h4>
+                <p style="font-size:0.9rem;"><strong>What's the matter?</strong> – <span class="es">¿Qué te pasa?</span></p>
+                <p style="font-size:0.85rem; color:var(--muted);">Used to ask someone what's wrong.</p>
+                <div style="margin-top:8px; background:var(--bg); padding:8px 12px; border-radius:6px;">
+                  <span style="color:var(--accent2);">👉</span> <strong>What's the matter?</strong> – <span style="color:var(--accent);">I've got a headache.</span>
+                </div>
+              </div>
+              <div style="background:var(--surface2); padding:16px; border-radius:10px; border-left: 4px solid var(--accent2);">
+                <h4 style="color:var(--white); font-size:0.9rem; margin-bottom:6px;">🔹 Other questions</h4>
+                <ul style="list-style:none; padding:0; margin:0;">
+                  <li style="padding:4px 0;"><strong>What's wrong?</strong> <span style="color:var(--muted);">(¿Qué pasa?)</span></li>
+                  <li style="padding:4px 0;"><strong>Are you OK?</strong> <span style="color:var(--muted);">(¿Estás bien?)</span></li>
+                  <li style="padding:4px 0;"><strong>Where does it hurt?</strong> <span style="color:var(--muted);">(¿Dónde te duele?)</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Diálogo de ejemplo + Imagen -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; align-items:center;">
+              <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; border-left: 4px solid var(--accent);">
+                <p style="font-weight:600; color:var(--white); margin-bottom:8px;">💬 Example dialogue</p>
+                <div style="display:flex; flex-direction:column; gap:6px; padding-left:8px;">
+                  <div style="display:flex; gap:10px; align-items:baseline;">
+                    <span style="background:var(--accent3); color:var(--bg); font-size:0.7rem; font-weight:700; padding:2px 10px; border-radius:12px;">A</span>
+                    <span style="color:var(--text);"><strong>“What's the matter?”</strong></span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:baseline; margin-left:20px;">
+                    <span style="background:var(--accent2); color:var(--bg); font-size:0.7rem; font-weight:700; padding:2px 10px; border-radius:12px;">B</span>
+                    <span style="color:var(--accent);"><strong>“I've got a headache and my back hurts.”</strong></span>
+                  </div>
+                  <hr style="border-color:var(--border); margin:6px 0;">
+                  <div style="display:flex; gap:10px; align-items:baseline;">
+                    <span style="background:var(--accent3); color:var(--bg); font-size:0.7rem; font-weight:700; padding:2px 10px; border-radius:12px;">A</span>
+                    <span style="color:var(--text);"><strong>“Where does it hurt?”</strong></span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:baseline; margin-left:20px;">
+                    <span style="background:var(--accent2); color:var(--bg); font-size:0.7rem; font-weight:700; padding:2px 10px; border-radius:12px;">B</span>
+                    <span style="color:var(--accent);"><strong>“My stomach aches.”</strong></span>
+                  </div>
+                </div>
+              </div>
+              <!-- Imagen de doctor / paciente -->
+              <div style="border-radius:12px; overflow:hidden; aspect-ratio: 4/3; background:var(--surface2); border:1px solid var(--border);">
+                <img src="https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                     alt="Doctor and patient" 
+                     style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:rgba(79,195,247,0.15);background:rgba(79,195,247,0.03)">
+          <div class="card-label">📝 More useful expressions</div>
+          <div class="card-body">
+            <ul style="margin-left:20px;line-height:2">
+              <li><strong>I feel sick.</strong> – <span class="es">Me siento mal.</span></li>
+              <li><strong>I've got a temperature.</strong> – <span class="es">Tengo fiebre.</span></li>
+              <li><strong>I need to see a doctor.</strong> – <span class="es">Necesito ver a un médico.</span></li>
+              <li><strong>Take a painkiller.</strong> – <span class="es">Toma un analgésico.</span></li>
+              <li><strong>You should rest.</strong> – <span class="es">Deberías descansar.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bottom-nav"><button class="nav-btn" onclick="goTo(1)">← Vocabulary</button><span class="page-indicator">3 / 6</span><button class="nav-btn primary" onclick="goTo(3)">Dialogue →</button></div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 3 — DIALOGUE ═══════ -->
+    <section class="section" id="sec3">
+      <div class="sec-header" data-label="DLG">
+        <div class="sec-eyebrow">Section 4 of 6</div>
+        <h1 class="sec-title">Dialogue – At the Doctor's</h1>
+        <p class="sec-desc">Two conversations: one at the doctor's office and one between friends. Practise describing symptoms and giving advice.</p>
+      </div>
+      <div class="sec-body">
+        <div class="context-grid">
+          <div>
+            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Dialogue 1 – At the doctor's</p>
+            <div class="dialogue-wrap">
+              <div class="dialogue-header">Roleplay · Doctor and patient</div>
+              <div class="dialogue-body">
+                <div class="d-line"><div class="d-speaker b">Doctor</div><div class="d-text"><strong>"Hello. What's the matter?"</strong></div></div>
+                <div class="d-line"><div class="d-speaker a">Patient</div><div class="d-text"><strong>"I've got a terrible headache and my eyes hurt."</strong><div class="note">I've got = I have</div></div></div>
+                <div class="d-line"><div class="d-speaker b">Doctor</div><div class="d-text"><strong>"Do you have a fever?"</strong></div></div>
+                <div class="d-line"><div class="d-speaker a">Patient</div><div class="d-text"><strong>"Yes, I think so."</strong></div></div>
+                <div class="d-line"><div class="d-speaker b">Doctor</div><div class="d-text"><strong>"Let me check your temperature. ... You've got a fever. You should rest and drink a lot of water."</strong></div></div>
+                <div class="d-line"><div class="d-speaker a">Patient</div><div class="d-text"><strong>"Thank you, doctor."</strong></div></div>
+              </div>
+            </div>
+
+            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;margin-top:24px">Dialogue 2 – Between friends</p>
+            <div class="dialogue-wrap">
+              <div class="dialogue-header">Roleplay · Friends at school</div>
+              <div class="dialogue-body">
+                <div class="d-line"><div class="d-speaker c">Friend 1</div><div class="d-text"><strong>"You look pale. Are you OK?"</strong></div></div>
+                <div class="d-line"><div class="d-speaker a">Friend 2</div><div class="d-text"><strong>"Not really. I've got a stomachache."</strong></div></div>
+                <div class="d-line"><div class="d-speaker c">Friend 1</div><div class="d-text"><strong>"Oh no! What did you eat?"</strong></div></div>
+                <div class="d-line"><div class="d-speaker a">Friend 2</div><div class="d-text"><strong>"I ate a lot of pizza and ice cream."</strong></div></div>
+                <div class="d-line"><div class="d-speaker c">Friend 1</div><div class="d-text"><strong>"Maybe you should lie down. I'll get you some water."</strong></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="img-slot" style="aspect-ratio:1.2;margin-bottom:0"><img src="https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Doctor" /></div>
+            <div class="card">
+              <div class="card-label">🔑 Key phrases for roleplay</div>
+              <ul class="context-list">
+                <li><span class="context-num">→</span>What's the matter?</li>
+                <li><span class="context-num">→</span>I've got a headache / cold / fever.</li>
+                <li><span class="context-num">→</span>My [body part] hurts.</li>
+                <li><span class="context-num">→</span>I feel sick / dizzy.</li>
+                <li><span class="context-num">→</span>You should rest / drink water.</li>
+                <li><span class="context-num">→</span>Take a painkiller.</li>
+              </ul>
+            </div>
+            <div class="card" style="border-color:rgba(129,199,132,0.2);background:rgba(129,199,132,0.04)">
+              <div class="card-label" style="color:var(--accent2)">💡 Roleplay tip</div>
+              <div class="card-body">
+                When you are the doctor, ask open questions: <em>"Where does it hurt?"</em> or <em>"How long have you felt like this?"</em><br/>
+                When you are the patient, be specific: <em>"My throat hurts"</em> or <em>"I have a cough"</em>.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav"><button class="nav-btn" onclick="goTo(2)">← Structures</button><span class="page-indicator">4 / 6</span><button class="nav-btn primary" onclick="goTo(4)">Pronunciation →</button></div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 4 — PRONUNCIATION ═══════ -->
+    <section class="section" id="sec4">
+      <div class="sec-header" data-label="SND">
+        <div class="sec-eyebrow">Section 5 of 6</div>
+        <h1 class="sec-title">Pronunciation – Question Intonation</h1>
+        <p class="sec-desc">In English, yes/no questions usually have rising intonation, while wh-questions have falling intonation. Let's practise with health questions.</p>
+      </div>
+      <div class="sec-body">
+
+        <div class="pron-grid" style="margin-bottom:28px">
+          <div class="pron-card">
+            <div class="pron-symbol">↗</div>
+            <div class="pron-name">Rising intonation for yes/no questions</div>
+            <div class="pron-examples">
+              <span class="pron-chip">Are you OK?</span>
+              <span class="pron-chip">Do you have a fever?</span>
+              <span class="pron-chip">Does it hurt here?</span>
+            </div>
+            <div class="pron-tip">
+              The pitch goes up at the end. This makes it clear you're asking a question.<br/>
+              <button onclick="speakConnected('Are you OK? Do you have a fever? Does it hurt here?')" style="margin-top:8px; background:var(--surface2); border:none; padding:6px 12px; border-radius:20px; color:var(--accent); cursor:pointer;">🔊 Listen to rising intonation</button>
+            </div>
+          </div>
+          <div class="pron-card">
+            <div class="pron-symbol">↘</div>
+            <div class="pron-name">Falling intonation for wh-questions</div>
+            <div class="pron-examples">
+              <span class="pron-chip">What's the matter?</span>
+              <span class="pron-chip">Where does it hurt?</span>
+              <span class="pron-chip">How do you feel?</span>
+            </div>
+            <div class="pron-tip">
+              Wh-questions (what, where, when, why, how) usually have a falling intonation at the end.<br/>
+              <button onclick="speakConnected('What\'s the matter? Where does it hurt? How do you feel?')" style="margin-top:8px; background:var(--surface2); border:none; padding:6px 12px; border-radius:20px; color:var(--accent2); cursor:pointer;">🔊 Listen to falling intonation</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:rgba(79,195,247,0.2);background:rgba(79,195,247,0.04)">
+          <div class="card-label">🎯 Practice these health questions</div>
+          <div class="card-body">
+            <ul style="margin-left:20px;line-height:2.2">
+              <li>↗ Are you feeling OK?</li>
+              <li>↗ Do you have a headache?</li>
+              <li>↘ What's wrong with you?</li>
+              <li>↘ Where does it hurt?</li>
+              <li>↗ Does your back hurt?</li>
+            </ul>
+            <button onclick="speakConnected('Are you feeling OK? Do you have a headache? What\'s wrong with you? Where does it hurt? Does your back hurt?')" style="margin-top:12px; background:var(--surface2); border:none; padding:8px 16px; border-radius:30px; color:var(--accent); cursor:pointer;">🔊 Listen to all questions</button>
+          </div>
+        </div>
+
+        <div class="bottom-nav"><button class="nav-btn" onclick="goTo(3)">← Dialogue</button><span class="page-indicator">5 / 6</span><button class="nav-btn primary" onclick="goTo(5)">Practice →</button></div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 5 — PRACTICE ═══════ -->
+    <section class="section" id="sec5">
+      <div class="sec-header" data-label="DO">
+        <div class="sec-eyebrow">Section 6 of 6</div>
+        <h1 class="sec-title">Practice</h1>
+        <p class="sec-desc">Three exercises: fill in the blanks, choose the correct option, and a listening task.</p>
+      </div>
+      <div class="sec-body">
+
+        <div class="grid-2" style="margin-bottom:28px">
+
+          <!-- EXERCISE 1 – Fill in the blanks -->
+          <div>
+            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 1 – Complete the sentences</p>
+            <div class="card" style="margin-bottom:14px">
+              <div class="card-body" style="display:flex;flex-direction:column;gap:14px">
+                <p>1. I <span class="fill-blank" data-blank-idx="0" data-correct="have">___</span> a headache.</p>
+                <p>2. My legs <span class="fill-blank" data-blank-idx="1" data-correct="hurt">___</span> after the run.</p>
+                <p>3. She <span class="fill-blank" data-blank-idx="2" data-correct="has">___</span> got a fever.</p>
+                <p>4. What's the <span class="fill-blank" data-blank-idx="3" data-correct="matter">___</span>?</p>
+                <p>5. My stomach <span class="fill-blank" data-blank-idx="4" data-correct="aches">___</span> .</p>
+                <p>6. <span class="fill-blank" data-blank-idx="5" data-correct="Does">___</span> your arm hurt?</p>
+              </div>
+            </div>
+            <div class="card" style="border-color:rgba(79,195,247,0.15);background:rgba(79,195,247,0.03)">
+              <div class="card-label">Word bank (drag to the blanks)</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="wordBank1">
+                <span class="word-bank-word" draggable="true" data-word="have">have</span>
+                <span class="word-bank-word" draggable="true" data-word="hurt">hurt</span>
+                <span class="word-bank-word" draggable="true" data-word="has">has</span>
+                <span class="word-bank-word" draggable="true" data-word="matter">matter</span>
+                <span class="word-bank-word" draggable="true" data-word="aches">aches</span>
+                <span class="word-bank-word" draggable="true" data-word="Does">Does</span>
+                <span class="word-bank-word" draggable="true" data-word="Do">Do</span> <!-- extra -->
+              </div>
+            </div>
+            <div id="ex1Feedback" class="feedback-msg"></div>
+            <button class="check-btn" onclick="checkExercise1()">Check Exercise 1 ✓</button>
+            <button class="check-btn" style="margin-left:10px;background:var(--surface2);color:var(--text);" onclick="resetExercise1()">Reset</button>
+          </div>
+
+          <!-- EXERCISE 2 – Multiple choice -->
+          <div>
+            <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Exercise 2 – Choose the correct option</p>
+            <div class="card" style="margin-bottom:14px">
+              <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+                <div>
+                  <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">I ___ a cold.</p>
+                  <div data-situation="have1">
+                    <span class="option-btn" data-opt="have got">(a) have got</span>
+                    <span class="option-btn" data-opt="has got">(b) has got</span>
+                    <span class="option-btn" data-opt="got">(c) got</span>
+                  </div>
+                </div>
+                <hr class="divider" style="margin:0"/>
+                <div>
+                  <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">My feet ___ after the walk.</p>
+                  <div data-situation="hurt1">
+                    <span class="option-btn" data-opt="hurt">(a) hurt</span>
+                    <span class="option-btn" data-opt="hurts">(b) hurts</span>
+                    <span class="option-btn" data-opt="aching">(c) aching</span>
+                  </div>
+                </div>
+                <hr class="divider" style="margin:0"/>
+                <div>
+                  <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">___ the matter?</p>
+                  <div data-situation="matter1">
+                    <span class="option-btn" data-opt="What's">(a) What's</span>
+                    <span class="option-btn" data-opt="Whats">(b) Whats</span>
+                    <span class="option-btn" data-opt="What">(c) What</span>
+                  </div>
+                </div>
+                <hr class="divider" style="margin:0"/>
+                <div>
+                  <p style="color:var(--muted);font-size:0.82rem;margin-bottom:6px">She ___ a headache.</p>
+                  <div data-situation="has1">
+                    <span class="option-btn" data-opt="has">(a) has</span>
+                    <span class="option-btn" data-opt="have">(b) have</span>
+                    <span class="option-btn" data-opt="is">(c) is</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="ex2Feedback" class="feedback-msg"></div>
+            <button class="check-btn" onclick="checkExercise2()">Check Exercise 2 ✓</button>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- EXERCISE 3 – Listening -->
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">Exercise 3 – Listening: Identify the symptom</p>
+        <div class="card" style="border-color:rgba(129,199,132,0.2);background:rgba(129,199,132,0.04);margin-bottom:22px">
+          <div class="card-body">
+            <p>Listen to the sentences and write the missing word (symptom or body part).</p>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+              <div>
+                <button onclick="speakListening('I have a headache.')" style="background:var(--surface2); border:none; padding:6px 14px; border-radius:30px; cursor:pointer;">🔊 Listen 1</button>
+                <span style="margin-left:8px;">I have a <input type="text" id="listen1" class="write-input" style="width:120px;" placeholder="symptom" /></span>
+              </div>
+              <div>
+                <button onclick="speakListening('My back hurts.')" style="background:var(--surface2); border:none; padding:6px 14px; border-radius:30px; cursor:pointer;">🔊 Listen 2</button>
+                <span style="margin-left:8px;">My <input type="text" id="listen2" class="write-input" style="width:120px;" placeholder="body part" /> hurts.</span>
+              </div>
+              <div>
+                <button onclick="speakListening('She\'s got a fever.')" style="background:var(--surface2); border:none; padding:6px 14px; border-radius:30px; cursor:pointer;">🔊 Listen 3</button>
+                <span style="margin-left:8px;">She's got a <input type="text" id="listen3" class="write-input" style="width:120px;" placeholder="symptom" /></span>
+              </div>
+            </div>
+            <div id="listenFeedback" class="feedback-msg"></div>
+            <button class="check-btn" onclick="checkListening()">Check listening ✓</button>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Speaking Task – Roleplay -->
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px">🎭 Speaking Task – At the doctor's</p>
+        <div class="card" style="border-color:rgba(129,199,132,0.2);background:rgba(129,199,132,0.04);margin-bottom:22px">
+          <div class="card-body">
+            <p>Work with a partner. One person is the doctor, the other is the patient. Use the vocabulary and structures from this lesson.</p>
+            <p><em>Example dialogue:</em></p>
+            <div style="background:var(--surface2);padding:12px;border-radius:10px;margin:8px 0;color:var(--muted);">
+              <p><strong>Doctor:</strong> "Hello. What's the matter?"</p>
+              <p><strong>Patient:</strong> "I've got a sore throat and my head hurts."</p>
+              <p><strong>Doctor:</strong> "Do you have a fever?"</p>
+              <p><strong>Patient:</strong> "I think so."</p>
+              <p><strong>Doctor:</strong> "You should drink warm tea and rest."</p>
+            </div>
+            <button onclick="simulateSpeaking()" style="margin-top:12px; background:var(--accent2); border:none; padding:8px 20px; border-radius:30px; color:var(--bg); font-weight:600; cursor:pointer;">🎙️ Simulate roleplay practice</button>
+            <div id="speakingFeedback" class="feedback-msg" style="margin-top:12px;"></div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="card" style="border-color:rgba(79,195,247,0.2);background:rgba(79,195,247,0.04)">
+          <div class="card-label">📌 Lesson Summary</div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+            <div><span class="hl">✓</span> 25+ body parts</div>
+            <div><span class="hl">✓</span> have got / have</div>
+            <div><span class="hl">✓</span> hurt / ache</div>
+            <div><span class="hl">✓</span> What's the matter?</div>
+            <div><span class="hl">✓</span> Question intonation</div>
+            <div><span class="hl">✓</span> Doctor-patient roleplay</div>
+          </div>
+        </div>
+
+        <div class="bottom-nav">
+          <button class="nav-btn" onclick="goTo(4)">← Pronunciation</button>
+          <span class="page-indicator">6 / 6</span>
+          <button class="nav-btn" style="background:var(--surface2);border-color:var(--border);color:var(--text);font-weight:600;cursor:default">✓ Complete</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ─── NAVIGATION ───
+    const TOTAL = 6;
+    let current = 0;
+
+    function goTo(idx) {
+      if (idx < 0 || idx >= TOTAL) return;
+      document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === idx));
+      document.querySelectorAll('.nav-link').forEach(l => {
+        const i = parseInt(l.dataset.idx);
+        l.classList.remove('active', 'done');
+        if (i === idx) l.classList.add('active');
+        else if (i < idx) l.classList.add('done');
+      });
+      document.getElementById('progressFill').style.width = ((idx + 1) / TOTAL * 100) + '%';
+      document.getElementById('progressLabel').textContent = `Section ${idx + 1} of ${TOTAL}`;
+      current = idx;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goTo(current + 1);
+      if (e.key === 'ArrowLeft') goTo(current - 1);
+    });
+
+    // ─── SPEECH SYNTHESIS ───
+    let activeSpeakCard = null;
+
+    function speakWord(word, cardEl) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      if (activeSpeakCard) activeSpeakCard.classList.remove('speaking');
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.8;
+      activeSpeakCard = cardEl;
+      cardEl.classList.add('speaking');
+      utter.onend = () => cardEl.classList.remove('speaking');
+      utter.onerror = () => cardEl.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    }
+
+    function speakConnected(phrase) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(phrase);
+      utter.lang = 'en-US';
+      utter.rate = 0.8;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function speakListening(sentence) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(sentence);
+      utter.lang = 'en-US';
+      utter.rate = 0.7;
+      window.speechSynthesis.speak(utter);
+    }
+
+    // ─── VOCABULARY GRIDS ───
+    const bodyParts = {
+      head: [
+        { word: 'head', emoji: '🧑', es: 'cabeza' },
+        { word: 'hair', emoji: '💇', es: 'pelo' },
+        { word: 'forehead', emoji: '🤔', es: 'frente' },
+        { word: 'eyes', emoji: '👀', es: 'ojos' },
+        { word: 'ears', emoji: '👂', es: 'orejas' },
+        { word: 'nose', emoji: '👃', es: 'nariz' },
+        { word: 'mouth', emoji: '👄', es: 'boca' },
+        { word: 'teeth', emoji: '🦷', es: 'dientes' },
+        { word: 'chin', emoji: '🧔', es: 'barbilla' },
+        { word: 'neck', emoji: '🧣', es: 'cuello' }
+      ],
+      torso: [
+        { word: 'shoulders', emoji: '🤷', es: 'hombros' },
+        { word: 'chest', emoji: '💪', es: 'pecho' },
+        { word: 'back', emoji: '🔙', es: 'espalda' },
+        { word: 'stomach', emoji: '🤰', es: 'estómago' },
+        { word: 'waist', emoji: '👖', es: 'cintura' }
+      ],
+      limbs: [
+        { word: 'arms', emoji: '💪', es: 'brazos' },
+        { word: 'elbows', emoji: '🤾', es: 'codos' },
+        { word: 'hands', emoji: '✋', es: 'manos' },
+        { word: 'fingers', emoji: '🖐️', es: 'dedos (mano)' },
+        { word: 'legs', emoji: '🦵', es: 'piernas' },
+        { word: 'knees', emoji: '🦵', es: 'rodillas' },
+        { word: 'feet', emoji: '🦶', es: 'pies' },
+        { word: 'toes', emoji: '🦶', es: 'dedos (pie)' }
+      ],
+      organs: [
+        { word: 'heart', emoji: '❤️', es: 'corazón' },
+        { word: 'lungs', emoji: '🫁', es: 'pulmones' },
+        { word: 'brain', emoji: '🧠', es: 'cerebro' }
+      ]
+    };
+
+    function buildBodyGrid(containerId, items) {
+      const grid = document.getElementById(containerId);
+      if (!grid) return;
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'body-card';
+        card.innerHTML = `<span class="body-emoji">${item.emoji}</span><div class="body-word">${item.word}</div><div class="body-es">${item.es}</div>`;
+        card.addEventListener('click', () => speakWord(item.word, card));
+        grid.appendChild(card);
+      });
+    }
+
+    buildBodyGrid('headParts', bodyParts.head);
+    buildBodyGrid('torsoParts', bodyParts.torso);
+    buildBodyGrid('limbParts', bodyParts.limbs);
+    buildBodyGrid('organParts', bodyParts.organs);
+
+    // ─── EXERCISE 1: DRAG & DROP ───
+    const blanks1 = document.querySelectorAll('#sec5 .fill-blank');
+    const wordBank1 = document.querySelectorAll('#wordBank1 .word-bank-word');
+    let userAnswers1 = new Array(blanks1.length).fill(null);
+    let draggedWord1 = null;
+
+    wordBank1.forEach(el => {
+      el.addEventListener('dragstart', (e) => {
+        if (el.classList.contains('used')) { e.preventDefault(); return false; }
+        draggedWord1 = el;
+        e.dataTransfer.setData('text/plain', el.getAttribute('data-word'));
+        e.dataTransfer.effectAllowed = 'copy';
+        el.classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => { el.classList.remove('dragging'); draggedWord1 = null; });
+    });
+
+    blanks1.forEach(blank => {
+      blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+      blank.addEventListener('dragleave', () => { blank.classList.remove('drag-over'); });
+      blank.addEventListener('drop', (e) => {
+        e.preventDefault();
+        blank.classList.remove('drag-over');
+        if (!draggedWord1 || draggedWord1.classList.contains('used')) return;
+        const word = draggedWord1.getAttribute('data-word');
+        const idx = parseInt(blank.getAttribute('data-blank-idx'));
+        if (userAnswers1[idx] !== null) {
+          const old = userAnswers1[idx];
+          const oldEl = Array.from(wordBank1).find(w => w.getAttribute('data-word') === old);
+          if (oldEl) oldEl.classList.remove('used');
+        }
+        userAnswers1[idx] = word;
+        blank.textContent = word;
+        blank.classList.add('filled');
+        blank.classList.remove('correct', 'incorrect');
+        draggedWord1.classList.add('used');
+        document.getElementById('ex1Feedback').innerHTML = '';
+      });
+    });
+
+    function resetExercise1() {
+      userAnswers1.fill(null);
+      blanks1.forEach(b => { b.textContent = '___'; b.classList.remove('filled', 'correct', 'incorrect', 'drag-over'); });
+      wordBank1.forEach(w => w.classList.remove('used', 'dragging'));
+      draggedWord1 = null;
+      document.getElementById('ex1Feedback').innerHTML = '';
+    }
+
+    function checkExercise1() {
+      const correct = ['have', 'hurt', 'has', 'matter', 'aches', 'Does'];
+      let allOk = true;
+      blanks1.forEach((blank, idx) => {
+        const ans = userAnswers1[idx];
+        blank.classList.remove('correct', 'incorrect');
+        if (!ans) { allOk = false; return; }
+        if (ans === correct[idx]) {
+          blank.classList.add('correct');
+        } else {
+          blank.classList.add('incorrect');
+          allOk = false;
+        }
+      });
+      const fb = document.getElementById('ex1Feedback');
+      if (allOk && userAnswers1.every(a => a !== null)) {
+        fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! All answers are correct.</div>';
+      } else {
+        fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some answers are wrong. Check: 1=have, 2=hurt, 3=has, 4=matter, 5=aches, 6=Does.</div>';
+      }
+    }
+
+    // ─── EXERCISE 2: MULTIPLE CHOICE ───
+    const mcData2 = {
+      have1: { correct: 'have got' },
+      hurt1: { correct: 'hurt' },
+      matter1: { correct: "What's" },
+      has1: { correct: 'has' }
+    };
+    let userSelections2 = { have1: null, hurt1: null, matter1: null, has1: null };
+
+    document.querySelectorAll('#sec5 .option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.closest('[data-situation]');
+        if (!parent) return;
+        const sit = parent.getAttribute('data-situation');
+        parent.querySelectorAll('.option-btn').forEach(opt => opt.classList.remove('selected'));
+        btn.classList.add('selected');
+        userSelections2[sit] = btn.getAttribute('data-opt');
+        document.getElementById('ex2Feedback').innerHTML = '';
+      });
+    });
+
+    function checkExercise2() {
+      let allCorrect = true;
+      Object.keys(mcData2).forEach(sit => {
+        const selected = userSelections2[sit];
+        const correct = mcData2[sit].correct;
+        const container = document.querySelector(`[data-situation="${sit}"]`);
+        if (!container) return;
+        container.querySelectorAll('.option-btn').forEach(opt => {
+          opt.classList.remove('correct', 'incorrect');
+          if (opt.getAttribute('data-opt') === correct) opt.classList.add('correct');
+          if (opt.getAttribute('data-opt') === selected && selected !== correct) opt.classList.add('incorrect');
+        });
+        if (selected !== correct) allCorrect = false;
+      });
+      const fb = document.getElementById('ex2Feedback');
+      if (allCorrect) {
+        fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Excellent! All answers are correct.</div>';
+      } else {
+        fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Some wrong. Check: 1=have got, 2=hurt, 3=What\'s, 4=has.</div>';
+      }
+    }
+
+    // ─── EXERCISE 3: LISTENING ───
+    function checkListening() {
+      const user1 = document.getElementById('listen1').value.trim().toLowerCase();
+      const user2 = document.getElementById('listen2').value.trim().toLowerCase();
+      const user3 = document.getElementById('listen3').value.trim().toLowerCase();
+      const correct = ['headache', 'back', 'fever'];
+      let ok = true;
+      if (user1 !== correct[0]) ok = false;
+      if (user2 !== correct[1]) ok = false;
+      if (user3 !== correct[2]) ok = false;
+      const fb = document.getElementById('listenFeedback');
+      if (ok) {
+        fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">✓ Perfect! You heard headache, back, and fever.</div>';
+      } else {
+        fb.innerHTML = '<div class="feedback-incorrect" style="padding:10px;border-radius:8px;">⚠ Not quite. Listen again: 1=headache, 2=back, 3=fever.</div>';
+      }
+    }
+
+    // ─── SPEAKING SIMULATION ───
+    function simulateSpeaking() {
+      const fb = document.getElementById('speakingFeedback');
+      fb.innerHTML = '<div class="feedback-correct" style="padding:10px;border-radius:8px;">🎭 Great! Now practise the roleplay with a partner. Take turns being the doctor and the patient. Use the vocabulary and phrases from this lesson.</div>';
+    }
+
+    // ─── INIT ───
+    resetExercise1();
+  </script>
+</body>
+</html>
