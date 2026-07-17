@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 5 — Topics 13–15 | English A1 | Body, Health & Doctor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #141720;
+      --surface2: #1c2030;
+      --border: rgba(255,255,255,0.07);
+      --accent: #4fc3f7;
+      --accent2: #81c784;
+      --accent3: #ff8a65;
+      --gold: #f0b429;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --r: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13,15,20,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-left { display: flex; flex-direction: column; gap: 2px; }
+    .topbar-eyebrow { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .topbar-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+    .topbar-right { display: flex; align-items: center; gap: 20px; }
+    .counter { font-size: 0.8rem; color: var(--muted); }
+    .counter span { color: var(--gold); font-weight: 600; }
+    .timer-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 5px 16px;
+      font-family: 'Syne', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .progress-wrap { width: 140px; background: var(--surface2); border-radius: 99px; height: 5px; }
+    .progress-fill { height: 5px; border-radius: 99px; background: linear-gradient(90deg, var(--gold), var(--accent)); transition: width .3s ease; width: 0%; }
+
+    .hero {
+      padding: 48px 32px 32px;
+      max-width: 860px; margin: 0 auto;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; gap: 7px;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      color: var(--gold); border: 1px solid rgba(240,180,41,0.3);
+      padding: 6px 14px; border-radius: 99px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { font-size: 0.9rem; color: var(--muted); margin-top: 12px; }
+    .start-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      max-width: 500px;
+      margin: 30px auto 0;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .btn-start {
+      background: var(--accent);
+      border: none;
+      color: var(--bg);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      padding: 14px 40px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-start:hover { opacity: 0.85; transform: scale(1.02); }
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; display: none; }
+    .section-block { margin-bottom: 52px; }
+    .section-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(79,195,247,0.1); border: 1.5px solid rgba(79,195,247,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent);
+    }
+    .section-info h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .section-info p { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    .question {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 20px 18px;
+      margin-bottom: 14px;
+      transition: border-color .2s;
+    }
+    .question.correct { border-color: rgba(129,199,132,0.5); background: rgba(129,199,132,0.04); }
+    .question.wrong   { border-color: rgba(255,138,101,0.5); background: rgba(255,138,101,0.04); }
+
+    .q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .q-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--surface2);
+      font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--muted);
+    }
+    .q-text { font-size: 0.95rem; line-height: 1.5; color: var(--text); }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .opt {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 9px 12px; font-size: 0.85rem;
+      color: var(--text); cursor: pointer; text-align: left;
+    }
+    .opt.selected { border-color: var(--gold); background: rgba(240,180,41,0.1); color: var(--white); }
+    .opt.correct-ans { border-color: var(--accent2); background: rgba(129,199,132,0.12); color: var(--accent2); }
+    .opt.wrong-ans   { border-color: var(--accent3); background: rgba(255,138,101,0.1); color: var(--accent3); }
+    .opt:disabled { cursor: default; }
+
+    .fill-input, .listen-input {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 10px 14px; font-size: 0.9rem;
+      color: var(--white); width: 100%; max-width: 360px; outline: none;
+    }
+    .fill-input:focus, .listen-input:focus { border-color: rgba(79,195,247,0.5); }
+    .fill-input.correct-inp, .listen-input.correct-inp { border-color: var(--accent2); color: var(--accent2); }
+    .fill-input.wrong-inp, .listen-input.wrong-inp { border-color: var(--accent3); color: var(--accent3); }
+    .listen-btn {
+      background: var(--surface); border: 1px solid var(--accent2);
+      border-radius: 30px; padding: 5px 16px; font-size: 0.7rem;
+      color: var(--accent2); cursor: pointer; margin-right: 12px;
+    }
+    .listen-btn:hover { background: rgba(129,199,132,0.2); }
+    .fill-hint { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+
+    .blank-slot {
+      display: inline-block; min-width: 80px; padding: 6px 10px;
+      background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+      color: var(--muted); font-weight: 500; text-align: center; transition: 0.2s;
+      margin: 0 4px;
+    }
+    .blank-slot.drag-over { border-color: var(--accent); background: rgba(79,195,247,0.1); }
+    .blank-slot.filled { background: rgba(79,195,247,0.15); border: 2px solid var(--accent); color: var(--accent); }
+    .blank-slot.correct { background: rgba(129,199,132,0.25); border-color: var(--accent2); color: var(--accent2); }
+    .blank-slot.incorrect { background: rgba(255,138,101,0.2); border-color: var(--accent3); color: var(--accent3); }
+    .word-bank {
+      display: inline-block; padding: 8px 18px; margin: 5px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+      font-size: 0.9rem; font-weight: 500; cursor: grab; transition: 0.2s; user-select: none;
+    }
+    .word-bank:active { cursor: grabbing; }
+    .word-bank.dragging { opacity: 0.5; }
+    .word-bank.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+
+    .submit-zone {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .btn-submit {
+      background: var(--gold); color: var(--bg); border: none;
+      border-radius: 9px; padding: 12px 32px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-submit:disabled { opacity: 0.4; cursor: default; }
+
+    .results-panel {
+      display: none; background: var(--surface);
+      border-radius: 18px; border: 1px solid var(--border);
+      padding: 36px 28px; text-align: center; margin-top: 30px;
+    }
+    .results-panel.show { display: block; }
+    .score-ring {
+      width: 110px; height: 110px; border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 3px solid var(--gold);
+    }
+    .score-num { font-size: 2.2rem; color: var(--gold); font-weight: 800; }
+    .grade { display: inline-block; padding: 5px 18px; border-radius: 99px; margin-bottom: 16px; }
+    .grade.a { background: rgba(129,199,132,0.15); color: var(--accent2); }
+    .grade.b { background: rgba(79,195,247,0.12); color: var(--accent); }
+    .grade.c { background: rgba(240,180,41,0.12); color: var(--gold); }
+    .grade.d { background: rgba(255,138,101,0.1); color: var(--accent3); }
+    .breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0; }
+    .error-list { text-align: left; margin: 16px auto; max-width: 600px; color: var(--muted); font-size: 0.85rem; }
+    .error-list li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .btn-retry { background: transparent; border: 1.5px solid var(--border); color: var(--text); border-radius: 9px; padding: 10px 24px; cursor: pointer; margin-right: 10px; }
+    .btn-retry:hover { border-color: var(--gold); color: var(--white); }
+    .btn-home {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      color: var(--text); border-radius: 9px; padding: 10px 24px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color .2s;
+    }
+    .btn-home:hover { border-color: var(--accent); color: var(--white); }
+
+    @media (max-width: 600px) { .options { grid-template-columns: 1fr; } .topbar { padding: 10px 16px; } .progress-wrap { width: 80px; } }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-eyebrow">English A1 — Exam 5</span>
+    <span class="topbar-title">Topics 13 · 14 · 15 | Body, Health & Doctor</span>
+  </div>
+  <div class="topbar-right">
+    <span class="counter">Answered: <span id="answeredCount">0</span> / 30</span>
+    <div class="timer-box" id="timerDisplay">20:00</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-badge">📝 Final assessment · Topics 13–15</span>
+  <h1>Exam <em>5</em></h1>
+  <p>Body parts, health problems, symptoms, and doctor-patient conversations.</p>
+  <div class="start-panel" id="startPanel">
+    <p style="margin-bottom: 20px;">⏱️ 20 minutes · 30 questions · 3 sections</p>
+    <button class="btn-start" id="startExamBtn">▶ Start Exam</button>
+  </div>
+</div>
+
+<div class="wrapper" id="examWrapper">
+  <div id="questionsContainer"></div>
+  <div class="submit-zone">
+    <button class="btn-submit" id="submitBtn">✔ Submit Exam</button>
+  </div>
+  <div class="results-panel" id="resultsPanel">
+    <div class="score-ring"><span class="score-num" id="scoreNum">0</span><span style="font-size:0.7rem;">/30</span></div>
+    <h2 id="resultsTitle">Your Results</h2>
+    <span class="grade" id="gradeTag"></span>
+    <p id="resultsMsg"></p>
+    <div class="breakdown">
+      <div><div class="bi-score" id="score13">—</div><div class="bi-label">Topic 13<br>Body Parts</div></div>
+      <div><div class="bi-score" id="score14">—</div><div class="bi-label">Topic 14<br>Health</div></div>
+      <div><div class="bi-score" id="score15">—</div><div class="bi-label">Topic 15<br>Doctor</div></div>
+    </div>
+    <div id="errorDetails" class="error-list"></div>
+    <button class="btn-retry" id="retryBtn">↺ Try Again</button>
+    <a class="btn-home" href="#">⌂ Back to Home</a>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────────────────
+//  QUESTION BANK — 30 preguntas (10 por tema agrupado)
+// ──────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // ─── TOPIC 13: BODY PARTS (1-10) ───
+  { id:1, topic:13, type:'mc', text:'What is the English word for "cabeza"?', options:['Head','Hair','Neck','Shoulder'], correct:'Head' },
+  { id:2, topic:13, type:'mc', text:'Which part is used for hearing?', options:['Eyes','Ears','Nose','Mouth'], correct:'Ears' },
+  { id:3, topic:13, type:'fill', text:'Complete: "I brush my _______ (dientes) every morning."', correct:'teeth' },
+  { id:4, topic:13, type:'mc', text:'What do you call the organ that pumps blood?', options:['Brain','Lungs','Heart','Stomach'], correct:'Heart' },
+  { id:5, topic:13, type:'listen', text:'Listen and write the body part you hear.', correct:'knees', audioHint:'knees' },
+  { id:6, topic:13, type:'mc', text:'Which body part is usually plural?', options:['Head','Arm','Leg','Eyes'], correct:'Eyes' },
+  { id:7, topic:13, type:'drag', text:'Drag the correct word: "My _______ (feet / head / arm) hurt after the walk."', blanks:['feet','head','arm'], correct:'feet' },
+  { id:8, topic:13, type:'fill', text:'Write the plural: "one foot, two _______"', correct:'feet' },
+  { id:9, topic:13, type:'mc', text:'What do you use to smell?', options:['Eyes','Ears','Nose','Mouth'], correct:'Nose' },
+  { id:10, topic:13, type:'listen', text:'Listen: Which body part is mentioned?', correct:'shoulders', audioHint:'shoulders' },
+
+  // ─── TOPIC 14: HEALTH & SYMPTOMS (11-20) ───
+  { id:11, topic:14, type:'mc', text:'How do you say "tengo dolor de cabeza" in English?', options:['I have headache.','I have a headache.','I have head ache.','I got headache.'], correct:'I have a headache.' },
+  { id:12, topic:14, type:'fill', text:'Complete: "She _______ (have got) a cold."', correct:'has got' },
+  { id:13, topic:14, type:'mc', text:'What is the correct question?', options:['What the matter?','What\'s the matter?','What matter?','What is matter?'], correct:'What\'s the matter?' },
+  { id:14, topic:14, type:'fill', text:'Write the verb: "My stomach _______ (ache) after lunch."', correct:'aches' },
+  { id:15, topic:14, type:'mc', text:'What does "I feel sick" mean?', options:['I am happy.','I am ill.','I am tired.','I am hungry.'], correct:'I am ill.' },
+  { id:16, topic:14, type:'listen', text:'Listen: What symptom does the speaker have?', correct:'fever', audioHint:'fever' },
+  { id:17, topic:14, type:'drag', text:'Drag to complete: "I _______ (have / has / am) got a temperature."', blanks:['have','has','am'], correct:'have' },
+  { id:18, topic:14, type:'mc', text:'Which is correct for "he"?', options:['He have a cough.','He has a cough.','He have got a cough.','He is a cough.'], correct:'He has a cough.' },
+  { id:19, topic:14, type:'fill', text:'Complete: "My legs _______ (hurt) after the run."', correct:'hurt' },
+  { id:20, topic:14, type:'listen', text:'Listen: Does she have a stomachache? (write yes/no)', correct:'yes', audioHint:'yes' },
+
+  // ─── TOPIC 15: AT THE DOCTOR'S (21-30) ───
+  { id:21, topic:15, type:'mc', text:'What does the doctor ask to start a consultation?', options:['What\'s the problem?','What\'s the matter?','How are you?','Are you OK?'], correct:'What\'s the matter?' },
+  { id:22, topic:15, type:'fill', text:'Complete: "You should _______ (rest) and drink water."', correct:'rest' },
+  { id:23, topic:15, type:'mc', text:'How do you ask for a painkiller?', options:['Can I have a painkiller?','I want painkiller.','Give me painkiller.','Painkiller, please.'], correct:'Can I have a painkiller?' },
+  { id:24, topic:15, type:'drag', text:'Drag to complete: "_______ (Do / Does / Are) you have a fever?"', blanks:['Do','Does','Are'], correct:'Do' },
+  { id:25, topic:15, type:'mc', text:'Patient: "My throat hurts." Doctor: "You should _______."', options:['drink cold water','drink warm tea','eat ice cream','run outside'], correct:'drink warm tea' },
+  { id:26, topic:15, type:'fill', text:'Write the question: "_______ does it hurt?" (where)', correct:'Where' },
+  { id:27, topic:15, type:'listen', text:'Listen: What does the doctor advise?', correct:'rest', audioHint:'rest' },
+  { id:28, topic:15, type:'mc', text:'What do you say to ask for the bill at the doctor? (not used, but trick)', options:['The bill, please.','I need a prescription.','Can I have the receipt?','How much is it?'], correct:'How much is it?' },
+  { id:29, topic:15, type:'fill', text:'Complete the doctor\'s question: "How long have you _______ (feel) like this?"', correct:'felt' },
+  { id:30, topic:15, type:'listen', text:'Listen: What is the patient\'s symptom?', correct:'cough', audioHint:'cough' }
+];
+
+// ─── ESTADO ──────────────────────────────────
+let examStarted = false;
+let timerInterval = null;
+let timeLeft = 20 * 60;
+let userAnswers = new Array(30).fill(null);
+let submitted = false;
+
+const startPanel = document.getElementById('startPanel');
+const examWrapper = document.getElementById('examWrapper');
+const startBtn = document.getElementById('startExamBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resultsPanel = document.getElementById('resultsPanel');
+const timerDisplay = document.getElementById('timerDisplay');
+const answeredSpan = document.getElementById('answeredCount');
+const progressFill = document.getElementById('progressFill');
+
+// ─── RENDER QUESTIONS ──────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  const topics = [13, 14, 15];
+  const topicNames = {
+    13: 'Body Parts',
+    14: 'Health & Symptoms',
+    15: 'At the Doctor\'s'
+  };
+  topics.forEach(topic => {
+    const qs = QUESTIONS.filter(q => q.topic === topic);
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section-block';
+    const range = qs.length ? `${qs[0].id}–${qs[qs.length-1].id}` : '';
+    sectionDiv.innerHTML = `
+      <div class="section-label">
+        <div class="section-num">${topic}</div>
+        <div class="section-info"><h3>Topic ${topic} — ${topicNames[topic]}</h3><p>Questions ${range}</p></div>
+      </div>
+    `;
+    qs.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = `q${q.id}`;
+      let inner = `<div class="q-header"><span class="q-num">${q.id}</span><span class="q-text">${q.text}</span></div>`;
+      if (q.type === 'mc') {
+        inner += `<div class="options">`;
+        q.options.forEach(opt => {
+          inner += `<button class="opt" data-qid="${q.id}" data-val="${opt}">${opt}</button>`;
+        });
+        inner += `</div>`;
+      } else if (q.type === 'fill') {
+        inner += `<div class="fill-wrap"><input class="fill-input" id="fill${q.id}" type="text" placeholder="Type your answer..." autocomplete="off"/><div class="fill-hint">✏️ Write the correct word.</div></div>`;
+      } else if (q.type === 'listen') {
+        inner += `<div class="fill-wrap"><button class="listen-btn" data-listenid="${q.id}">🔊 Listen</button><input class="listen-input" id="listen${q.id}" type="text" placeholder="Write what you hear..." style="width:70%"/><div class="fill-hint">🎧 Click listen, then write the word/phrase.</div></div>`;
+      } else if (q.type === 'drag') {
+        const blankText = q.blanks ? q.blanks[0] : '___';
+        inner += `<div class="drag-area">
+                    <span>Choose: </span>
+                    <span class="blank-slot" data-qid="${q.id}" data-correct="${q.correct}">___</span>
+                    <span style="margin-left:12px;">from the options:</span>
+                  </div>
+                  <div class="word-bank-container" id="wordbank${q.id}">`;
+        const options = q.blanks || [q.correct, 'other'];
+        options.forEach(w => {
+          inner += `<span class="word-bank" data-qid="${q.id}" data-word="${w}">${w}</span>`;
+        });
+        inner += `</div>`;
+      }
+      qDiv.innerHTML = inner;
+      sectionDiv.appendChild(qDiv);
+    });
+    container.appendChild(sectionDiv);
+  });
+  attachEvents();
+}
+
+function attachEvents() {
+  // MC
+  document.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (!examStarted || submitted) return;
+      const qid = parseInt(this.dataset.qid);
+      document.querySelectorAll(`.opt[data-qid="${qid}"]`).forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      userAnswers[qid-1] = this.dataset.val;
+      updateProgress();
+    });
+  });
+  // Fill
+  QUESTIONS.forEach(q => {
+    if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+      const listenBtn = document.querySelector(`.listen-btn[data-listenid="${q.id}"]`);
+      if (listenBtn) {
+        listenBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const phrase = q.audioHint || q.correct;
+          speakPhrase(phrase);
+        });
+      }
+    } else if (q.type === 'drag') {
+      const blank = document.querySelector(`.blank-slot[data-qid="${q.id}"]`);
+      const words = document.querySelectorAll(`.word-bank[data-qid="${q.id}"]`);
+      words.forEach(w => {
+        w.setAttribute('draggable', 'true');
+        w.addEventListener('dragstart', (e) => {
+          if (w.classList.contains('used')) { e.preventDefault(); return; }
+          e.dataTransfer.setData('text/plain', w.dataset.word);
+          e.dataTransfer.effectAllowed = 'copy';
+          w.classList.add('dragging');
+        });
+        w.addEventListener('dragend', () => w.classList.remove('dragging'));
+      });
+      if (blank) {
+        blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+        blank.addEventListener('dragleave', () => blank.classList.remove('drag-over'));
+        blank.addEventListener('drop', (e) => {
+          e.preventDefault();
+          blank.classList.remove('drag-over');
+          const word = e.dataTransfer.getData('text/plain');
+          const wordEl = document.querySelector(`.word-bank[data-qid="${q.id}"][data-word="${word}"]`);
+          if (!wordEl || wordEl.classList.contains('used')) return;
+          const prev = userAnswers[q.id-1];
+          if (prev) {
+            const prevEl = document.querySelector(`.word-bank[data-qid="${q.id}"][data-word="${prev}"]`);
+            if (prevEl) prevEl.classList.remove('used');
+          }
+          userAnswers[q.id-1] = word;
+          blank.textContent = word;
+          blank.classList.add('filled');
+          blank.classList.remove('correct', 'incorrect');
+          wordEl.classList.add('used');
+          updateProgress();
+        });
+      }
+    }
+  });
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null && a !== '').length;
+  answeredSpan.innerText = answered;
+  progressFill.style.width = (answered / 30 * 100) + '%';
+}
+
+function speakPhrase(phrase) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(phrase);
+  utter.lang = 'en-US';
+  utter.rate = 0.75;
+  window.speechSynthesis.speak(utter);
+}
+
+// ─── TIMER ───────────────────────────────────
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!examStarted || submitted) return;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!submitted) submitExam(true);
+    } else {
+      timeLeft--;
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      timerDisplay.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      if (timeLeft === 0) timerDisplay.innerText = "0:00";
+    }
+  }, 1000);
+}
+
+// ─── EVALUACIÓN ─────────────────────────────
+function evaluateExam() {
+  let total = 0;
+  let topicScores = {13:0, 14:0, 15:0};
+  let topicCounts = {13:0, 14:0, 15:0};
+  QUESTIONS.forEach((q, idx) => {
+    topicCounts[q.topic]++;
+    let isCorrect = false;
+    const userAns = userAnswers[idx];
+    if (q.type === 'mc') {
+      isCorrect = (userAns === q.correct);
+    } else if (q.type === 'fill' || q.type === 'listen') {
+      const normalizedUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s.]/g, '');
+      const normalizedCorrect = q.correct.toLowerCase().trim();
+      isCorrect = (normalizedUser === normalizedCorrect);
+    } else if (q.type === 'drag') {
+      isCorrect = (userAns === q.correct);
+    }
+    if (isCorrect) { total++; topicScores[q.topic]++; }
+    // Marcar UI
+    const qDiv = document.getElementById(`q${q.id}`);
+    if (!qDiv) return;
+    if (q.type === 'mc') {
+      const opts = qDiv.querySelectorAll('.opt');
+      opts.forEach(opt => {
+        opt.disabled = true;
+        if (opt.dataset.val === q.correct) opt.classList.add('correct-ans');
+        if (opt.dataset.val === userAns && userAns !== q.correct) opt.classList.add('wrong-ans');
+      });
+    } else if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'drag') {
+      const blank = qDiv.querySelector('.blank-slot');
+      if (blank) {
+        if (isCorrect) blank.classList.add('correct');
+        else {
+          blank.classList.add('incorrect');
+          blank.textContent = `${blank.textContent} (correct: ${q.correct})`;
+        }
+      }
+      qDiv.querySelectorAll('.word-bank').forEach(w => w.style.cursor = 'default');
+    }
+    qDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+  });
+  return { total, topicScores, topicCounts };
+}
+
+function submitExam(autoTimeout = false) {
+  if (submitted) return;
+  submitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  examStarted = false;
+  const { total, topicScores, topicCounts } = evaluateExam();
+  document.querySelectorAll('.opt, .fill-input, .listen-input').forEach(el => el.disabled = true);
+  document.getElementById('submitBtn').disabled = true;
+
+  resultsPanel.classList.add('show');
+  document.getElementById('scoreNum').innerHTML = total;
+  document.getElementById('score13').innerText = `${topicScores[13]}/${topicCounts[13]}`;
+  document.getElementById('score14').innerText = `${topicScores[14]}/${topicCounts[14]}`;
+  document.getElementById('score15').innerText = `${topicScores[15]}/${topicCounts[15]}`;
+  const pct = (total / 30) * 100;
+  let grade, msg, cls;
+  if (pct >= 90) { grade = 'A — Excellent'; cls = 'a'; msg = 'Outstanding! You know body parts, health symptoms, and doctor conversations perfectly.'; }
+  else if (pct >= 75) { grade = 'B — Good'; cls = 'b'; msg = 'Good job! Review a few specific symptoms or body part names.'; }
+  else if (pct >= 60) { grade = 'C — Acceptable'; cls = 'c'; msg = 'Acceptable. Focus on vocabulary and the structures have/has got and hurt/ache.'; }
+  else { grade = 'D — Needs Review'; cls = 'd'; msg = 'Review the lessons on body parts, health problems, and doctor-patient dialogues.'; }
+  document.getElementById('gradeTag').innerHTML = grade;
+  document.getElementById('gradeTag').className = `grade ${cls}`;
+  document.getElementById('resultsTitle').innerHTML = total >= 20 ? '🎉 Well done!' : 'Keep practising!';
+  document.getElementById('resultsMsg').innerHTML = msg;
+  if (autoTimeout) {
+    document.getElementById('resultsMsg').innerHTML += `<br><span style="color:var(--accent3);">⏰ Time is up! Exam auto-submitted.</span>`;
+  }
+  const errorDiv = document.getElementById('errorDetails');
+  let errors = [];
+  QUESTIONS.forEach((q, idx) => {
+    const userAns = userAnswers[idx];
+    let isCorrect = false;
+    if (q.type === 'mc') isCorrect = (userAns === q.correct);
+    else if (q.type === 'fill' || q.type === 'listen') {
+      const nUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s.]/g, '');
+      const nCorr = q.correct.toLowerCase().trim();
+      isCorrect = (nUser === nCorr);
+    } else if (q.type === 'drag') isCorrect = (userAns === q.correct);
+    if (!isCorrect) {
+      errors.push(`Q${q.id}: your answer "${userAns || '(empty)'}" → correct: "${q.correct}"`);
+    }
+  });
+  if (errors.length) {
+    errorDiv.innerHTML = `<h4 style="color:var(--accent3); margin-bottom:8px;">❌ You had ${errors.length} incorrect answers:</h4><ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+  } else {
+    errorDiv.innerHTML = `<p style="color:var(--accent2);">✅ All answers correct! Perfect score.</p>`;
+  }
+  resultsPanel.scrollIntoView({ behavior: 'smooth' });
+}
+
+function startExam() {
+  if (examStarted) return;
+  examStarted = true;
+  startPanel.style.display = 'none';
+  examWrapper.style.display = 'block';
+  renderQuestions();
+  userAnswers = new Array(30).fill(null);
+  submitted = false;
+  timeLeft = 20 * 60;
+  timerDisplay.innerText = "20:00";
+  if (timerInterval) clearInterval(timerInterval);
+  startTimer();
+  updateProgress();
+}
+
+document.getElementById('retryBtn')?.addEventListener('click', () => location.reload());
+startBtn.addEventListener('click', startExam);
+submitBtn.addEventListener('click', () => { if (examStarted && !submitted) submitExam(false); });
+
+examWrapper.style.display = 'none';
+resultsPanel.classList.remove('show');
+</script>
+</body>
+</html>

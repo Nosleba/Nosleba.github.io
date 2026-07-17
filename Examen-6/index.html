@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 6 — Topics 16–18 | English A1 | Animals & Descriptions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #141720;
+      --surface2: #1c2030;
+      --border: rgba(255,255,255,0.07);
+      --accent: #66bb6a;
+      --accent2: #ffa726;
+      --accent3: #42a5f5;
+      --gold: #f0b429;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --r: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13,15,20,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-left { display: flex; flex-direction: column; gap: 2px; }
+    .topbar-eyebrow { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .topbar-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+    .topbar-right { display: flex; align-items: center; gap: 20px; }
+    .counter { font-size: 0.8rem; color: var(--muted); }
+    .counter span { color: var(--gold); font-weight: 600; }
+    .timer-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 5px 16px;
+      font-family: 'Syne', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .progress-wrap { width: 140px; background: var(--surface2); border-radius: 99px; height: 5px; }
+    .progress-fill { height: 5px; border-radius: 99px; background: linear-gradient(90deg, var(--gold), var(--accent)); transition: width .3s ease; width: 0%; }
+
+    .hero {
+      padding: 48px 32px 32px;
+      max-width: 860px; margin: 0 auto;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; gap: 7px;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      color: var(--gold); border: 1px solid rgba(240,180,41,0.3);
+      padding: 6px 14px; border-radius: 99px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p { font-size: 0.9rem; color: var(--muted); margin-top: 12px; }
+    .start-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      max-width: 500px;
+      margin: 30px auto 0;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .btn-start {
+      background: var(--accent);
+      border: none;
+      color: var(--bg);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      padding: 14px 40px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-start:hover { opacity: 0.85; transform: scale(1.02); }
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; display: none; }
+    .section-block { margin-bottom: 52px; }
+    .section-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(102,187,106,0.1); border: 1.5px solid rgba(102,187,106,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent);
+    }
+    .section-info h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .section-info p { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    .question {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 20px 18px;
+      margin-bottom: 14px;
+      transition: border-color .2s;
+    }
+    .question.correct { border-color: rgba(102,187,106,0.5); background: rgba(102,187,106,0.04); }
+    .question.wrong   { border-color: rgba(255,167,38,0.5); background: rgba(255,167,38,0.04); }
+
+    .q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .q-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--surface2);
+      font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--muted);
+    }
+    .q-text { font-size: 0.95rem; line-height: 1.5; color: var(--text); }
+
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .opt {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 9px 12px; font-size: 0.85rem;
+      color: var(--text); cursor: pointer; text-align: left;
+    }
+    .opt.selected { border-color: var(--gold); background: rgba(240,180,41,0.1); color: var(--white); }
+    .opt.correct-ans { border-color: var(--accent); background: rgba(102,187,106,0.12); color: var(--accent); }
+    .opt.wrong-ans   { border-color: var(--accent2); background: rgba(255,167,38,0.1); color: var(--accent2); }
+    .opt:disabled { cursor: default; }
+
+    .fill-input, .listen-input {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 10px 14px; font-size: 0.9rem;
+      color: var(--white); width: 100%; max-width: 360px; outline: none;
+    }
+    .fill-input:focus, .listen-input:focus { border-color: rgba(102,187,106,0.5); }
+    .fill-input.correct-inp, .listen-input.correct-inp { border-color: var(--accent); color: var(--accent); }
+    .fill-input.wrong-inp, .listen-input.wrong-inp { border-color: var(--accent2); color: var(--accent2); }
+    .listen-btn {
+      background: var(--surface); border: 1px solid var(--accent3);
+      border-radius: 30px; padding: 5px 16px; font-size: 0.7rem;
+      color: var(--accent3); cursor: pointer; margin-right: 12px;
+    }
+    .listen-btn:hover { background: rgba(66,165,245,0.2); }
+    .fill-hint { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+
+    .blank-slot {
+      display: inline-block; min-width: 80px; padding: 6px 10px;
+      background: var(--surface2); border: 2px dashed var(--border); border-radius: 8px;
+      color: var(--muted); font-weight: 500; text-align: center; transition: 0.2s;
+      margin: 0 4px;
+    }
+    .blank-slot.drag-over { border-color: var(--accent); background: rgba(102,187,106,0.1); }
+    .blank-slot.filled { background: rgba(102,187,106,0.15); border: 2px solid var(--accent); color: var(--accent); }
+    .blank-slot.correct { background: rgba(102,187,106,0.25); border-color: var(--accent); color: var(--accent); }
+    .blank-slot.incorrect { background: rgba(255,167,38,0.2); border-color: var(--accent2); color: var(--accent2); }
+    .word-bank {
+      display: inline-block; padding: 8px 18px; margin: 5px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
+      font-size: 0.9rem; font-weight: 500; cursor: grab; transition: 0.2s; user-select: none;
+    }
+    .word-bank:active { cursor: grabbing; }
+    .word-bank.dragging { opacity: 0.5; }
+    .word-bank.used { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; background: var(--surface2); }
+
+    .submit-zone {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .btn-submit {
+      background: var(--gold); color: var(--bg); border: none;
+      border-radius: 9px; padding: 12px 32px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-submit:disabled { opacity: 0.4; cursor: default; }
+
+    .results-panel {
+      display: none; background: var(--surface);
+      border-radius: 18px; border: 1px solid var(--border);
+      padding: 36px 28px; text-align: center; margin-top: 30px;
+    }
+    .results-panel.show { display: block; }
+    .score-ring {
+      width: 110px; height: 110px; border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 3px solid var(--gold);
+    }
+    .score-num { font-size: 2.2rem; color: var(--gold); font-weight: 800; }
+    .grade { display: inline-block; padding: 5px 18px; border-radius: 99px; margin-bottom: 16px; }
+    .grade.a { background: rgba(102,187,106,0.15); color: var(--accent); }
+    .grade.b { background: rgba(66,165,245,0.12); color: var(--accent3); }
+    .grade.c { background: rgba(240,180,41,0.12); color: var(--gold); }
+    .grade.d { background: rgba(255,167,38,0.1); color: var(--accent2); }
+    .breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0; }
+    .error-list { text-align: left; margin: 16px auto; max-width: 600px; color: var(--muted); font-size: 0.85rem; }
+    .error-list li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .btn-retry { background: transparent; border: 1.5px solid var(--border); color: var(--text); border-radius: 9px; padding: 10px 24px; cursor: pointer; margin-right: 10px; }
+    .btn-retry:hover { border-color: var(--gold); color: var(--white); }
+    .btn-home {
+      background: var(--surface2); border: 1.5px solid var(--border);
+      color: var(--text); border-radius: 9px; padding: 10px 24px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color .2s;
+    }
+    .btn-home:hover { border-color: var(--accent); color: var(--white); }
+
+    @media (max-width: 600px) { .options { grid-template-columns: 1fr; } .topbar { padding: 10px 16px; } .progress-wrap { width: 80px; } }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-eyebrow">English A1 — Exam 6</span>
+    <span class="topbar-title">Topics 16 · 17 · 18 | Animals & Descriptions</span>
+  </div>
+  <div class="topbar-right">
+    <span class="counter">Answered: <span id="answeredCount">0</span> / 30</span>
+    <div class="timer-box" id="timerDisplay">20:00</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-badge">📝 Final assessment · Topics 16–18</span>
+  <h1>Exam <em>6</em></h1>
+  <p>Animals, body parts, abilities, adjectives, and describing your favourite animal.</p>
+  <div class="start-panel" id="startPanel">
+    <p style="margin-bottom: 20px;">⏱️ 20 minutes · 30 questions · 3 sections</p>
+    <button class="btn-start" id="startExamBtn">▶ Start Exam</button>
+  </div>
+</div>
+
+<div class="wrapper" id="examWrapper">
+  <div id="questionsContainer"></div>
+  <div class="submit-zone">
+    <button class="btn-submit" id="submitBtn">✔ Submit Exam</button>
+  </div>
+  <div class="results-panel" id="resultsPanel">
+    <div class="score-ring"><span class="score-num" id="scoreNum">0</span><span style="font-size:0.7rem;">/30</span></div>
+    <h2 id="resultsTitle">Your Results</h2>
+    <span class="grade" id="gradeTag"></span>
+    <p id="resultsMsg"></p>
+    <div class="breakdown">
+      <div><div class="bi-score" id="score16">—</div><div class="bi-label">Topic 16<br>Animals</div></div>
+      <div><div class="bi-score" id="score17">—</div><div class="bi-label">Topic 17<br>Descriptions</div></div>
+      <div><div class="bi-score" id="score18">—</div><div class="bi-label">Topic 18<br>Production</div></div>
+    </div>
+    <div id="errorDetails" class="error-list"></div>
+    <button class="btn-retry" id="retryBtn">↺ Try Again</button>
+    <a class="btn-home" href="#">⌂ Back to Home</a>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────────────────
+//  QUESTION BANK — 30 preguntas (10 por tema)
+//  Tema 16: Animals (vocabulario básico)
+//  Tema 17: Descriptions (has/have, can/can't, adjetivos)
+//  Tema 18: Production (hablar/escribir sobre animales)
+// ──────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // ─── TOPIC 16: ANIMALS (1-10) ───
+  { id:1, topic:16, type:'mc', text:'What animal is known as "the king of the jungle"?', options:['Tiger','Lion','Elephant','Bear'], correct:'Lion' },
+  { id:2, topic:16, type:'mc', text:'Which animal has a long neck and spots?', options:['Zebra','Giraffe','Leopard','Cow'], correct:'Giraffe' },
+  { id:3, topic:16, type:'fill', text:'Complete: "A _______ (delfín) is very intelligent."', correct:'dolphin' },
+  { id:4, topic:16, type:'mc', text:'What do you call a baby dog?', options:['Kitty','Puppy','Cub','Foal'], correct:'Puppy' },
+  { id:5, topic:16, type:'listen', text:'Listen and write the animal you hear.', correct:'parrot', audioHint:'parrot' },
+  { id:6, topic:16, type:'mc', text:'Which animal can change its colour?', options:['Lizard','Chameleon','Snake','Turtle'], correct:'Chameleon' },
+  { id:7, topic:16, type:'drag', text:'Drag the correct animal: "A _______ (cow / pig / sheep) gives us milk."', blanks:['cow','pig','sheep'], correct:'cow' },
+  { id:8, topic:16, type:'fill', text:'Write the plural: "one mouse, two _______"', correct:'mice' },
+  { id:9, topic:16, type:'mc', text:'Which bird cannot fly?', options:['Eagle','Parrot','Penguin','Sparrow'], correct:'Penguin' },
+  { id:10, topic:16, type:'listen', text:'Listen: Which animal is mentioned?', correct:'shark', audioHint:'shark' },
+
+  // ─── TOPIC 17: DESCRIPTIONS (has/have, can/can't, adjectives) (11-20) ───
+  { id:11, topic:17, type:'mc', text:'Complete: "It _______ four legs."', options:['has','have','is','can'], correct:'has' },
+  { id:12, topic:17, type:'fill', text:'Complete: "Elephants _______ (have) big ears."', correct:'have' },
+  { id:13, topic:17, type:'mc', text:'Which is correct? "The bird _______ fly."', options:['can','can\'t','has','have'], correct:'can' },
+  { id:14, topic:17, type:'fill', text:'Write the negative: "A fish _______ (can) walk."', correct:'can\'t' },
+  { id:15, topic:17, type:'mc', text:'Choose the correct adjective order: "a _______ elephant."', options:['big grey','grey big','big and grey','grey and big'], correct:'big grey' },
+  { id:16, topic:17, type:'listen', text:'Listen: What does the animal have?', correct:'wings', audioHint:'wings' },
+  { id:17, topic:17, type:'drag', text:'Drag to complete: "The zebra _______ (has / have / is) black and white stripes."', blanks:['has','have','is'], correct:'has' },
+  { id:18, topic:17, type:'mc', text:'What does "It lives in the ocean" mean?', options:['Vive en el océano','Vive en el bosque','Vive en la montaña','Vive en el desierto'], correct:'Vive en el océano' },
+  { id:19, topic:17, type:'fill', text:'Complete: "Lions are _______ (peligrosos)."', correct:'dangerous' },
+  { id:20, topic:17, type:'listen', text:'Listen: Can it climb? (write yes/no)', correct:'yes', audioHint:'yes' },
+
+  // ─── TOPIC 18: PRODUCTION (speaking & writing) (21-30) ───
+  { id:21, topic:18, type:'mc', text:'What question do you ask to guess an animal?', options:['What animal is it?','How are you?','Where are you from?','What time is it?'], correct:'What animal is it?' },
+  { id:22, topic:18, type:'fill', text:'Complete the question: "_______ (Does / Can) it live in the jungle?"', correct:'Does' },
+  // ⭐ PREGUNTA 23 CORREGIDA — ahora las opciones incorrectas son claramente negativas
+  { id:23, topic:18, type:'mc', text:'Why do you like elephants? Choose the best reason.', options:['Because they are intelligent.','Because they are dangerous.','Because they are ugly.','Because they are slow.'], correct:'Because they are intelligent.' },
+  { id:24, topic:18, type:'drag', text:'Drag to complete: "_______ (My / Your / Her) favourite animal is the dolphin."', blanks:['My','Your','Her'], correct:'My' },
+  { id:25, topic:18, type:'mc', text:'How do you say "puede nadar" in English?', options:['It can swim.','It can fly.','It can run.','It can climb.'], correct:'It can swim.' },
+  { id:26, topic:18, type:'fill', text:'Write the sentence: "Mi animal favorito es el conejo." in English.', correct:'my favourite animal is the rabbit' },
+  { id:27, topic:18, type:'listen', text:'Listen: What is the speaker\'s favourite animal?', correct:'tiger', audioHint:'tiger' },
+  { id:28, topic:18, type:'mc', text:'Which phrase describes a pet?', options:['It is wild.','It is dangerous.','It is domestic.','It lives in the jungle.'], correct:'It is domestic.' },
+  { id:29, topic:18, type:'fill', text:'Complete: "It eats grass and _______ (hojas)."', correct:'leaves' },
+  { id:30, topic:18, type:'listen', text:'Listen: What does the animal eat?', correct:'fish', audioHint:'fish' }
+];
+
+// ─── ESTADO ──────────────────────────────────
+let examStarted = false;
+let timerInterval = null;
+let timeLeft = 20 * 60;
+let userAnswers = new Array(30).fill(null);
+let submitted = false;
+
+const startPanel = document.getElementById('startPanel');
+const examWrapper = document.getElementById('examWrapper');
+const startBtn = document.getElementById('startExamBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resultsPanel = document.getElementById('resultsPanel');
+const timerDisplay = document.getElementById('timerDisplay');
+const answeredSpan = document.getElementById('answeredCount');
+const progressFill = document.getElementById('progressFill');
+
+// ─── RENDER QUESTIONS ──────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  const topics = [16, 17, 18];
+  const topicNames = {
+    16: 'Animals & Vocabulary',
+    17: 'Describing Animals (has/have, can/can\'t, adjectives)',
+    18: 'Production (speaking & writing)'
+  };
+  topics.forEach(topic => {
+    const qs = QUESTIONS.filter(q => q.topic === topic);
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section-block';
+    const range = qs.length ? `${qs[0].id}–${qs[qs.length-1].id}` : '';
+    sectionDiv.innerHTML = `
+      <div class="section-label">
+        <div class="section-num">${topic}</div>
+        <div class="section-info"><h3>Topic ${topic} — ${topicNames[topic]}</h3><p>Questions ${range}</p></div>
+      </div>
+    `;
+    qs.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = `q${q.id}`;
+      let inner = `<div class="q-header"><span class="q-num">${q.id}</span><span class="q-text">${q.text}</span></div>`;
+      if (q.type === 'mc') {
+        inner += `<div class="options">`;
+        q.options.forEach(opt => {
+          inner += `<button class="opt" data-qid="${q.id}" data-val="${opt}">${opt}</button>`;
+        });
+        inner += `</div>`;
+      } else if (q.type === 'fill') {
+        inner += `<div class="fill-wrap"><input class="fill-input" id="fill${q.id}" type="text" placeholder="Type your answer..." autocomplete="off"/><div class="fill-hint">✏️ Write the correct word.</div></div>`;
+      } else if (q.type === 'listen') {
+        inner += `<div class="fill-wrap"><button class="listen-btn" data-listenid="${q.id}">🔊 Listen</button><input class="listen-input" id="listen${q.id}" type="text" placeholder="Write what you hear..." style="width:70%"/><div class="fill-hint">🎧 Click listen, then write the word/phrase.</div></div>`;
+      } else if (q.type === 'drag') {
+        const blankText = q.blanks ? q.blanks[0] : '___';
+        inner += `<div class="drag-area">
+                    <span>Choose: </span>
+                    <span class="blank-slot" data-qid="${q.id}" data-correct="${q.correct}">___</span>
+                    <span style="margin-left:12px;">from the options:</span>
+                  </div>
+                  <div class="word-bank-container" id="wordbank${q.id}">`;
+        const options = q.blanks || [q.correct, 'other'];
+        options.forEach(w => {
+          inner += `<span class="word-bank" data-qid="${q.id}" data-word="${w}">${w}</span>`;
+        });
+        inner += `</div>`;
+      }
+      qDiv.innerHTML = inner;
+      sectionDiv.appendChild(qDiv);
+    });
+    container.appendChild(sectionDiv);
+  });
+  attachEvents();
+}
+
+function attachEvents() {
+  // MC
+  document.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (!examStarted || submitted) return;
+      const qid = parseInt(this.dataset.qid);
+      document.querySelectorAll(`.opt[data-qid="${qid}"]`).forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      userAnswers[qid-1] = this.dataset.val;
+      updateProgress();
+    });
+  });
+  // Fill
+  QUESTIONS.forEach(q => {
+    if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.addEventListener('input', () => {
+          if (!examStarted || submitted) return;
+          userAnswers[q.id-1] = inp.value.trim().toLowerCase();
+          updateProgress();
+        });
+      }
+      const listenBtn = document.querySelector(`.listen-btn[data-listenid="${q.id}"]`);
+      if (listenBtn) {
+        listenBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const phrase = q.audioHint || q.correct;
+          speakPhrase(phrase);
+        });
+      }
+    } else if (q.type === 'drag') {
+      const blank = document.querySelector(`.blank-slot[data-qid="${q.id}"]`);
+      const words = document.querySelectorAll(`.word-bank[data-qid="${q.id}"]`);
+      words.forEach(w => {
+        w.setAttribute('draggable', 'true');
+        w.addEventListener('dragstart', (e) => {
+          if (w.classList.contains('used')) { e.preventDefault(); return; }
+          e.dataTransfer.setData('text/plain', w.dataset.word);
+          e.dataTransfer.effectAllowed = 'copy';
+          w.classList.add('dragging');
+        });
+        w.addEventListener('dragend', () => w.classList.remove('dragging'));
+      });
+      if (blank) {
+        blank.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; blank.classList.add('drag-over'); });
+        blank.addEventListener('dragleave', () => blank.classList.remove('drag-over'));
+        blank.addEventListener('drop', (e) => {
+          e.preventDefault();
+          blank.classList.remove('drag-over');
+          const word = e.dataTransfer.getData('text/plain');
+          const wordEl = document.querySelector(`.word-bank[data-qid="${q.id}"][data-word="${word}"]`);
+          if (!wordEl || wordEl.classList.contains('used')) return;
+          const prev = userAnswers[q.id-1];
+          if (prev) {
+            const prevEl = document.querySelector(`.word-bank[data-qid="${q.id}"][data-word="${prev}"]`);
+            if (prevEl) prevEl.classList.remove('used');
+          }
+          userAnswers[q.id-1] = word;
+          blank.textContent = word;
+          blank.classList.add('filled');
+          blank.classList.remove('correct', 'incorrect');
+          wordEl.classList.add('used');
+          updateProgress();
+        });
+      }
+    }
+  });
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null && a !== '').length;
+  answeredSpan.innerText = answered;
+  progressFill.style.width = (answered / 30 * 100) + '%';
+}
+
+function speakPhrase(phrase) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(phrase);
+  utter.lang = 'en-US';
+  utter.rate = 0.75;
+  window.speechSynthesis.speak(utter);
+}
+
+// ─── TIMER ───────────────────────────────────
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!examStarted || submitted) return;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!submitted) submitExam(true);
+    } else {
+      timeLeft--;
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      timerDisplay.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      if (timeLeft === 0) timerDisplay.innerText = "0:00";
+    }
+  }, 1000);
+}
+
+// ─── EVALUACIÓN ─────────────────────────────
+function evaluateExam() {
+  let total = 0;
+  let topicScores = {16:0, 17:0, 18:0};
+  let topicCounts = {16:0, 17:0, 18:0};
+  QUESTIONS.forEach((q, idx) => {
+    topicCounts[q.topic]++;
+    let isCorrect = false;
+    const userAns = userAnswers[idx];
+    if (q.type === 'mc') {
+      isCorrect = (userAns === q.correct);
+    } else if (q.type === 'fill' || q.type === 'listen') {
+      const normalizedUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s.]/g, '');
+      const normalizedCorrect = q.correct.toLowerCase().trim();
+      isCorrect = (normalizedUser === normalizedCorrect);
+    } else if (q.type === 'drag') {
+      isCorrect = (userAns === q.correct);
+    }
+    if (isCorrect) { total++; topicScores[q.topic]++; }
+    // Marcar UI
+    const qDiv = document.getElementById(`q${q.id}`);
+    if (!qDiv) return;
+    if (q.type === 'mc') {
+      const opts = qDiv.querySelectorAll('.opt');
+      opts.forEach(opt => {
+        opt.disabled = true;
+        if (opt.dataset.val === q.correct) opt.classList.add('correct-ans');
+        if (opt.dataset.val === userAns && userAns !== q.correct) opt.classList.add('wrong-ans');
+      });
+    } else if (q.type === 'fill') {
+      const inp = document.getElementById(`fill${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'listen') {
+      const inp = document.getElementById(`listen${q.id}`);
+      if (inp) {
+        inp.disabled = true;
+        if (isCorrect) inp.classList.add('correct-inp');
+        else {
+          inp.classList.add('wrong-inp');
+          inp.value = `✗ "${userAns || '?'}" → correct: ${q.correct}`;
+        }
+      }
+    } else if (q.type === 'drag') {
+      const blank = qDiv.querySelector('.blank-slot');
+      if (blank) {
+        if (isCorrect) blank.classList.add('correct');
+        else {
+          blank.classList.add('incorrect');
+          blank.textContent = `${blank.textContent} (correct: ${q.correct})`;
+        }
+      }
+      qDiv.querySelectorAll('.word-bank').forEach(w => w.style.cursor = 'default');
+    }
+    qDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+  });
+  return { total, topicScores, topicCounts };
+}
+
+function submitExam(autoTimeout = false) {
+  if (submitted) return;
+  submitted = true;
+  if (timerInterval) clearInterval(timerInterval);
+  examStarted = false;
+  const { total, topicScores, topicCounts } = evaluateExam();
+  document.querySelectorAll('.opt, .fill-input, .listen-input').forEach(el => el.disabled = true);
+  document.getElementById('submitBtn').disabled = true;
+
+  resultsPanel.classList.add('show');
+  document.getElementById('scoreNum').innerHTML = total;
+  document.getElementById('score16').innerText = `${topicScores[16]}/${topicCounts[16]}`;
+  document.getElementById('score17').innerText = `${topicScores[17]}/${topicCounts[17]}`;
+  document.getElementById('score18').innerText = `${topicScores[18]}/${topicCounts[18]}`;
+  const pct = (total / 30) * 100;
+  let grade, msg, cls;
+  if (pct >= 90) { grade = 'A — Excellent'; cls = 'a'; msg = 'Outstanding! You have a great command of animal vocabulary, descriptions, and production skills.'; }
+  else if (pct >= 75) { grade = 'B — Good'; cls = 'b'; msg = 'Good job! Review a few animal names or grammar points to perfect your skills.'; }
+  else if (pct >= 60) { grade = 'C — Acceptable'; cls = 'c'; msg = 'Acceptable. Focus on the verb forms (has/have, can/can\'t) and adjective order.'; }
+  else { grade = 'D — Needs Review'; cls = 'd'; msg = 'Review the lessons on animals, body parts, abilities, and how to describe them.'; }
+  document.getElementById('gradeTag').innerHTML = grade;
+  document.getElementById('gradeTag').className = `grade ${cls}`;
+  document.getElementById('resultsTitle').innerHTML = total >= 20 ? '🎉 Well done!' : 'Keep practising!';
+  document.getElementById('resultsMsg').innerHTML = msg;
+  if (autoTimeout) {
+    document.getElementById('resultsMsg').innerHTML += `<br><span style="color:var(--accent2);">⏰ Time is up! Exam auto-submitted.</span>`;
+  }
+  const errorDiv = document.getElementById('errorDetails');
+  let errors = [];
+  QUESTIONS.forEach((q, idx) => {
+    const userAns = userAnswers[idx];
+    let isCorrect = false;
+    if (q.type === 'mc') isCorrect = (userAns === q.correct);
+    else if (q.type === 'fill' || q.type === 'listen') {
+      const nUser = (userAns || '').trim().toLowerCase().replace(/[^a-z0-9\s.]/g, '');
+      const nCorr = q.correct.toLowerCase().trim();
+      isCorrect = (nUser === nCorr);
+    } else if (q.type === 'drag') isCorrect = (userAns === q.correct);
+    if (!isCorrect) {
+      errors.push(`Q${q.id}: your answer "${userAns || '(empty)'}" → correct: "${q.correct}"`);
+    }
+  });
+  if (errors.length) {
+    errorDiv.innerHTML = `<h4 style="color:var(--accent2); margin-bottom:8px;">❌ You had ${errors.length} incorrect answers:</h4><ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+  } else {
+    errorDiv.innerHTML = `<p style="color:var(--accent);">✅ All answers correct! Perfect score.</p>`;
+  }
+  resultsPanel.scrollIntoView({ behavior: 'smooth' });
+}
+
+function startExam() {
+  if (examStarted) return;
+  examStarted = true;
+  startPanel.style.display = 'none';
+  examWrapper.style.display = 'block';
+  renderQuestions();
+  userAnswers = new Array(30).fill(null);
+  submitted = false;
+  timeLeft = 20 * 60;
+  timerDisplay.innerText = "20:00";
+  if (timerInterval) clearInterval(timerInterval);
+  startTimer();
+  updateProgress();
+}
+
+document.getElementById('retryBtn')?.addEventListener('click', () => location.reload());
+startBtn.addEventListener('click', startExam);
+submitBtn.addEventListener('click', () => { if (examStarted && !submitted) submitExam(false); });
+
+examWrapper.style.display = 'none';
+resultsPanel.classList.remove('show');
+</script>
+</body>
+</html>
